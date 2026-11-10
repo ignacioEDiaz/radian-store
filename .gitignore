@@ -10,3 +10,6 @@ playwright-report/
 test-results/
 .DS_Store
 .api-dev.log
+.web-dev.log
+apps/web/test-results/
+apps/web/playwright-report/

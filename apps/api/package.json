@@ -14,7 +14,8 @@
     "test:coverage": "vitest run --coverage",
     "db:migrate": "tsx --conditions=source --env-file-if-exists=.env src/scripts/migrate.ts",
     "load:pool": "autocannon -c 60 -d 20 http://localhost:3000/api/_diag/slow",
-    "seed:catalog": "tsx --conditions=source --env-file-if-exists=.env src/scripts/seed-catalog.ts"
+    "seed:catalog": "tsx --conditions=source --env-file-if-exists=.env src/scripts/seed-catalog.ts",
+    "verify:oversell": "tsx src/scripts/verify-oversell.ts"
   },
   "dependencies": {
     "@fastify/cookie": "^11.1.5",

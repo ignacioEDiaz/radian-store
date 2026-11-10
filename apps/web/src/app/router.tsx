@@ -6,6 +6,11 @@ import { CollectionPage } from '../features/catalog/pages/CollectionPage';
 import { ProductPage } from '../features/catalog/pages/ProductPage';
 import { NotFoundPage } from '../features/catalog/pages/NotFoundPage';
 import { AddToCart } from '../features/cart/components/AddToCart';
+import { CheckoutPage } from '../features/checkout/CheckoutPage';
+import { OrderConfirmationPage } from '../features/checkout/OrderConfirmationPage';
+import { OrdersPage } from '../features/orders/OrdersPage';
+import { OrderDetailPage } from '../features/orders/OrderDetailPage';
+import { AdminOrderDetailPage, AdminOrdersPage } from '../features/orders/AdminOrdersPages';
 import { LoginPage } from '../features/account/pages/LoginPage';
 import { RegisterPage } from '../features/account/pages/RegisterPage';
 import { AccountPage } from '../features/account/pages/AccountPage';
@@ -25,6 +30,8 @@ export const router = createBrowserRouter([
       { path: 'buscar', element: <CollectionPage mode="search" /> },
       { path: 'productos/:slug', element: <ProductPage purchase={(p) => <AddToCart {...p} />} /> },
       { path: 'estado', element: <StatusPage /> },
+      { path: 'checkout', element: <CheckoutPage /> },
+      { path: 'pedidos/:number', element: <OrderConfirmationPage /> },
       { path: 'cuenta/ingresar', element: <LoginPage /> },
       { path: 'cuenta/registro', element: <RegisterPage /> },
       {
@@ -34,7 +41,11 @@ export const router = createBrowserRouter([
             <Outlet />
           </RequireAuth>
         ),
-        children: [{ index: true, element: <AccountPage /> }],
+        children: [
+          { index: true, element: <AccountPage /> },
+          { path: 'pedidos', element: <OrdersPage /> },
+          { path: 'pedidos/:number', element: <OrderDetailPage /> },
+        ],
       },
       {
         path: 'admin',
@@ -44,6 +55,8 @@ export const router = createBrowserRouter([
           { path: 'productos', element: <ProductsListPage /> },
           { path: 'productos/:id', element: <ProductEditorPage /> },
           { path: 'colecciones', element: <CollectionsPage /> },
+          { path: 'pedidos', element: <AdminOrdersPage /> },
+          { path: 'pedidos/:number', element: <AdminOrderDetailPage /> },
         ],
       },
       { path: '*', element: <NotFoundPage /> },

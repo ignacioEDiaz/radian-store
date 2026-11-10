@@ -22,7 +22,7 @@ const GROUPS: { dim: Dimension; key: keyof Omit<Facets, 'price'>; label: string 
 /** Facetas con conteos (calculados por la API excluyendo el propio filtro). */
 export function FiltersPanel({ facets, isActive, onToggle, available, onAvailable, onClear, hideTypes }: Props) {
   return (
-    <aside className={styles.filters} aria-label="Filtros">
+    <aside id="filters-panel" className={styles.filters} aria-label="Filtros">
       <label className={styles.check}>
         <input type="checkbox" checked={available} onChange={(e) => onAvailable(e.target.checked)} />
         Solo disponibles
