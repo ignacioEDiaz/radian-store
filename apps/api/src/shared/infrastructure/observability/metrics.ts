@@ -90,6 +90,18 @@ export class Metrics {
     registers: [this.registry],
   });
 
+  readonly ordersPlaced = new Counter({
+    name: 'orders_placed_total',
+    help: 'Intentos de compra por resultado',
+    labelNames: ['result'] as const,
+    registers: [this.registry],
+  });
+  readonly paymentAttempts = new Counter({
+    name: 'payment_attempts_total',
+    help: 'Cobros por resultado del proveedor',
+    labelNames: ['result'] as const,
+    registers: [this.registry],
+  });
   readonly cartOperations = new Counter({
     name: 'cart_operations_total',
     help: 'Operaciones de carrito por resultado',
