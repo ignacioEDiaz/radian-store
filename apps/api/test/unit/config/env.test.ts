@@ -36,7 +36,10 @@ describe('loadConfig', () => {
     const dev = loadConfig(base);
     expect(dev.session.secret.length).toBeGreaterThanOrEqual(32);
     expect(dev.session.secureCookie).toBe(false);
-    expect(dev.admin).toBeNull();
+    expect(dev.staff).toEqual([]);
+    expect(loadConfig({ ...base, VIEWER_EMAIL: 'demo@x.com', VIEWER_PASSWORD: 'demo-password-123' }).staff).toEqual([
+      { email: 'demo@x.com', password: 'demo-password-123', role: 'viewer', name: 'Demo (solo lectura)' },
+    ]);
     const prod = loadConfig({ ...base, NODE_ENV: 'production', SESSION_SECRET: 's'.repeat(32), COOKIE_SECRET: 'c'.repeat(32) });
     expect(prod.session.secureCookie).toBe(true);
   });

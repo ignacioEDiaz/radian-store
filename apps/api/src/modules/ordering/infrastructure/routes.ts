@@ -6,6 +6,7 @@ import type { AuthGuards } from '../../../shared/infrastructure/http/auth.js';
 import { parseBody, parseParams, parseQuery } from '../../../shared/infrastructure/http/validation.js';
 import type { CheckoutService, OrderAdmin } from '../application/checkout-service.js';
 import type { OrderQueries } from './read-side.js';
+import { maskOrder, maskSummary } from './mask.js';
 
 const numberParams = z.object({ number: z.string().regex(/^RS-\d{6,}$/) });
 const pageQuery = z.object({ page: z.coerce.number().int().min(1).default(1) });
@@ -52,16 +53,21 @@ export function registerOrderingRoutes(app: FastifyInstance, d: OrderingRouteDep
     s.get('/api/orders', { preHandler: d.guards.requireAuth }, async (req) => d.queries.listMine(req.auth!.customerId, parseQuery(pageQuery, req.query).page));
     s.get('/api/orders/:number', { preHandler: d.guards.requireAuth }, async (req) => d.queries.getMine(req.auth!.customerId, parseParams(numberParams, req.params).number));
 
-    s.get('/api/admin/orders', { preHandler: d.guards.requireRole('admin') }, async (req) => {
+    s.get('/api/admin/orders', { preHandler: d.guards.requireAdminArea }, async (req) => {
       const q = parseQuery(adminOrdersQuerySchema, req.query);
-      return d.queries.listAdmin(q.status, q.page);
+      const page = await d.queries.listAdmin(q.status, q.page);
+      return req.auth?.role === 'viewer' ? { ...page, items: page.items.map(maskSummary) } : page;
     });
-    s.get('/api/admin/orders/:number', { preHandler: d.guards.requireRole('admin') }, async (req) => d.queries.getAdmin(parseParams(numberParams, req.params).number));
-    s.post('/api/admin/orders/:number/ship', { preHandler: d.guards.requireRole('admin') }, async (req) => {
+    s.get('/api/admin/orders/:number', { preHandler: d.guards.requireAdminArea }, async (req) => {
+      const order = await d.queries.getAdmin(parseParams(numberParams, req.params).number);
+      // Solo lectura ⇒ sin datos personales del cliente.
+      return req.auth?.role === 'viewer' ? maskOrder(order) : order;
+    });
+    s.post('/api/admin/orders/:number/ship', { preHandler: d.guards.requireAdminArea }, async (req) => {
       const body = parseBody(shipOrderRequestSchema, req.body);
       return d.admin.ship({ number: parseParams(numberParams, req.params).number, ...body, actor: req.auth!.customerId });
     });
-    s.post('/api/admin/orders/:number/cancel', { preHandler: d.guards.requireRole('admin') }, async (req) => {
+    s.post('/api/admin/orders/:number/cancel', { preHandler: d.guards.requireAdminArea }, async (req) => {
       const body = parseBody(cancelOrderRequestSchema, req.body);
       return d.admin.cancel({ number: parseParams(numberParams, req.params).number, ...body, actor: req.auth!.customerId });
     });

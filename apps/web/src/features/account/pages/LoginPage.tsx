@@ -8,7 +8,15 @@ import { useLogin } from '../hooks/useSession';
 import { safeRedirect } from './safeRedirect';
 import styles from './AuthLayout.module.css';
 
+/** `email:contraseña` de la cuenta demo de solo lectura, si está configurada. */
+function demoViewer(): { email: string; password: string } | null {
+  const raw = import.meta.env.VITE_DEMO_VIEWER;
+  const at = raw?.indexOf(':') ?? -1;
+  return raw && at > 0 ? { email: raw.slice(0, at), password: raw.slice(at + 1) } : null;
+}
+
 export function LoginPage() {
+  const demo = demoViewer();
   const [values, setValues] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState<FieldErrors>({});
   const login = useLogin();
@@ -35,6 +43,19 @@ export function LoginPage() {
       {apiError && (
         <div role="alert" className={styles.alert}>
           {apiError}
+        </div>
+      )}
+      {demo && (
+        <div role="note" className={styles.demo}>
+          <p>
+            <strong>¿Querés ver el panel de administración?</strong> Usá la cuenta demo de solo lectura:
+          </p>
+          <p className={styles.demoCredentials}>
+            {demo.email} · {demo.password}
+          </p>
+          <button type="button" className="btn btn--ghost" onClick={() => setValues({ email: demo.email, password: demo.password })}>
+            Usar cuenta demo
+          </button>
         </div>
       )}
       <form onSubmit={onSubmit} noValidate>

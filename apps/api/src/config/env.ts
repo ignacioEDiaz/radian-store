@@ -35,6 +35,8 @@ const schema = z.object({
   COOKIE_SECURE: z.enum(['true', 'false']).optional(),
   ADMIN_EMAIL: z.string().optional(),
   ADMIN_PASSWORD: z.string().min(10).optional(),
+  VIEWER_EMAIL: z.string().optional(),
+  VIEWER_PASSWORD: z.string().min(10).optional(),
   MEDIA_DIR: z.string().default('./storage/media'),
   PAYMENT_TIMEOUT_MS: int(5000, 10),
 });
@@ -86,7 +88,11 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
       secureCookie: e.COOKIE_SECURE ? e.COOKIE_SECURE === 'true' : e.NODE_ENV === 'production',
     },
     cookieSecret: e.COOKIE_SECRET ?? DEV_SECRET,
-    admin: e.ADMIN_EMAIL && e.ADMIN_PASSWORD ? { email: e.ADMIN_EMAIL, password: e.ADMIN_PASSWORD } : null,
+    /** Cuentas de staff garantizadas al arrancar (admin y la demo de solo lectura). */
+    staff: [
+      ...(e.ADMIN_EMAIL && e.ADMIN_PASSWORD ? [{ email: e.ADMIN_EMAIL, password: e.ADMIN_PASSWORD, role: 'admin' as const }] : []),
+      ...(e.VIEWER_EMAIL && e.VIEWER_PASSWORD ? [{ email: e.VIEWER_EMAIL, password: e.VIEWER_PASSWORD, role: 'viewer' as const, name: 'Demo (solo lectura)' }] : []),
+    ],
     mediaDir: e.MEDIA_DIR,
     payments: { timeoutMs: e.PAYMENT_TIMEOUT_MS },
   };

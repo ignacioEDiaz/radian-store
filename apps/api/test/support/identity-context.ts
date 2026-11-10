@@ -22,7 +22,10 @@ export function identityTestContext() {
     clock: fixedClock,
     ids: { uuid: () => crypto.randomUUID() },
     session: { ttlSeconds: 3600, secureCookie: false },
-    admin: { email: 'admin@radian.store', password: 'admin-password-123' },
+    staff: [
+      { email: 'admin@radian.store', password: 'admin-password-123', role: 'admin' },
+      { email: 'demo@radian.store', password: 'demo-password-123', role: 'viewer' },
+    ],
     metrics,
   });
   return { repo, context, metrics };

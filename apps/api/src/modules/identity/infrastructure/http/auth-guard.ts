@@ -6,6 +6,10 @@ import type { CustomerProfileReader, TokenIssuer } from '../../application/ports
 import { customerTag } from '../../application/queries/get-my-profile.js';
 import { SESSION_COOKIE } from './session-cookie.js';
 
+export const READ_ONLY_MESSAGE =
+  'Esta es una cuenta de demostración de solo lectura: podés recorrer todo el panel de administración, ' +
+  'pero no crear, editar ni borrar nada. La restricción protege los datos de la tienda, que es pública.';
+
 /**
  * Verifica la firma de la sesión y el estado/rol VIGENTE de la cuenta en el modelo de lectura
  * (cacheado), así una desactivación o cambio de rol aplica en la siguiente operación.
@@ -37,6 +41,16 @@ export function createAuthGuards(deps: { tokens: TokenIssuer; reader: CustomerPr
     requireRole: (role: Role) => async (req, reply) => {
       await requireAuth(req, reply);
       if (req.auth?.role !== role) throw new ForbiddenError();
+    },
+    requireAdminArea: async (req, reply) => {
+      await requireAuth(req, reply);
+      const role = req.auth?.role;
+      if (role === 'admin') return;
+      if (role === 'viewer') {
+        if (req.method === 'GET' || req.method === 'HEAD') return;
+        throw new ForbiddenError(READ_ONLY_MESSAGE, 'READ_ONLY_ACCOUNT');
+      }
+      throw new ForbiddenError();
     },
     optionalAuth: async (req) => {
       const auth = await resolve(req).catch(() => null);

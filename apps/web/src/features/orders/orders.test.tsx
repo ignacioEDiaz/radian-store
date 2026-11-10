@@ -15,8 +15,24 @@ describe('Mis pedidos', () => {
       http.get('/api/orders', () =>
         HttpResponse.json({
           items: [
-            { id: '2', number: 'RS-001002', status: 'shipped', email: 'a', totalCents: 36_000, itemCount: 1, placedAt: '2026-11-11T10:00:00.000Z' },
-            { id: '1', number: 'RS-001001', status: 'paid', email: 'a', totalCents: 45_000, itemCount: 2, placedAt: '2026-11-10T10:00:00.000Z' },
+            {
+              id: '2',
+              number: 'RS-001002',
+              status: 'shipped',
+              email: 'a',
+              totalCents: 36_000,
+              itemCount: 1,
+              placedAt: '2026-11-11T10:00:00.000Z',
+            },
+            {
+              id: '1',
+              number: 'RS-001001',
+              status: 'paid',
+              email: 'a',
+              totalCents: 45_000,
+              itemCount: 2,
+              placedAt: '2026-11-10T10:00:00.000Z',
+            },
           ],
           total: 2,
           page: 1,
@@ -29,12 +45,22 @@ describe('Mis pedidos', () => {
     expect(rows[1]).toHaveTextContent('RS-001002');
     expect(rows[1]).toHaveTextContent('Enviado');
     expect(rows[2]).toHaveTextContent('Pagado');
-    expect(within(rows[2]!).getByRole('link', { name: 'RS-001001' })).toHaveAttribute('href', '/cuenta/pedidos/RS-001001');
+    expect(within(rows[2]!).getByRole('link', { name: 'RS-001001' })).toHaveAttribute(
+      'href',
+      '/cuenta/pedidos/RS-001001',
+    );
   });
 
   it('detalle con líneas, totales, pago y seguimiento', async () => {
-    server.use(http.get('/api/orders/RS-001001', () => HttpResponse.json(order({ status: 'shipped', trackingCode: 'AR123' }))));
-    renderWithProviders(<OrderDetailPage />, { route: '/cuenta/pedidos/RS-001001', path: '/cuenta/pedidos/:number' });
+    server.use(
+      http.get('/api/orders/RS-001001', () =>
+        HttpResponse.json(order({ status: 'shipped', trackingCode: 'AR123' })),
+      ),
+    );
+    renderWithProviders(<OrderDetailPage />, {
+      route: '/cuenta/pedidos/RS-001001',
+      path: '/cuenta/pedidos/:number',
+    });
     expect(await screen.findByRole('heading', { name: /RS-001001/ })).toBeInTheDocument();
     expect(await screen.findByText(/AR123/)).toBeInTheDocument();
     expect(screen.getByText(/visa terminada en 4242/i)).toBeInTheDocument();
@@ -48,7 +74,22 @@ describe('Administración de pedidos', () => {
     server.use(
       http.get('/api/admin/orders', ({ request }) => {
         urls.push(request.url);
-        return HttpResponse.json({ items: [{ id: '1', number: 'RS-001001', status: 'paid', email: 'ana@example.com', totalCents: 45_000, itemCount: 1, placedAt: '2026-11-10T10:00:00.000Z' }], total: 1, page: 1, pageSize: 20 });
+        return HttpResponse.json({
+          items: [
+            {
+              id: '1',
+              number: 'RS-001001',
+              status: 'paid',
+              email: 'ana@example.com',
+              totalCents: 45_000,
+              itemCount: 1,
+              placedAt: '2026-11-10T10:00:00.000Z',
+            },
+          ],
+          total: 1,
+          page: 1,
+          pageSize: 20,
+        });
       }),
     );
     renderWithProviders(<AdminOrdersPage />);
@@ -67,7 +108,10 @@ describe('Administración de pedidos', () => {
         return HttpResponse.json(order({ status: 'shipped', trackingCode: 'AR999', version: 3 }));
       }),
     );
-    renderWithProviders(<AdminOrderDetailPage />, { route: '/admin/pedidos/RS-001001', path: '/admin/pedidos/:number' });
+    renderWithProviders(<AdminOrderDetailPage />, {
+      route: '/admin/pedidos/RS-001001',
+      path: '/admin/pedidos/:number',
+    });
     await userEvent.type(await screen.findByLabelText(/código de seguimiento/i), 'AR999');
     await userEvent.click(screen.getByRole('button', { name: /marcar como enviado/i }));
     expect(await screen.findByText(/enviado/i, { selector: '[data-status]' })).toBeInTheDocument();

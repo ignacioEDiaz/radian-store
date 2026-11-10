@@ -1,7 +1,7 @@
 import type { DomainEvent } from '../../../shared/domain/domain-event.js';
 import type { AddressData } from './address.js';
 
-export type Role = 'customer' | 'admin';
+export type Role = 'customer' | 'admin' | 'viewer';
 export type CustomerStatus = 'active' | 'disabled';
 
 export interface CustomerSnapshot {

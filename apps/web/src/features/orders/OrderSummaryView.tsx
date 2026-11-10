@@ -3,7 +3,8 @@ import { formatMoney } from '../../shared/format/money';
 import { STATUS_LABEL } from '../checkout/checkoutService';
 import styles from './orders.module.css';
 
-const date = (iso: string) => new Date(iso).toLocaleString('es-AR', { dateStyle: 'medium', timeStyle: 'short' });
+const date = (iso: string) =>
+  new Date(iso).toLocaleString('es-AR', { dateStyle: 'medium', timeStyle: 'short' });
 
 /** Detalle de un pedido (compartido por confirmación, historial y administración). */
 export function OrderSummaryView({ order }: { order: OrderDetail }) {
@@ -16,28 +17,35 @@ export function OrderSummaryView({ order }: { order: OrderDetail }) {
           {STATUS_LABEL[order.status]}
         </strong>
         {order.trackingCode && <> · seguimiento {order.trackingCode}</>}
-        {order.cancelReason && order.status === 'cancelled' && <span className={styles.muted}> ({order.cancelReason})</span>}
+        {order.cancelReason && order.status === 'cancelled' && (
+          <span className={styles.muted}> ({order.cancelReason})</span>
+        )}
       </p>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th scope="col">Producto</th>
-            <th scope="col">Cant.</th>
-            <th scope="col">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {order.lines.map((l) => (
-            <tr key={l.variantId}>
-              <th scope="row">
-                {l.title} <small className={styles.muted}>{l.color} · {l.size}</small>
-              </th>
-              <td>{l.quantity}</td>
-              <td>{formatMoney(l.lineTotalCents)}</td>
+      <div className="table-scroll">
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Cant.</th>
+              <th scope="col">Total</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {order.lines.map((l) => (
+              <tr key={l.variantId}>
+                <th scope="row">
+                  {l.title}{' '}
+                  <small className={styles.muted}>
+                    {l.color} · {l.size}
+                  </small>
+                </th>
+                <td>{l.quantity}</td>
+                <td>{formatMoney(l.lineTotalCents)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <dl className={styles.totals}>
         <dt>Subtotal</dt>
         <dd>{formatMoney(order.totals.subtotalCents)}</dd>
@@ -48,7 +56,9 @@ export function OrderSummaryView({ order }: { order: OrderDetail }) {
           </>
         )}
         <dt>Envío ({order.shippingMethod === 'express' ? 'exprés' : 'estándar'})</dt>
-        <dd>{order.totals.shippingCents === 0 ? 'Gratis' : formatMoney(order.totals.shippingCents)}</dd>
+        <dd>
+          {order.totals.shippingCents === 0 ? 'Gratis' : formatMoney(order.totals.shippingCents)}
+        </dd>
         <dt>Total</dt>
         <dd>
           <strong>{formatMoney(order.totals.totalCents)}</strong>
@@ -68,7 +78,11 @@ export function OrderSummaryView({ order }: { order: OrderDetail }) {
         </div>
         <div>
           <h3>Pago</h3>
-          <p>{order.payment ? `${order.payment.brand.toUpperCase()} terminada en ${order.payment.last4}` : 'Sin pago confirmado'}</p>
+          <p>
+            {order.payment
+              ? `${order.payment.brand.toUpperCase()} terminada en ${order.payment.last4}`
+              : 'Sin pago confirmado'}
+          </p>
         </div>
         <div>
           <h3>Historial</h3>

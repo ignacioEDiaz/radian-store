@@ -5,7 +5,16 @@ import { authService } from '../services/authService';
 
 export function useSession() {
   const query = useQuery({ queryKey: queryKeys.session, queryFn: authService.me, staleTime: 5 * 60_000 });
-  return { ...query, profile: query.data ?? null, isAuthenticated: !!query.data, isAdmin: query.data?.role === 'admin' };
+  const role = query.data?.role;
+  return {
+    ...query,
+    profile: query.data ?? null,
+    isAuthenticated: !!query.data,
+    isAdmin: role === 'admin',
+    /** Puede entrar al panel (admin o cuenta de solo lectura). */
+    isStaff: role === 'admin' || role === 'viewer',
+    isReadOnly: role === 'viewer',
+  };
 }
 
 /** Tras login/registro: fija la sesión y refresca datos que dependen del usuario (p. ej. carrito). */

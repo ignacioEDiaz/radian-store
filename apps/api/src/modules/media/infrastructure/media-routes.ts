@@ -15,7 +15,7 @@ export function registerMediaRoutes(app: FastifyInstance, d: { upload: UploadMed
   return app.register(async (scope) => {
     await scope.register(multipart, { limits: { fileSize: MAX_BYTES, files: 1, fields: 5 } });
 
-    scope.post('/api/admin/media', { preHandler: d.guards.requireRole('admin') }, async (req, reply) => {
+    scope.post('/api/admin/media', { preHandler: d.guards.requireAdminArea }, async (req, reply) => {
       const file = await req.file();
       if (!file) throw new DomainError('FILE_REQUIRED', 'Falta el archivo (campo "file")');
       let buffer: Buffer;

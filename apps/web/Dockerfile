@@ -9,6 +9,8 @@ RUN npm ci --workspace @radian/web --workspace @radian/contracts --include-works
 COPY tsconfig.base.json ./
 COPY packages/contracts packages/contracts
 COPY apps/web apps/web
+ARG VITE_DEMO_VIEWER=""
+ENV VITE_DEMO_VIEWER=$VITE_DEMO_VIEWER
 RUN npm run build -w @radian/web
 
 FROM nginx:1.29-alpine

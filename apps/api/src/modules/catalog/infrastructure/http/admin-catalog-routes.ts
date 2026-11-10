@@ -37,7 +37,7 @@ export interface AdminCatalogDeps {
 
 export function registerAdminCatalogRoutes(app: FastifyInstance, d: AdminCatalogDeps) {
   return app.register(async (s) => {
-    s.addHook('preHandler', d.guards.requireRole('admin'));
+    s.addHook('preHandler', d.guards.requireAdminArea);
 
     // --- Productos ---
     s.get('/api/admin/products', async (req) => {
