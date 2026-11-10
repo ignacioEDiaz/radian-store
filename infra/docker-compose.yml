@@ -1,0 +1,106 @@
+name: radian-store
+
+x-postgres: &postgres
+  image: postgres:17-alpine
+  environment:
+    POSTGRES_USER: radian
+    POSTGRES_PASSWORD: radian
+  healthcheck:
+    test: ['CMD-SHELL', 'pg_isready -U radian']
+    interval: 5s
+    timeout: 3s
+    retries: 10
+  restart: unless-stopped
+
+services:
+  write-db:
+    <<: *postgres
+    environment:
+      POSTGRES_USER: radian
+      POSTGRES_PASSWORD: radian
+      POSTGRES_DB: radian_write
+    ports: ['5432:5432']
+    volumes: ['write-data:/var/lib/postgresql/data']
+
+  read-db:
+    <<: *postgres
+    environment:
+      POSTGRES_USER: radian
+      POSTGRES_PASSWORD: radian
+      POSTGRES_DB: radian_read
+    ports: ['5433:5432']
+    volumes: ['read-data:/var/lib/postgresql/data']
+
+  redis:
+    image: redis:8-alpine
+    command: ['redis-server', '--maxmemory', '128mb', '--maxmemory-policy', 'allkeys-lru', '--save', '']
+    ports: ['6379:6379']
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    command: ['--config.file=/etc/prometheus/prometheus.yml', '--storage.tsdb.retention.time=7d']
+    volumes: ['./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro']
+    ports: ['9090:9090']
+    extra_hosts: ['host.docker.internal:host-gateway']
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:12.1.0
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/radian-store.json
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ['3001:3000']
+    depends_on: [prometheus]
+    restart: unless-stopped
+
+  api:
+    profiles: [app]
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      WEB_ORIGIN: http://localhost:8080
+      WRITE_DATABASE_URL: postgres://radian:radian@write-db:5432/radian_write
+      READ_DATABASE_URL: postgres://radian:radian@read-db:5432/radian_read
+      REDIS_URL: redis://redis:6379
+      MEDIA_DIR: /data/media
+      ENABLE_DIAG_ROUTES: 'true'
+      ADMIN_EMAIL: admin@radian.store
+      ADMIN_PASSWORD: admin-password-123
+      SESSION_SECRET: change-me-in-production-0123456789abcdef
+      COOKIE_SECRET: change-me-in-production-fedcba9876543210
+    volumes: ['media-data:/data/media']
+    ports: ['3000:3000']
+    depends_on:
+      write-db: { condition: service_healthy }
+      read-db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    restart: unless-stopped
+
+  web:
+    profiles: [app]
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
+    ports: ['8080:80']
+    depends_on: [api]
+    restart: unless-stopped
+
+volumes:
+  write-data:
+  read-data:
+  media-data:

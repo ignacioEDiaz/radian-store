@@ -1,0 +1,30 @@
+.footer {
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-16);
+}
+
+.inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--gutter);
+  display: grid;
+  gap: var(--space-6);
+}
+
+.tagline {
+  font-size: clamp(24px, 3vw, 36px);
+  margin: 0;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  color: var(--color-muted);
+}
+
+.copy {
+  color: var(--color-muted);
+  font-size: 13px;
+  margin: 0;
+}
