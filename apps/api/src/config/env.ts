@@ -36,6 +36,7 @@ const schema = z.object({
   ADMIN_EMAIL: z.string().optional(),
   ADMIN_PASSWORD: z.string().min(10).optional(),
   MEDIA_DIR: z.string().default('./storage/media'),
+  PAYMENT_TIMEOUT_MS: int(5000, 10),
 });
 
 const DEV_SECRET = 'dev-only-secret-change-me-0123456789abcdef';
@@ -87,5 +88,6 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     cookieSecret: e.COOKIE_SECRET ?? DEV_SECRET,
     admin: e.ADMIN_EMAIL && e.ADMIN_PASSWORD ? { email: e.ADMIN_EMAIL, password: e.ADMIN_PASSWORD } : null,
     mediaDir: e.MEDIA_DIR,
+    payments: { timeoutMs: e.PAYMENT_TIMEOUT_MS },
   };
 }

@@ -68,12 +68,31 @@
   color: var(--color-text);
 }
 
+/* Tablet: el buscador se oculta para que el header nunca desborde horizontalmente. */
+@media (max-width: 900px) {
+  .actions > :first-child {
+    display: none;
+  }
+}
+
 @media (max-width: 640px) {
+  .inner {
+    gap: var(--space-2);
+  }
   .nav {
     font-size: 12px;
+  }
+  .nav a:not(:first-child) {
+    display: none;
   }
   .logo {
     font-size: 16px;
     letter-spacing: 0.2em;
+  }
+  .actions {
+    gap: var(--space-3);
+  }
+  .actions .action:not(:last-of-type) {
+    display: none;
   }
 }

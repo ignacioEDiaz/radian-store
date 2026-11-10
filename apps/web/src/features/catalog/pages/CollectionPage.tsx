@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams, useSearchParams } from 'react-router';
 import { SORTS } from '@radian/contracts';
 import { ErrorState } from '../../../shared/ui/ErrorState';
@@ -24,6 +25,7 @@ export function CollectionPage({ mode = 'shop' }: { mode?: 'shop' | 'search' }) 
   const filters = useFiltersFromUrl({ collection: slug, q });
   const collection = useCollection(slug);
   const { data, isPending, isError, refetch, isPlaceholderData } = useProducts(filters.params);
+  const [showFilters, setShowFilters] = useState(false);
 
   const title = mode === 'search' ? `Resultados para “${q}”` : (collection.data?.title ?? (slug ? '' : 'Tienda'));
 
@@ -46,7 +48,10 @@ export function CollectionPage({ mode = 'shop' }: { mode?: 'shop' | 'search' }) 
           </div>
         </div>
       </header>
-      <div className={styles.listingBody}>
+      <button type="button" className={`btn btn--ghost ${styles.filtersToggle}`} aria-expanded={showFilters} aria-controls="filters-panel" onClick={() => setShowFilters((v) => !v)}>
+        {showFilters ? 'Ocultar filtros' : 'Filtros'}
+      </button>
+      <div className={`${styles.listingBody} ${showFilters ? styles.filtersOpen : ''}`}>
         {data && (
           <FiltersPanel
             facets={data.facets}

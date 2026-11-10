@@ -3,6 +3,8 @@ import { createCatalogModule } from './catalog/index.js';
 import { createIdentityModule } from './identity/index.js';
 import { createInventoryModule } from './inventory/index.js';
 import { createMediaModule } from './media/index.js';
+import { createOrderingModule } from './ordering/index.js';
+import { FakePaymentGateway } from './ordering/infrastructure/fake-payment-gateway.js';
 import type { BoundedContext, ModuleContext } from './types.js';
 
 export type { BoundedContext, ModuleContext } from './types.js';
@@ -17,5 +19,8 @@ export function createContexts(ctx: ModuleContext): BoundedContext[] {
   const catalog = createCatalogModule({ writeDb, readDb, guards, cache: ctx.infra.cache });
   const cart = createCartModule({ writeDb, readDb, guards, metrics: ctx.metrics, logger: ctx.logger, secureCookie: ctx.config.session.secureCookie });
   identity.afterLogin.push(cart.mergeOnLogin);
-  return [identity, media.context, inventory, catalog.context, cart.context];
+  const ordering = createOrderingModule({ writeDb, readDb, guards, metrics: ctx.metrics, logger: ctx.logger, guestCartId: cart.guestCartId,
+    payments: new FakePaymentGateway({ timeoutMs: ctx.config.payments.timeoutMs }),
+  });
+  return [identity, media.context, inventory, catalog.context, cart.context, ordering.context];
 }

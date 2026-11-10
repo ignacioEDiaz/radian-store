@@ -25,6 +25,7 @@ export async function fullApp(): Promise<{ app: FastifyInstance; infra: Infrastr
     ADMIN_EMAIL: ADMIN.email,
     ADMIN_PASSWORD: ADMIN.password,
     MEDIA_DIR: mediaDir,
+    PAYMENT_TIMEOUT_MS: '50',
   });
   const metrics = new Metrics();
   const consumers: Parameters<typeof createInfrastructure>[3] = [];
@@ -50,7 +51,7 @@ export async function fullApp(): Promise<{ app: FastifyInstance; infra: Infrastr
 export async function resetAll(infra: Infrastructure) {
   for (const db of [infra.writeDb, infra.readDb]) {
     const { rows } = await db.query<{ tablename: string }>(
-      `SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND tablename <> 'pgmigrations'`,
+      `SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND tablename NOT IN ('pgmigrations', 'discount_codes')`,
     );
     if (rows.length) await db.query(`TRUNCATE ${rows.map((r) => `"${r.tablename}"`).join(', ')} RESTART IDENTITY CASCADE`);
   }

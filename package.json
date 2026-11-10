@@ -19,7 +19,8 @@
     "lint": "eslint .",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "arch": "depcruise apps/api/src --config .dependency-cruiser.cjs",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test:e2e": "npm run test:e2e -w @radian/web"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",

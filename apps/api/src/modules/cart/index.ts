@@ -1,7 +1,9 @@
 import type { Clock, IdGenerator } from '../../shared/application/ports.js';
 import { randomIds, systemClock } from '../../shared/application/ports.js';
 import type { DbPool } from '../../shared/infrastructure/db/pool.js';
-import { createUnitOfWork } from '../../shared/infrastructure/db/unit-of-work.js';
+import { createUnitOfWork, inTransaction } from '../../shared/infrastructure/db/unit-of-work.js';
+import type { EventConsumer } from '../../shared/infrastructure/outbox/consumer.js';
+import type { TxClient } from '../../shared/infrastructure/db/pool.js';
 import type { AfterLoginHook, AuthGuards } from '../../shared/infrastructure/http/auth.js';
 import type { Logger } from '../../shared/infrastructure/observability/logger.js';
 import type { Metrics } from '../../shared/infrastructure/observability/metrics.js';
@@ -25,12 +27,23 @@ export interface CartModuleDeps {
 }
 
 export function createCartModule(d: CartModuleDeps) {
-  const cart = new CartService({
-    uow: createUnitOfWork(d.writeDb, (tx) => ({ carts: new PgCartRepository(tx), catalog: new PgWriteCatalogLookup(tx) })),
-    reader: new PgCartReadModel(d.readDb),
-    clock: d.clock ?? systemClock,
-    ids: d.ids ?? randomIds,
-  });
+  const repos = (tx: TxClient) => ({ carts: new PgCartRepository(tx), catalog: new PgWriteCatalogLookup(tx) });
+  const reader = new PgCartReadModel(d.readDb);
+  const clock = d.clock ?? systemClock;
+  const ids = d.ids ?? randomIds;
+  const cart = new CartService({ uow: createUnitOfWork(d.writeDb, repos), reader, clock, ids });
+
+  /** Política (write): tras un pago confirmado se vacía el carrito del comprador. Contrato: evento ordering.OrderPaid. */
+  const clearOnOrderPaid: EventConsumer = {
+    name: 'cart.clear-on-order-paid',
+    target: 'write',
+    handles: ['ordering.OrderPaid'],
+    async apply(event, tx) {
+      const { customerId, cartId } = (event.payload as { snapshot: { customerId: string | null; cartId: string | null } }).snapshot;
+      const service = new CartService({ uow: inTransaction(tx, repos), reader, clock, ids });
+      await service.clear(customerId ? { customerId } : { guestCartId: cartId });
+    },
+  };
 
   /** Al iniciar sesión, el carrito de visitante se combina con el del cliente. */
   const mergeOnLogin: AfterLoginHook = async (req, reply, customerId) => {
@@ -42,7 +55,7 @@ export function createCartModule(d: CartModuleDeps) {
 
   let timer: NodeJS.Timeout | undefined;
   const context: BoundedContext = {
-    consumers: [cartProjection],
+    consumers: [cartProjection, clearOnOrderPaid],
     appModule: {
       name: 'cart',
       register: async (app) => {
@@ -62,5 +75,5 @@ export function createCartModule(d: CartModuleDeps) {
     },
     stop: () => clearInterval(timer),
   };
-  return { context, cart, mergeOnLogin };
+  return { context, cart, mergeOnLogin, guestCartId };
 }
