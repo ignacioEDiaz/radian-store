@@ -1,0 +1,1 @@
+import{zt as t}from"./630ba094.D60hzN4o.js";import{At as o,gD as a}from"./6ec9a0fa.DVsXYFp6.js";function s(){const{shop:{id:s}}=a(),e=o();return t(()=>Boolean(e.value.get(s)?.length))}export{s as t};

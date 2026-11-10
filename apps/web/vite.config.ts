@@ -1,11 +1,12 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { themeShell } from './theme/vite-plugin.ts';
 
 const apiTarget = process.env['VITE_API_PROXY'] ?? 'http://localhost:3000';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), themeShell()],
   resolve: { conditions: ['source'] },
   server: {
     port: 5173,
@@ -18,7 +19,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['src/test/setup.ts'],
-    include: ['src/**/*.test.{ts,tsx}'],
+    include: ['src/**/*.test.{ts,tsx}', 'theme/**/*.test.ts'],
     css: false,
   },
 });

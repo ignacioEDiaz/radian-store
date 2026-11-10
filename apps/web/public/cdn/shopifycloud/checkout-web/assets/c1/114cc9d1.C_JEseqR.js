@@ -1,0 +1,1 @@
+var a=a=>""===a?"":`${a.charAt(0).toLocaleUpperCase()+a.substring(1)}`;export{a as t};

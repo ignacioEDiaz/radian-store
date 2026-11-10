@@ -1,0 +1,2 @@
+const e="undefined"==typeof navigator?{languages:[],userAgent:"",userAgentData:{},userLanguage:"",credentials:{}}:navigator,t=["Load failed","Failed to fetch","when attempting to fetch resource"],n=["fetch error"];function a(e){return void 0!==e&&(t.some((t=>e.includes(t)))||n.includes(e))}export{e as n,a as t};
+//# sourceMappingURL=chunk.networkErrorMessages_Du380vAr.esm.js.map

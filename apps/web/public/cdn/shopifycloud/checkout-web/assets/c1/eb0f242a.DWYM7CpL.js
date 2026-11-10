@@ -1,0 +1,1 @@
+function e(e){return Boolean(e.analyticsProcessingAllowed||e.marketingAllowed)}export{e as t};

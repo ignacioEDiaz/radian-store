@@ -1,0 +1,9 @@
+.section-corner-radius {
+  overflow: hidden;
+  overflow: clip;
+  border-radius:
+    var(--section-radius-top-left, 0)
+    var(--section-radius-top-right, 0)
+    var(--section-radius-bottom-right, 0)
+    var(--section-radius-bottom-left, 0);
+}

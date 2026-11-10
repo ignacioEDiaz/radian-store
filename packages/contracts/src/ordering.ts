@@ -3,6 +3,8 @@ import { addressSchema, emailSchema, type Address } from './identity.js';
 import type { CartLineView } from './cart.js';
 
 export const SHIPPING_METHODS = ['standard', 'express'] as const;
+/** Subtotal (con descuento) desde el cual el envío estándar es gratis. La regla la aplica el backend. */
+export const FREE_SHIPPING_THRESHOLD_CENTS = 15_000;
 export type ShippingMethod = (typeof SHIPPING_METHODS)[number];
 
 /** Algoritmo de Luhn: detecta números de tarjeta mal tipeados antes de llamar al proveedor. */

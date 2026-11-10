@@ -1,0 +1,1 @@
+import{Lt as s,tn as r}from"./630ba094.D60hzN4o.js";import{gD as o}from"./6ec9a0fa.DVsXYFp6.js";import{t}from"./0b704646.DBgRw5yq.js";function n({progressing:o=!1}={}){const n=t();return r(()=>s("_0mzUL","dark"===n&&"_6W0f3","automatic"===n&&"G7Rpe",o&&"XVUQD"),[n,o])}function a(){const{shopPay:s}=o();return n({progressing:s.session.isInternalProgressing.value})}export{n,a as t};

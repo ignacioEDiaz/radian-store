@@ -13,3 +13,6 @@ test-results/
 .web-dev.log
 apps/web/test-results/
 apps/web/playwright-report/
+
+# sondas manuales de Playwright
+apps/web/e2e/_*.mjs

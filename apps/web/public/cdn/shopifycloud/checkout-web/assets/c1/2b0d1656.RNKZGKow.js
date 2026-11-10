@@ -1,0 +1,1 @@
+function e(e,o){return!!e&&Boolean(o?.some(o=>o.value===e))}export{e as t};

@@ -59,6 +59,14 @@ describe('importCatalog', () => {
       expect(r.images).toBeGreaterThan(0);
       expect(r.stock).toBe(r.variants);
     }
+    // Las URLs del tema apuntan a los handles originales: el slug debe ser el handle, no el título.
+    const seed = JSON.parse(readFileSync(path.join(seedDir, 'catalog.json'), 'utf8')) as { products: { handle: string }[]; collections: { handle: string }[] };
+    const slugs = await ctx.infra.writeDb.query<{ slug: string }>('SELECT slug FROM products ORDER BY slug');
+    expect(slugs.rows.map((r) => r.slug)).toEqual(seed.products.map((p) => p.handle).sort());
+    expect(slugs.rows.map((r) => r.slug)).toContain('sharp-boot');
+    const collectionSlugs = await ctx.infra.writeDb.query<{ slug: string }>('SELECT slug FROM collections ORDER BY slug');
+    expect(collectionSlugs.rows.map((r) => r.slug)).toEqual(seed.collections.map((c) => c.handle).sort());
+
     const mediaRows = await ctx.infra.writeDb.query<{ n: number }>('SELECT count(*)::int AS n FROM media_assets');
     expect(mediaRows.rows[0]!.n).toBeGreaterThan(0);
   });

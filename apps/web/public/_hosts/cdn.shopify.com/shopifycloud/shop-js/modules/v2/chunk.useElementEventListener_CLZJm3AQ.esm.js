@@ -1,0 +1,2 @@
+import{F as e,T as n}from"./chunk.register_lK8tAztS.esm.js";import{n as r}from"./chunk.hooks_CZqB7gtv.esm.js";function t(t){const{loading:s}=r(),{element:o}=n();e((()=>{var e;if(o&&!0!==s)return Object.entries(t).forEach((([e,n])=>{o.addEventListener(e,n)})),null==o||null===(e=o._eventListenerReadyPromiseResolve)||void 0===e||e.call(o),()=>{Object.entries(t).forEach((([e,n])=>{null==o||o.removeEventListener(e,n)}))}}),[o,s,t])}export{t};
+//# sourceMappingURL=chunk.useElementEventListener_CLZJm3AQ.esm.js.map

@@ -23,10 +23,12 @@ type Versioned<T = object> = T & { productId: string; expectedVersion: number };
 export class ProductCommands {
   constructor(private readonly d: Deps) {}
 
-  createProduct(input: ProductDetails): Promise<AdminProduct> {
+  /** `slug` es opcional: por defecto se deriva del título; el importador conserva el handle original. */
+  createProduct(input: ProductDetails & { slug?: string | undefined }): Promise<AdminProduct> {
+    const { slug: preferred, ...details } = input;
     return this.d.uow.run(async (r) => {
-      const slug = await r.slugs.allocate('product', Slug.fromTitle(input.title));
-      const product = Product.create({ ...input, id: this.d.ids.uuid(), slug, now: this.now() });
+      const slug = await r.slugs.allocate('product', preferred ? Slug.create(preferred) : Slug.fromTitle(details.title));
+      const product = Product.create({ ...details, id: this.d.ids.uuid(), slug, now: this.now() });
       await r.products.save(product);
       return toAdminProduct(product.toSnapshot(), new Map());
     });

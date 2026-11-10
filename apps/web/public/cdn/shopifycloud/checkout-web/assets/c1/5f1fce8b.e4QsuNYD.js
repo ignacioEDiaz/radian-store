@@ -1,0 +1,1 @@
+var n=function(n){return n.Generic="generic",n.SignInFailed="sign_in_failed",n.ContinueWithShopPay="continue_with_shop_pay",n}({});export{n as t};

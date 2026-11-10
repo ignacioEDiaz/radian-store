@@ -54,6 +54,7 @@ export async function importCatalog(d: ImportDeps): Promise<{ productsCreated: n
       continue;
     }
     let product = await d.products.createProduct({
+      slug: p.handle,
       title: p.title,
       description: p.description,
       productType: p.productType,
@@ -81,7 +82,7 @@ export async function importCatalog(d: ImportDeps): Promise<{ productsCreated: n
   for (const c of seed.collections) {
     const exists = await d.writeDb.query('SELECT 1 FROM collections WHERE slug = $1', [c.handle]);
     if (exists.rows.length) continue;
-    const created = await d.collections.create({ title: c.title, description: c.description, imageMediaId: null });
+    const created = await d.collections.create({ slug: c.handle, title: c.title, description: c.description, imageMediaId: null });
     const productIds = c.products.map((h) => idsByHandle.get(h)).filter((id): id is string => !!id);
     await d.collections.setProducts({ collectionId: created.id, expectedVersion: created.version, productIds });
     collectionsCreated += 1;
