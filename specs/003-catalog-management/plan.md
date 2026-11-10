@@ -86,9 +86,14 @@ apps/web/src/features/admin-catalog/ (ProductsListPage, ProductEditorPage, Varia
   `draft ⇄ published → archived`. `version` para concurrencia optimista: los comandos de edición
   reciben `expectedVersion` (409 `VERSION_CONFLICT`).
 - **Variantes y stock**: `addVariant({sku, color, size, priceCents?, initialStock})` emite
-  `catalog.VariantAdded{initialStock}`; un *event handler* de `inventory` (suscrito al outbox,
-  igual que una proyección pero contra write-db) crea el `InventoryItem`. Así catalog no conoce
-  a inventory.
+  `catalog.VariantAdded`; en la **misma transacción** el caso de uso llama al puerto
+  `InventoryProvisioner` (implementado por `inventory`) que crea el `InventoryItem`. Así la
+  respuesta del comando ya incluye el stock inicial (read-your-writes) y catalog solo conoce el
+  puerto, no el dominio de inventory. *(Enmienda durante la implementación: originalmente era una
+  política asíncrona; se cambió porque la respuesta del comando no podía mostrar el stock.)*
+- **Disponibilidad en lectura**: el `doc` del producto guarda la información estática; la
+  disponibilidad por variante vive en `catalog_variants` (proyectada desde inventory) y se une al
+  consultar, así un cambio de stock no reescribe el documento.
 - **InventoryItem**: `onHand ≥ 0`, `reserved ≥ 0`, `available = onHand − reserved`;
   `adjust(delta, reason, actorId)` rechaza dejar `onHand < reserved`. Cada ajuste se registra en
   `stock_movements`. Eventos `inventory.StockAdjusted{onHand, reserved}`.

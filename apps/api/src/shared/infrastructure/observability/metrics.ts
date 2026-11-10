@@ -90,6 +90,19 @@ export class Metrics {
     registers: [this.registry],
   });
 
+  readonly mediaUploads = new Counter({
+    name: 'media_uploads_total',
+    help: 'Subidas de imágenes por resultado',
+    labelNames: ['result'] as const,
+    registers: [this.registry],
+  });
+  readonly mediaProcessing = new Histogram({
+    name: 'media_processing_seconds',
+    help: 'Tiempo de validación y generación de tamaños',
+    buckets: [0.05, 0.1, 0.25, 0.5, 1, 2, 5],
+    registers: [this.registry],
+  });
+
   constructor(options: { defaultMetrics?: boolean } = {}) {
     if (options.defaultMetrics) collectDefaultMetrics({ register: this.registry });
   }

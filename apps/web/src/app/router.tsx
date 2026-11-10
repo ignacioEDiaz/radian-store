@@ -1,11 +1,15 @@
-import { createBrowserRouter, Outlet } from 'react-router';
+import { createBrowserRouter, Navigate, Outlet } from 'react-router';
 import { Layout } from './Layout';
 import { StatusPage } from '../features/system/StatusPage';
 import { PlaceholderHome } from './PlaceholderHome';
 import { LoginPage } from '../features/account/pages/LoginPage';
 import { RegisterPage } from '../features/account/pages/RegisterPage';
 import { AccountPage } from '../features/account/pages/AccountPage';
-import { RequireAdmin, RequireAuth } from '../features/account/components/guards';
+import { RequireAuth } from '../features/account/components/guards';
+import { AdminLayout } from '../features/admin-catalog/pages/AdminLayout';
+import { ProductsListPage } from '../features/admin-catalog/pages/ProductsListPage';
+import { ProductEditorPage } from '../features/admin-catalog/pages/ProductEditorPage';
+import { CollectionsPage } from '../features/admin-catalog/pages/CollectionsPage';
 
 export const router = createBrowserRouter([
   {
@@ -26,12 +30,13 @@ export const router = createBrowserRouter([
       },
       {
         path: 'admin',
-        element: (
-          <RequireAdmin>
-            <Outlet />
-          </RequireAdmin>
-        ),
-        children: [{ index: true, element: <p className="container">Panel de administración</p> }],
+        element: <AdminLayout />,
+        children: [
+          { index: true, element: <Navigate to="/admin/productos" replace /> },
+          { path: 'productos', element: <ProductsListPage /> },
+          { path: 'productos/:id', element: <ProductEditorPage /> },
+          { path: 'colecciones', element: <CollectionsPage /> },
+        ],
       },
     ],
   },
