@@ -79,9 +79,9 @@ export class Customer extends AggregateRoot<CustomerEvent> {
     this.emit('identity.CustomerProfileUpdated', now, (s) => ({ snapshot: s, name: s.name, defaultAddress: s.defaultAddress }));
   }
 
-  promoteToAdmin(now: Date): void {
-    if (this.state.role === 'admin') return;
-    this.state = { ...this.state, role: 'admin', updatedAt: now };
+  changeRole(role: Role, now: Date): void {
+    if (this.state.role === role) return;
+    this.state = { ...this.state, role, updatedAt: now };
     this.emit('identity.CustomerRoleChanged', now, (s) => ({ snapshot: s, role: s.role }));
   }
 

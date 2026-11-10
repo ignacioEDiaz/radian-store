@@ -60,13 +60,16 @@ describe('Customer', () => {
     expect(c.toSnapshot().defaultAddress).toBeNull();
   });
 
-  it('puede promoverse a admin y desactivarse', () => {
+  it('cambia de rol (admin o viewer) emitiendo evento solo si cambia, y puede desactivarse', () => {
     const c = register();
     c.pullEvents();
-    c.promoteToAdmin(now);
-    c.promoteToAdmin(now);
+    c.changeRole('viewer', now);
+    expect(c.toSnapshot().role).toBe('viewer');
+    c.changeRole('admin', now);
+    c.changeRole('admin', now);
+    expect(c.pullEvents().map((e) => e.type)).toEqual(['identity.CustomerRoleChanged', 'identity.CustomerRoleChanged']);
     c.deactivate(now);
-    expect(c.pullEvents().map((e) => e.type)).toEqual(['identity.CustomerRoleChanged', 'identity.CustomerDeactivated']);
+    expect(c.pullEvents().map((e) => e.type)).toEqual(['identity.CustomerDeactivated']);
     expect(c.isActive).toBe(false);
     expect(c.toSnapshot().role).toBe('admin');
   });

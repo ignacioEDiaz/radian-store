@@ -7,7 +7,7 @@ import type { AfterLoginHook, AuthGuards } from '../../shared/infrastructure/htt
 import type { Metrics } from '../../shared/infrastructure/observability/metrics.js';
 import type { BoundedContext, ModuleContext } from '../types.js';
 import { Authenticate } from './application/commands/authenticate.js';
-import { EnsureAdmin } from './application/commands/ensure-admin.js';
+import { EnsureStaffAccount } from './application/commands/ensure-staff-account.js';
 import { RegisterCustomer } from './application/commands/register-customer.js';
 import { UpdateProfile } from './application/commands/update-profile.js';
 import type { CustomerProfileReader, IdentityRepos, LoginAttemptLimiter, TokenIssuer } from './application/ports.js';
@@ -32,7 +32,8 @@ export interface IdentityDeps {
   clock: Clock;
   ids: IdGenerator;
   session: { ttlSeconds: number; secureCookie: boolean };
-  admin: { email: string; password: string } | null;
+  /** Cuentas de staff a garantizar al arrancar (admin, viewer). */
+  staff: { email: string; password: string; role: 'admin' | 'viewer'; name?: string }[];
   metrics: Metrics;
 }
 
@@ -46,7 +47,7 @@ export interface IdentityContext extends BoundedContext {
 export function createIdentityContext(d: IdentityDeps): IdentityContext {
   const guards = createAuthGuards({ tokens: d.tokens, reader: d.reader, cache: d.cache });
   const afterLogin: AfterLoginHook[] = [];
-  const ensureAdmin = new EnsureAdmin(d);
+  const ensureStaff = new EnsureStaffAccount(d);
   return {
     guards,
     afterLogin,
@@ -67,7 +68,7 @@ export function createIdentityContext(d: IdentityDeps): IdentityContext {
         }),
     },
     onStart: async () => {
-      if (d.admin) await ensureAdmin.execute(d.admin);
+      for (const account of d.staff) await ensureStaff.execute(account);
     },
   };
 }
@@ -84,7 +85,7 @@ export function createIdentityModule(ctx: ModuleContext, redis: CounterStore): I
     clock: systemClock,
     ids: randomIds,
     session: ctx.config.session,
-    admin: ctx.config.admin,
+    staff: ctx.config.staff,
     metrics: ctx.metrics,
   });
 }

@@ -54,7 +54,8 @@ export const updateProfileRequestSchema = z
   })
   .refine((v) => v.name !== undefined || v.defaultAddress !== undefined, 'No hay cambios para guardar');
 
-export const roleSchema = z.enum(['customer', 'admin']);
+/** `viewer`: recorre el panel de administración en modo solo lectura. */
+export const roleSchema = z.enum(['customer', 'admin', 'viewer']);
 
 export const profileSchema = z.object({
   id: z.uuid(),

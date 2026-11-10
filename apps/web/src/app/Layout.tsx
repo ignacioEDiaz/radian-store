@@ -3,6 +3,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import { CartDrawerProvider } from '../features/cart/components/CartDrawerContext';
 import { CartDrawer } from '../features/cart/components/CartDrawer';
+import { ReadOnlyDialog } from '../shared/ui/ReadOnlyDialog';
 import styles from './Layout.module.css';
 
 export function Layout() {
@@ -18,6 +19,7 @@ export function Layout() {
         </main>
         <Footer />
         <CartDrawer />
+        <ReadOnlyDialog />
       </div>
     </CartDrawerProvider>
   );

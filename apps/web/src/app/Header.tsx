@@ -6,7 +6,7 @@ import { CartButton } from '../features/cart/components/CartButton';
 import styles from './Header.module.css';
 
 export function Header() {
-  const { profile, isAdmin } = useSession();
+  const { profile, isStaff } = useSession();
   const logout = useLogout();
 
   return (
@@ -24,7 +24,7 @@ export function Header() {
         </Link>
         <div className={styles.actions}>
           <SearchBox />
-          {isAdmin && (
+          {isStaff && (
             <Link to="/admin" className={styles.action}>
               Admin
             </Link>

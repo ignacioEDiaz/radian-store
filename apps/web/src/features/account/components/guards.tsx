@@ -22,9 +22,9 @@ export function RequireAuth({ children }: { children: ReactNode }) {
 }
 
 export function RequireAdmin({ children }: { children: ReactNode }) {
-  const { isPending, isAdmin } = useSession();
+  const { isPending, isStaff } = useSession();
   if (isPending) return <Loading />;
-  if (!isAdmin) {
+  if (!isStaff) {
     return (
       <section className="container" style={{ paddingBlock: 'var(--space-12)' }}>
         <h1>Sin permiso</h1>

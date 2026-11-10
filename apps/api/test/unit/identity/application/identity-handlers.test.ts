@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { RegisterCustomer } from '../../../../src/modules/identity/application/commands/register-customer.js';
 import { Authenticate } from '../../../../src/modules/identity/application/commands/authenticate.js';
 import { UpdateProfile } from '../../../../src/modules/identity/application/commands/update-profile.js';
-import { EnsureAdmin } from '../../../../src/modules/identity/application/commands/ensure-admin.js';
+import { EnsureStaffAccount } from '../../../../src/modules/identity/application/commands/ensure-staff-account.js';
 import { GetMyProfile } from '../../../../src/modules/identity/application/queries/get-my-profile.js';
 import { ConflictError, NotFoundError, RateLimitedError, UnauthorizedError } from '../../../../src/shared/domain/errors.js';
 import { NullCache } from '../../../../src/shared/infrastructure/cache/null-cache.js';
@@ -100,18 +100,22 @@ describe('UpdateProfile', () => {
   });
 });
 
-describe('EnsureAdmin', () => {
+describe('EnsureStaffAccount', () => {
   it('crea el admin si no existe y es idempotente', async () => {
-    const ensure = new EnsureAdmin(deps);
-    await ensure.execute({ email: 'admin@radian.store', password: 'admin-password-123' });
-    await ensure.execute({ email: 'admin@radian.store', password: 'admin-password-123' });
-    const admins = [...repo.rows.values()].filter((r) => r.role === 'admin');
-    expect(admins).toHaveLength(1);
+    const ensure = new EnsureStaffAccount(deps);
+    await ensure.execute({ email: 'admin@radian.store', password: 'admin-password-123', role: 'admin' });
+    await ensure.execute({ email: 'admin@radian.store', password: 'admin-password-123', role: 'admin' });
+    expect([...repo.rows.values()].filter((r) => r.role === 'admin')).toHaveLength(1);
   });
 
-  it('promueve a admin una cuenta existente', async () => {
+  it('crea la cuenta de solo lectura con rol viewer', async () => {
+    await new EnsureStaffAccount(deps).execute({ email: 'demo@radian.store', password: 'demo-password-123', role: 'viewer' });
+    expect([...repo.rows.values()][0]).toMatchObject({ email: 'demo@radian.store', role: 'viewer', passwordHash: 'hashed:demo-password-123' });
+  });
+
+  it('ajusta el rol de una cuenta existente sin tocar su contraseña', async () => {
     await register();
-    await new EnsureAdmin(deps).execute({ email: 'ana@example.com', password: 'x-no-se-usa-123' });
+    await new EnsureStaffAccount(deps).execute({ email: 'ana@example.com', password: 'x-no-se-usa-123', role: 'admin' });
     expect([...repo.rows.values()][0]!.role).toBe('admin');
     expect([...repo.rows.values()][0]!.passwordHash).toBe('hashed:una-clave-larga');
   });

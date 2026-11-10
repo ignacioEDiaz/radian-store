@@ -26,7 +26,7 @@ export class JwtTokenIssuer implements TokenIssuer {
     try {
       const { payload } = await jwtVerify(token, this.key, { issuer: ISSUER, algorithms: ['HS256'] });
       const role = payload['role'];
-      if (typeof payload.sub !== 'string' || (role !== 'customer' && role !== 'admin')) return null;
+      if (typeof payload.sub !== 'string' || (role !== 'customer' && role !== 'admin' && role !== 'viewer')) return null;
       return { sub: payload.sub, role };
     } catch {
       return null;

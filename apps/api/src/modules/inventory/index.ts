@@ -24,7 +24,7 @@ export function createInventoryModule(d: { writeDb: DbPool; guards: AuthGuards; 
     appModule: {
       name: 'inventory',
       register: (app: FastifyInstance) => {
-        app.post('/api/admin/inventory/:variantId/adjustments', { preHandler: d.guards.requireRole('admin') }, async (req) => {
+        app.post('/api/admin/inventory/:variantId/adjustments', { preHandler: d.guards.requireAdminArea }, async (req) => {
           const { variantId } = parseParams(z.object({ variantId: z.uuid() }), req.params);
           const body = parseBody(stockAdjustmentRequestSchema, req.body);
           return adjustStock.execute({ variantId, delta: body.delta, reason: body.reason, actorId: req.auth?.customerId ?? null });

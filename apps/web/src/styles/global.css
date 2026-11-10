@@ -244,3 +244,10 @@ h1 {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Tablas anchas: se desplazan dentro de su contenedor, nunca desbordan la página (mobile). */
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

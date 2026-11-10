@@ -19,6 +19,12 @@ export interface AppDeps {
 }
 
 /** Un bounded context se integra a la app registrando sus rutas (composition root en main.ts). */
+declare module 'fastify' {
+  interface FastifyInstance {
+    registeredRoutes: { method: string; url: string }[];
+  }
+}
+
 export interface AppModule {
   name: string;
   register(app: FastifyInstance): void | Promise<void>;
@@ -68,6 +74,14 @@ export async function buildApp(deps: AppDeps, modules: AppModule[] = []): Promis
       return { ok: true };
     });
   }
+
+  // Inventario de rutas (método + URL) para verificaciones transversales, p. ej. que TODA
+  // modificación del área admin rechace al rol de solo lectura.
+  const routes: { method: string; url: string }[] = [];
+  app.addHook('onRoute', (r) => {
+    for (const method of [r.method].flat()) routes.push({ method, url: r.url });
+  });
+  app.decorate('registeredRoutes', routes);
 
   for (const module of modules) await module.register(app);
   return app;

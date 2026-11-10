@@ -3,6 +3,7 @@ import type { AdminImage, AdminProduct } from '@radian/contracts';
 import { adminCatalogService } from '../services/adminCatalogService';
 import { useProductCommand } from '../hooks/useAdminCatalog';
 import { CommandError } from './CommandError';
+import { reportIfReadOnly } from '../../../shared/api/readOnly';
 import styles from '../admin.module.css';
 
 export function ImagesSection({ product }: { product: AdminProduct }) {
@@ -30,6 +31,7 @@ export function ImagesSection({ product }: { product: AdminProduct }) {
       const media = await adminCatalogService.uploadMedia(file);
       await attach.mutateAsync(media.id);
     } catch (err) {
+      reportIfReadOnly(err);
       setUploadError(err);
     } finally {
       setUploading(false);

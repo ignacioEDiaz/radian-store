@@ -1,6 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-export type Role = 'customer' | 'admin';
+export type Role = 'customer' | 'admin' | 'viewer';
 
 export interface AuthContext {
   customerId: string;
@@ -24,6 +24,11 @@ export interface AuthGuards {
   requireAuth: PreHandler;
   /** 401/403 según sesión y rol. */
   requireRole(role: Role): PreHandler;
+  /**
+   * Área de administración: lectura (GET/HEAD) para `admin` y `viewer`; modificaciones solo `admin`.
+   * Un `viewer` que intenta modificar recibe 403 `READ_ONLY_ACCOUNT` con la explicación.
+   */
+  requireAdminArea: PreHandler;
   /** Completa `req.auth` si hay sesión válida; nunca falla. */
   optionalAuth: PreHandler;
 }

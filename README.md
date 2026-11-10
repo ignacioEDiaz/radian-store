@@ -24,6 +24,9 @@ invalidada por eventos y observabilidad de punta a punta.
 - **Cuentas** con sesión segura, perfil y dirección predeterminada; historial de pedidos.
 - **Administración**: productos, variantes, stock, imágenes (subida y reorden), colecciones y
   gestión de pedidos (envío con seguimiento, cancelación con reintegro).
+- **Cuenta demo de solo lectura** (rol `viewer`): recorre todo el panel, pero cualquier
+  modificación es rechazada por el servidor (403 `READ_ONLY_ACCOUNT`) y la web explica por qué;
+  los datos personales de los clientes se ven enmascarados.
 - Catálogo inicial: 21 productos, 168 variantes y 82 imágenes, importados de la tienda Radian
   original con los mismos casos de uso del panel.
 
@@ -104,6 +107,7 @@ docker compose -f infra/docker-compose.yml exec api node dist/src/scripts/seed-c
 |----------|-----|
 | Tienda | http://localhost:5173 (dev) · http://localhost:8080 (contenedores) |
 | Admin | `/admin` con `admin@radian.store` / `admin-password-123` |
+| Demo de solo lectura | `demo@radian.store` / `demo-password-123` (botón "Usar cuenta demo" en el login) |
 | Estado | `/estado` · http://localhost:3000/health/ready |
 | Grafana | http://localhost:3001 (admin / admin) |
 | Prometheus | http://localhost:9090 |
@@ -140,3 +144,4 @@ Todo el código nace de specs y tareas ([Spec Kit](https://github.com/github/spe
 | [004](specs/004-catalog-browsing/spec.md) | Tienda: listados con facetas, búsqueda, ficha de producto, caché |
 | [005](specs/005-shopping-cart/spec.md) | Carrito persistente con merge al iniciar sesión |
 | [006](specs/006-checkout-orders/spec.md) | Checkout idempotente, reservas sin sobreventa, pedidos y administración |
+| [007](specs/007-admin-viewer-role/spec.md) | Rol de solo lectura para el panel (demo segura) |
