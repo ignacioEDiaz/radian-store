@@ -5,6 +5,11 @@ import { createUnitOfWork, inTransaction } from '../../shared/infrastructure/db/
 import type { AuthGuards } from '../../shared/infrastructure/http/auth.js';
 import type { EventConsumer } from '../../shared/infrastructure/outbox/consumer.js';
 import type { BoundedContext } from '../types.js';
+import type { Cache } from '../../shared/application/cache.js';
+import { NullCache } from '../../shared/infrastructure/cache/null-cache.js';
+import { StorefrontQueries } from './application/queries/storefront-queries.js';
+import { registerStorefrontRoutes } from './infrastructure/http/storefront-routes.js';
+import { PgCatalogReadModel } from './infrastructure/read-model/pg-catalog-read-model.js';
 import { PgInventoryProvisioner } from '../inventory/infrastructure/inventory-provisioner.js';
 import { PgMediaLookup } from '../media/infrastructure/pg-media-repository.js';
 import { CollectionCommands } from './application/collection-commands.js';
@@ -21,6 +26,8 @@ export interface CatalogModuleDeps {
   writeDb: DbPool;
   readDb: DbPool;
   guards: AuthGuards;
+  /** Caché de consultas de la tienda (Redis en producción). */
+  cache?: Cache;
   clock?: Clock;
   ids?: IdGenerator;
 }
@@ -42,6 +49,7 @@ export function createCatalogModule(d: CatalogModuleDeps) {
   const uow = createUnitOfWork(d.writeDb, repos);
   const products = new ProductCommands({ uow, clock, ids });
   const collections = new CollectionCommands({ uow, clock, ids });
+  const storefront = new StorefrontQueries({ readModel: new PgCatalogReadModel(d.readDb), cache: d.cache ?? new NullCache() });
 
   /** Política (write): un producto archivado sale de todas sus colecciones. */
   const removeArchivedFromCollections: EventConsumer = {
@@ -58,9 +66,10 @@ export function createCatalogModule(d: CatalogModuleDeps) {
     appModule: {
       name: 'catalog',
       register: async (app) => {
+        await registerStorefrontRoutes(app, storefront);
         await registerAdminCatalogRoutes(app, { products, collections, reader: new PgAdminCatalogReader(d.readDb), guards: d.guards });
       },
     },
   };
-  return { context, products, collections };
+  return { context, products, collections, storefront };
 }

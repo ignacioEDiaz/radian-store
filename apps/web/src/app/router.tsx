@@ -1,7 +1,10 @@
 import { createBrowserRouter, Navigate, Outlet } from 'react-router';
 import { Layout } from './Layout';
 import { StatusPage } from '../features/system/StatusPage';
-import { PlaceholderHome } from './PlaceholderHome';
+import { HomePage } from '../features/catalog/pages/HomePage';
+import { CollectionPage } from '../features/catalog/pages/CollectionPage';
+import { ProductPage } from '../features/catalog/pages/ProductPage';
+import { NotFoundPage } from '../features/catalog/pages/NotFoundPage';
 import { LoginPage } from '../features/account/pages/LoginPage';
 import { RegisterPage } from '../features/account/pages/RegisterPage';
 import { AccountPage } from '../features/account/pages/AccountPage';
@@ -15,7 +18,11 @@ export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { index: true, element: <PlaceholderHome /> },
+      { index: true, element: <HomePage /> },
+      { path: 'tienda', element: <CollectionPage /> },
+      { path: 'colecciones/:slug', element: <CollectionPage /> },
+      { path: 'buscar', element: <CollectionPage mode="search" /> },
+      { path: 'productos/:slug', element: <ProductPage /> },
       { path: 'estado', element: <StatusPage /> },
       { path: 'cuenta/ingresar', element: <LoginPage /> },
       { path: 'cuenta/registro', element: <RegisterPage /> },
@@ -38,6 +45,7 @@ export const router = createBrowserRouter([
           { path: 'colecciones', element: <CollectionsPage /> },
         ],
       },
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ]);
