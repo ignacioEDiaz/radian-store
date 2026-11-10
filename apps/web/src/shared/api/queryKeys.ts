@@ -4,6 +4,7 @@ export const queryKeys = {
     health: ['system', 'health'] as const,
   },
   session: ['session'] as const,
+  cart: ['cart'] as const,
   catalog: {
     all: ['catalog'] as const,
     list: (params: object) => ['catalog', 'list', params] as const,

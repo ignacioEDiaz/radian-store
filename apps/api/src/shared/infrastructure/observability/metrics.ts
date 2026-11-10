@@ -90,6 +90,12 @@ export class Metrics {
     registers: [this.registry],
   });
 
+  readonly cartOperations = new Counter({
+    name: 'cart_operations_total',
+    help: 'Operaciones de carrito por resultado',
+    labelNames: ['op', 'result'] as const,
+    registers: [this.registry],
+  });
   readonly mediaUploads = new Counter({
     name: 'media_uploads_total',
     help: 'Subidas de imágenes por resultado',

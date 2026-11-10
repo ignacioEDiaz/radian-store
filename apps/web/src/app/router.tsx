@@ -5,6 +5,7 @@ import { HomePage } from '../features/catalog/pages/HomePage';
 import { CollectionPage } from '../features/catalog/pages/CollectionPage';
 import { ProductPage } from '../features/catalog/pages/ProductPage';
 import { NotFoundPage } from '../features/catalog/pages/NotFoundPage';
+import { AddToCart } from '../features/cart/components/AddToCart';
 import { LoginPage } from '../features/account/pages/LoginPage';
 import { RegisterPage } from '../features/account/pages/RegisterPage';
 import { AccountPage } from '../features/account/pages/AccountPage';
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
       { path: 'tienda', element: <CollectionPage /> },
       { path: 'colecciones/:slug', element: <CollectionPage /> },
       { path: 'buscar', element: <CollectionPage mode="search" /> },
-      { path: 'productos/:slug', element: <ProductPage /> },
+      { path: 'productos/:slug', element: <ProductPage purchase={(p) => <AddToCart {...p} />} /> },
       { path: 'estado', element: <StatusPage /> },
       { path: 'cuenta/ingresar', element: <LoginPage /> },
       { path: 'cuenta/registro', element: <RegisterPage /> },

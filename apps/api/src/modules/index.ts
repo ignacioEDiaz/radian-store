@@ -1,3 +1,4 @@
+import { createCartModule } from './cart/index.js';
 import { createCatalogModule } from './catalog/index.js';
 import { createIdentityModule } from './identity/index.js';
 import { createInventoryModule } from './inventory/index.js';
@@ -14,5 +15,7 @@ export function createContexts(ctx: ModuleContext): BoundedContext[] {
   const media = createMediaModule({ writeDb, guards, metrics: ctx.metrics, mediaDir: ctx.config.mediaDir });
   const inventory = createInventoryModule({ writeDb, guards });
   const catalog = createCatalogModule({ writeDb, readDb, guards, cache: ctx.infra.cache });
-  return [identity, media.context, inventory, catalog.context];
+  const cart = createCartModule({ writeDb, readDb, guards, metrics: ctx.metrics, logger: ctx.logger, secureCookie: ctx.config.session.secureCookie });
+  identity.afterLogin.push(cart.mergeOnLogin);
+  return [identity, media.context, inventory, catalog.context, cart.context];
 }
