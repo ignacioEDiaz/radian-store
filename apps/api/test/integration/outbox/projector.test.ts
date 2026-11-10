@@ -90,6 +90,17 @@ describe('Outbox + Projector', () => {
     expect(Date.now() - t0).toBeLessThan(1000);
   });
 
+  it('respeta consumidores registrados después de construir el proyector', async () => {
+    const consumers: EventConsumer[] = [];
+    const projector = makeProjector(consumers);
+    consumers.push(projection);
+    const id = crypto.randomUUID();
+    await writeDb.withTransaction((tx) => appendToOutbox(tx, [event('probe.Named', id, { name: 'tarde' })]));
+    await projector.runOnce();
+    const { rows } = await readDb.query<{ name: string }>('SELECT name FROM probe_view WHERE id = $1', [id]);
+    expect(rows[0]?.name).toBe('tarde');
+  });
+
   it('un rollback no publica eventos', async () => {
     await expect(
       writeDb.withTransaction(async (tx) => {

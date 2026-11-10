@@ -1,4 +1,5 @@
 import type { AppConfig } from './config/env.js';
+import type { Redis } from 'ioredis';
 import type { Cache } from './shared/application/cache.js';
 import { createPool, type DbPool } from './shared/infrastructure/db/pool.js';
 import { PoolMonitor } from './shared/infrastructure/db/pool-monitor.js';
@@ -14,6 +15,7 @@ export interface Infrastructure {
   writeDb: DbPool;
   readDb: DbPool;
   cache: Cache;
+  redis: Redis;
   projector: Projector;
   poolMonitor: PoolMonitor;
   health: HealthService;
@@ -85,6 +87,7 @@ export async function createInfrastructure(
     writeDb,
     readDb,
     cache,
+    redis,
     projector,
     poolMonitor,
     health,

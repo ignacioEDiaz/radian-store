@@ -29,7 +29,16 @@ const schema = z.object({
   CACHE_DEFAULT_TTL_S: int(300, 1),
   ENABLE_DIAG_ROUTES: bool(false),
   RUN_PROJECTOR: bool(true),
+  SESSION_SECRET: z.string().min(32).optional(),
+  COOKIE_SECRET: z.string().min(32).optional(),
+  SESSION_TTL_SECONDS: int(7 * 24 * 3600, 60),
+  COOKIE_SECURE: z.enum(['true', 'false']).optional(),
+  ADMIN_EMAIL: z.string().optional(),
+  ADMIN_PASSWORD: z.string().min(10).optional(),
+  MEDIA_DIR: z.string().default('./storage/media'),
 });
+
+const DEV_SECRET = 'dev-only-secret-change-me-0123456789abcdef';
 
 export class ConfigError extends Error {
   override readonly name = 'ConfigError';
@@ -44,6 +53,9 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     throw new ConfigError(`Configuración inválida:\n${lines.join('\n')}`);
   }
   const e = parsed.data;
+  if (e.NODE_ENV === 'production' && (!e.SESSION_SECRET || !e.COOKIE_SECRET)) {
+    throw new ConfigError('Configuración inválida:\n  - SESSION_SECRET y COOKIE_SECRET son obligatorios en producción');
+  }
   const pool = (url: string, max: number) => ({
     url,
     max,
@@ -67,5 +79,13 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
     projector: { pollMs: e.PROJECTOR_POLL_MS, lagWarnSeconds: e.PROJECTION_LAG_WARN_S, enabled: e.RUN_PROJECTOR },
     cache: { defaultTtlSeconds: e.CACHE_DEFAULT_TTL_S },
     enableDiagRoutes: e.ENABLE_DIAG_ROUTES,
+    session: {
+      secret: e.SESSION_SECRET ?? DEV_SECRET,
+      ttlSeconds: e.SESSION_TTL_SECONDS,
+      secureCookie: e.COOKIE_SECURE ? e.COOKIE_SECURE === 'true' : e.NODE_ENV === 'production',
+    },
+    cookieSecret: e.COOKIE_SECRET ?? DEV_SECRET,
+    admin: e.ADMIN_EMAIL && e.ADMIN_PASSWORD ? { email: e.ADMIN_EMAIL, password: e.ADMIN_PASSWORD } : null,
+    mediaDir: e.MEDIA_DIR,
   };
 }

@@ -1,0 +1,33 @@
+.page {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: var(--space-16) var(--gutter);
+}
+
+.title {
+  margin-bottom: var(--space-2);
+}
+
+.lead {
+  color: var(--color-muted);
+  margin: 0 0 var(--space-8);
+}
+
+.alt {
+  margin-top: var(--space-6);
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.alt a {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
+.alert {
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius);
+}

@@ -31,6 +31,16 @@ describe('loadConfig', () => {
     expect(() => loadConfig(rest)).toThrow(/READ_DATABASE_URL/);
   });
 
+  it('exige secretos en producción y usa defaults de desarrollo fuera de ella', () => {
+    expect(() => loadConfig({ ...base, NODE_ENV: 'production' })).toThrow(/SESSION_SECRET/);
+    const dev = loadConfig(base);
+    expect(dev.session.secret.length).toBeGreaterThanOrEqual(32);
+    expect(dev.session.secureCookie).toBe(false);
+    expect(dev.admin).toBeNull();
+    const prod = loadConfig({ ...base, NODE_ENV: 'production', SESSION_SECRET: 's'.repeat(32), COOKIE_SECRET: 'c'.repeat(32) });
+    expect(prod.session.secureCookie).toBe(true);
+  });
+
   it('falla nombrando la variable fuera de rango', () => {
     expect(() => loadConfig({ ...base, DB_READ_POOL_MAX: '0' })).toThrow(/DB_READ_POOL_MAX/);
   });
