@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router';
 import { BRAND_NAME } from './brand';
 import { useLogout, useSession } from '../features/account/hooks/useSession';
+import { SearchBox } from '../features/catalog/components/SearchBox';
 import styles from './Header.module.css';
 
 export function Header() {
@@ -11,12 +12,17 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <nav aria-label="Navegación principal" className={styles.nav}>
-          <NavLink to="/tienda">Tienda</NavLink>
+          <NavLink to="/tienda" end>
+            Tienda
+          </NavLink>
+          <NavLink to="/colecciones/dresses">Dresses</NavLink>
+          <NavLink to="/colecciones/outerwear">Outerwear</NavLink>
         </nav>
         <Link to="/" className={styles.logo} aria-label={`${BRAND_NAME} — inicio`}>
           {BRAND_NAME.toUpperCase()}
         </Link>
         <div className={styles.actions}>
+          <SearchBox />
           {isAdmin && (
             <Link to="/admin" className={styles.action}>
               Admin

@@ -13,6 +13,6 @@ export function createContexts(ctx: ModuleContext): BoundedContext[] {
   const guards = identity.guards;
   const media = createMediaModule({ writeDb, guards, metrics: ctx.metrics, mediaDir: ctx.config.mediaDir });
   const inventory = createInventoryModule({ writeDb, guards });
-  const catalog = createCatalogModule({ writeDb, readDb, guards });
+  const catalog = createCatalogModule({ writeDb, readDb, guards, cache: ctx.infra.cache });
   return [identity, media.context, inventory, catalog.context];
 }
