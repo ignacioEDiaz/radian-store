@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  # API dentro de compose (perfil app) o corriendo en el host con `npm run dev`.
+  - job_name: radian-api
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['api:3000', 'host.docker.internal:3000']

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.env
+.env.local
+storage/
+apps/api/storage/
+playwright-report/
+test-results/
+.DS_Store
+.api-dev.log

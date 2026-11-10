@@ -1,0 +1,35 @@
+{
+  "name": "radian-store",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "concurrently -n api,web -c magenta,cyan \"npm run dev -w @radian/api\" \"npm run dev -w @radian/web\"",
+    "dev:infra": "docker compose -f infra/docker-compose.yml up -d write-db read-db redis prometheus grafana",
+    "db:migrate": "npm run db:migrate -w @radian/api",
+    "build": "npm run build -w @radian/contracts && npm run build -w @radian/api && npm run build -w @radian/web",
+    "test": "npm run test --workspaces --if-present",
+    "test:integration": "npm run test:integration -w @radian/api",
+    "lint": "eslint .",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "arch": "depcruise apps/api/src --config .dependency-cruiser.cjs",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.0",
+    "concurrently": "^9.2.1",
+    "dependency-cruiser": "^18.7.2",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^16.4.0",
+    "prettier": "^3.6.2",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.2"
+  }
+}
