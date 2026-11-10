@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router';
 import { BRAND_NAME } from './brand';
 import { useLogout, useSession } from '../features/account/hooks/useSession';
 import { SearchBox } from '../features/catalog/components/SearchBox';
+import { CartButton } from '../features/cart/components/CartButton';
 import styles from './Header.module.css';
 
 export function Header() {
@@ -42,6 +43,7 @@ export function Header() {
               Ingresar
             </Link>
           )}
+          <CartButton />
         </div>
       </div>
     </header>
