@@ -1,0 +1,2235 @@
+{
+  "source": "radian-rmytbh87.myshopify.com",
+  "products": [
+    {
+      "handle": "sharp-boot",
+      "title": "Sharp Leather Boot",
+      "description": "Built on a sculpted sole with a clean, elongated silhouette. Smooth upper, cushioned footbed and a quiet tread made for the city. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Footwear",
+      "materials": [
+        "Leather"
+      ],
+      "tags": [
+        "footwear",
+        "leather"
+      ],
+      "priceCents": 45000,
+      "compareAtCents": 57692,
+      "featuredRank": 1,
+      "collections": [
+        "footwear",
+        "leathers"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "SHARP-BOOT-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 18
+        },
+        {
+          "sku": "SHARP-BOOT-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 13
+        },
+        {
+          "sku": "SHARP-BOOT-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 8
+        },
+        {
+          "sku": "SHARP-BOOT-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 3
+        },
+        {
+          "sku": "SHARP-BOOT-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 11
+        },
+        {
+          "sku": "SHARP-BOOT-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 0
+        },
+        {
+          "sku": "SHARP-BOOT-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 19
+        },
+        {
+          "sku": "SHARP-BOOT-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 14
+        }
+      ],
+      "images": [
+        {
+          "file": "sharp-boot-obsidian-black-full-model.webp",
+          "alt": "Sharp Leather Boot - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "sharp-boot-obsidian-black-front-product.webp",
+          "alt": "Sharp Leather Boot - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "sharp-boot-obsidian-black-side-model.webp",
+          "alt": "Sharp Leather Boot - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "sharp-boot-oxblood-burgundy-front-product.webp",
+          "alt": "Sharp Leather Boot - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "ink-asymmetric",
+      "title": "Ink Asymmetric",
+      "description": "An elevated essential with a clean neckline and a relaxed, boxy shape. Designed for effortless layering. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Tops",
+      "materials": [
+        "Cotton"
+      ],
+      "tags": [
+        "tops",
+        "cotton"
+      ],
+      "priceCents": 25000,
+      "compareAtCents": 32895,
+      "featuredRank": 2,
+      "collections": [
+        "tops",
+        "cotton"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "INK-ASYMMETRIC-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 10
+        },
+        {
+          "sku": "INK-ASYMMETRIC-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 5
+        },
+        {
+          "sku": "INK-ASYMMETRIC-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 18
+        },
+        {
+          "sku": "INK-ASYMMETRIC-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 13
+        },
+        {
+          "sku": "INK-ASYMMETRIC-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 3
+        },
+        {
+          "sku": "INK-ASYMMETRIC-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 16
+        },
+        {
+          "sku": "INK-ASYMMETRIC-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 0
+        },
+        {
+          "sku": "INK-ASYMMETRIC-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 6
+        }
+      ],
+      "images": [
+        {
+          "file": "ink-asymmetric-obsidian-black-full-model.webp",
+          "alt": "Ink Asymmetric - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "ink-asymmetric-obsidian-black-front-product.webp",
+          "alt": "Ink Asymmetric - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "ink-asymmetric-obsidian-black-side-model.webp",
+          "alt": "Ink Asymmetric - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "ink-asymmetric-oxblood-burgundy-front-product.webp",
+          "alt": "Ink Asymmetric - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "abyssal-cardigan",
+      "title": "Abyssal Cardigan",
+      "description": "Soft structure in a dense knit, designed to layer under tailoring or to wear alone with confidence. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Knitwear",
+      "materials": [
+        "Wool"
+      ],
+      "tags": [
+        "knitwear",
+        "wool"
+      ],
+      "priceCents": 28000,
+      "compareAtCents": null,
+      "featuredRank": 3,
+      "collections": [
+        "knitwear"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "ABYSSAL-CARDIGAN-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 6
+        },
+        {
+          "sku": "ABYSSAL-CARDIGAN-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 19
+        },
+        {
+          "sku": "ABYSSAL-CARDIGAN-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 14
+        },
+        {
+          "sku": "ABYSSAL-CARDIGAN-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 9
+        },
+        {
+          "sku": "ABYSSAL-CARDIGAN-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 17
+        },
+        {
+          "sku": "ABYSSAL-CARDIGAN-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 12
+        },
+        {
+          "sku": "ABYSSAL-CARDIGAN-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 7
+        },
+        {
+          "sku": "ABYSSAL-CARDIGAN-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 2
+        }
+      ],
+      "images": [
+        {
+          "file": "abyssal-cardigan-obsidian-black-full-model.webp",
+          "alt": "Abyssal Cardigan - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "abyssal-cardigan-obsidian-black-front-product.webp",
+          "alt": "Abyssal Cardigan - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "abyssal-cardigan-obsidian-black-side-model.webp",
+          "alt": "Abyssal Cardigan - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "abyssal-cardigan-oxblood-burgundy-front-product.webp",
+          "alt": "Abyssal Cardigan - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "slouchy-culottes-set",
+      "title": "Slouchy Culottes",
+      "description": "Clean lines, a considered rise and a relaxed leg that pairs with everything from tailoring to tees. Available in Bone Ivory and Chocolate Brown and Oxblood Burgundy.",
+      "productType": "Bottoms",
+      "materials": [
+        "Cotton"
+      ],
+      "tags": [
+        "bottoms",
+        "cotton"
+      ],
+      "priceCents": 38500,
+      "compareAtCents": null,
+      "featuredRank": 4,
+      "collections": [
+        "bottoms",
+        "cotton"
+      ],
+      "colors": [
+        {
+          "name": "Bone Ivory",
+          "hex": "#E8E1D5"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#5C3A2E"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-BOIV-S",
+          "color": "Bone Ivory",
+          "size": "S",
+          "initialStock": 16
+        },
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-BOIV-M",
+          "color": "Bone Ivory",
+          "size": "M",
+          "initialStock": 11
+        },
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-BOIV-L",
+          "color": "Bone Ivory",
+          "size": "L",
+          "initialStock": 6
+        },
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-BOIV-XL",
+          "color": "Bone Ivory",
+          "size": "XL",
+          "initialStock": 19
+        },
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-CHBR-S",
+          "color": "Chocolate Brown",
+          "size": "S",
+          "initialStock": 9
+        },
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-CHBR-M",
+          "color": "Chocolate Brown",
+          "size": "M",
+          "initialStock": 4
+        },
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-CHBR-L",
+          "color": "Chocolate Brown",
+          "size": "L",
+          "initialStock": 17
+        },
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-CHBR-XL",
+          "color": "Chocolate Brown",
+          "size": "XL",
+          "initialStock": 12
+        },
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 2
+        },
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 15
+        },
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 0
+        },
+        {
+          "sku": "SLOUCHY-CULOTTES-SET-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 5
+        }
+      ],
+      "images": [
+        {
+          "file": "slouchy-culottes-set-bone-ivory-front-product.webp",
+          "alt": "Slouchy Culottes - Bone Ivory - front product",
+          "color": "Bone Ivory"
+        },
+        {
+          "file": "slouchy-culottes-set-chocolate-brown-front-product.webp",
+          "alt": "Slouchy Culottes - Chocolate Brown - front product",
+          "color": "Chocolate Brown"
+        },
+        {
+          "file": "slouchy-culottes-set-chocolate-brown-side-model.webp",
+          "alt": "Slouchy Culottes - Chocolate Brown - side model",
+          "color": "Chocolate Brown"
+        },
+        {
+          "file": "slouchy-culottes-set-oxblood-burgundy-front-product.webp",
+          "alt": "Slouchy Culottes - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "calm-pullover",
+      "title": "Calm Pullover",
+      "description": "Soft structure in a dense knit, designed to layer under tailoring or to wear alone with confidence. Available in Bone Ivory and Chocolate Brown and Oxblood Burgundy.",
+      "productType": "Knitwear",
+      "materials": [
+        "Wool"
+      ],
+      "tags": [
+        "knitwear",
+        "wool"
+      ],
+      "priceCents": 41000,
+      "compareAtCents": 50000,
+      "featuredRank": 5,
+      "collections": [
+        "knitwear"
+      ],
+      "colors": [
+        {
+          "name": "Bone Ivory",
+          "hex": "#E8E1D5"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#5C3A2E"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "CALM-PULLOVER-BOIV-S",
+          "color": "Bone Ivory",
+          "size": "S",
+          "initialStock": 3
+        },
+        {
+          "sku": "CALM-PULLOVER-BOIV-M",
+          "color": "Bone Ivory",
+          "size": "M",
+          "initialStock": 0
+        },
+        {
+          "sku": "CALM-PULLOVER-BOIV-L",
+          "color": "Bone Ivory",
+          "size": "L",
+          "initialStock": 11
+        },
+        {
+          "sku": "CALM-PULLOVER-BOIV-XL",
+          "color": "Bone Ivory",
+          "size": "XL",
+          "initialStock": 6
+        },
+        {
+          "sku": "CALM-PULLOVER-CHBR-S",
+          "color": "Chocolate Brown",
+          "size": "S",
+          "initialStock": 14
+        },
+        {
+          "sku": "CALM-PULLOVER-CHBR-M",
+          "color": "Chocolate Brown",
+          "size": "M",
+          "initialStock": 9
+        },
+        {
+          "sku": "CALM-PULLOVER-CHBR-L",
+          "color": "Chocolate Brown",
+          "size": "L",
+          "initialStock": 4
+        },
+        {
+          "sku": "CALM-PULLOVER-CHBR-XL",
+          "color": "Chocolate Brown",
+          "size": "XL",
+          "initialStock": 17
+        },
+        {
+          "sku": "CALM-PULLOVER-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 7
+        },
+        {
+          "sku": "CALM-PULLOVER-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 2
+        },
+        {
+          "sku": "CALM-PULLOVER-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 15
+        },
+        {
+          "sku": "CALM-PULLOVER-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 10
+        }
+      ],
+      "images": [
+        {
+          "file": "calm-pullover-bone-ivory-front-product.webp",
+          "alt": "Calm Pullover - Bone Ivory - front product",
+          "color": "Bone Ivory"
+        },
+        {
+          "file": "calm-pullover-bone-ivory-side-model.webp",
+          "alt": "Calm Pullover - Bone Ivory - side model",
+          "color": "Bone Ivory"
+        },
+        {
+          "file": "calm-pullover-chocolate-brown-front-product.webp",
+          "alt": "Calm Pullover - Chocolate Brown - front product",
+          "color": "Chocolate Brown"
+        },
+        {
+          "file": "calm-pullover-oxblood-burgundy-front-product.webp",
+          "alt": "Calm Pullover - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "sable-blazer",
+      "title": "Sable Blazer",
+      "description": "Sharp shoulders, soft construction. Cut from Italian wool and finished by hand so it holds its line from the first wear to the hundredth. Available in Obsidian Black.",
+      "productType": "Blazers",
+      "materials": [
+        "Wool"
+      ],
+      "tags": [
+        "blazers",
+        "wool"
+      ],
+      "priceCents": 25500,
+      "compareAtCents": null,
+      "featuredRank": 6,
+      "collections": [
+        "blazers",
+        "outerwear"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "SABLE-BLAZER-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 14
+        },
+        {
+          "sku": "SABLE-BLAZER-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 9
+        },
+        {
+          "sku": "SABLE-BLAZER-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 4
+        },
+        {
+          "sku": "SABLE-BLAZER-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 0
+        }
+      ],
+      "images": [
+        {
+          "file": "sable-blazer-obsidian-black-full-model.webp",
+          "alt": "Sable Blazer - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "sable-blazer-obsidian-black-front-product.webp",
+          "alt": "Sable Blazer - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "sable-blazer-obsidian-black-side-model.webp",
+          "alt": "Sable Blazer - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        }
+      ]
+    },
+    {
+      "handle": "umber-jacket",
+      "title": "Umber Jacket",
+      "description": "A considered outer layer with a strong silhouette, built for weather and for the city at night. Fully lined with clean, minimal hardware. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Outerwear",
+      "materials": [
+        "Cotton"
+      ],
+      "tags": [
+        "outerwear",
+        "cotton"
+      ],
+      "priceCents": 27000,
+      "compareAtCents": 34177,
+      "featuredRank": 7,
+      "collections": [
+        "outerwear",
+        "cotton"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "UMBER-JACKET-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 14
+        },
+        {
+          "sku": "UMBER-JACKET-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 9
+        },
+        {
+          "sku": "UMBER-JACKET-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 4
+        },
+        {
+          "sku": "UMBER-JACKET-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 0
+        },
+        {
+          "sku": "UMBER-JACKET-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 7
+        },
+        {
+          "sku": "UMBER-JACKET-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 2
+        },
+        {
+          "sku": "UMBER-JACKET-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 15
+        },
+        {
+          "sku": "UMBER-JACKET-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 10
+        }
+      ],
+      "images": [
+        {
+          "file": "umber-jacket-obsidian-black-full-model.webp",
+          "alt": "Umber Jacket - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "umber-jacket-obsidian-black-front-product.webp",
+          "alt": "Umber Jacket - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "umber-jacket-obsidian-black-side-model.webp",
+          "alt": "Umber Jacket - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "umber-jacket-oxblood-burgundy-front-product.webp",
+          "alt": "Umber Jacket - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "woven-crop",
+      "title": "Woven Crop",
+      "description": "An elevated essential with a clean neckline and a relaxed, boxy shape. Designed for effortless layering. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Tops",
+      "materials": [
+        "Cotton"
+      ],
+      "tags": [
+        "tops",
+        "cotton"
+      ],
+      "priceCents": 31500,
+      "compareAtCents": 39375,
+      "featuredRank": 8,
+      "collections": [
+        "tops",
+        "cotton"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "WOVEN-CROP-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 18
+        },
+        {
+          "sku": "WOVEN-CROP-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 13
+        },
+        {
+          "sku": "WOVEN-CROP-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 8
+        },
+        {
+          "sku": "WOVEN-CROP-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 3
+        },
+        {
+          "sku": "WOVEN-CROP-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 11
+        },
+        {
+          "sku": "WOVEN-CROP-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 0
+        },
+        {
+          "sku": "WOVEN-CROP-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 19
+        },
+        {
+          "sku": "WOVEN-CROP-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 14
+        }
+      ],
+      "images": [
+        {
+          "file": "woven-crop-obsidian-black-full-model.webp",
+          "alt": "Woven Crop - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "woven-crop-obsidian-black-front-product.webp",
+          "alt": "Woven Crop - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "woven-crop-obsidian-black-side-model.webp",
+          "alt": "Woven Crop - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "woven-crop-oxblood-burgundy-front-product.webp",
+          "alt": "Woven Crop - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "zenith-shift",
+      "title": "Zenith Shift",
+      "description": "Fluid lines and a precise drape that moves with you, from the first meeting to the last call. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Dresses",
+      "materials": [
+        "Cotton"
+      ],
+      "tags": [
+        "dresses",
+        "cotton"
+      ],
+      "priceCents": 34500,
+      "compareAtCents": null,
+      "featuredRank": 9,
+      "collections": [
+        "dresses",
+        "cotton"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "ZENITH-SHIFT-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 14
+        },
+        {
+          "sku": "ZENITH-SHIFT-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 9
+        },
+        {
+          "sku": "ZENITH-SHIFT-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 4
+        },
+        {
+          "sku": "ZENITH-SHIFT-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 0
+        },
+        {
+          "sku": "ZENITH-SHIFT-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 7
+        },
+        {
+          "sku": "ZENITH-SHIFT-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 2
+        },
+        {
+          "sku": "ZENITH-SHIFT-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 15
+        },
+        {
+          "sku": "ZENITH-SHIFT-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 10
+        }
+      ],
+      "images": [
+        {
+          "file": "zenith-shift-obsidian-black-full-model.webp",
+          "alt": "Zenith Shift - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "zenith-shift-obsidian-black-front-product.webp",
+          "alt": "Zenith Shift - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "zenith-shift-obsidian-black-side-model.webp",
+          "alt": "Zenith Shift - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "zenith-shift-oxblood-burgundy-front-product.webp",
+          "alt": "Zenith Shift - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "wrap-skirt",
+      "title": "Wrap Skirt",
+      "description": "A fluid skirt with movement in every step, cut to sit cleanly at the waist and pair with sharp tailoring. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Skirts",
+      "materials": [
+        "Cotton"
+      ],
+      "tags": [
+        "skirts",
+        "cotton"
+      ],
+      "priceCents": 38000,
+      "compareAtCents": null,
+      "featuredRank": 10,
+      "collections": [
+        "skirts",
+        "bottoms",
+        "cotton"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "WRAP-SKIRT-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 18
+        },
+        {
+          "sku": "WRAP-SKIRT-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 13
+        },
+        {
+          "sku": "WRAP-SKIRT-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 8
+        },
+        {
+          "sku": "WRAP-SKIRT-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 3
+        },
+        {
+          "sku": "WRAP-SKIRT-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 11
+        },
+        {
+          "sku": "WRAP-SKIRT-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 0
+        },
+        {
+          "sku": "WRAP-SKIRT-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 19
+        },
+        {
+          "sku": "WRAP-SKIRT-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 14
+        }
+      ],
+      "images": [
+        {
+          "file": "wrap-skirt-obsidian-black-full-model.webp",
+          "alt": "Wrap Skirt - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "wrap-skirt-obsidian-black-front-product.webp",
+          "alt": "Wrap Skirt - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "wrap-skirt-obsidian-black-side-model.webp",
+          "alt": "Wrap Skirt - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "wrap-skirt-oxblood-burgundy-front-product.webp",
+          "alt": "Wrap Skirt - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "stonewash-mini",
+      "title": "Stonewash Mini",
+      "description": "Fluid lines and a precise drape that moves with you, from the first meeting to the last call. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Dresses",
+      "materials": [
+        "Cotton"
+      ],
+      "tags": [
+        "dresses",
+        "cotton"
+      ],
+      "priceCents": 39000,
+      "compareAtCents": 50000,
+      "featuredRank": 11,
+      "collections": [
+        "dresses",
+        "cotton"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "STONEWASH-MINI-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 10
+        },
+        {
+          "sku": "STONEWASH-MINI-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 5
+        },
+        {
+          "sku": "STONEWASH-MINI-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 18
+        },
+        {
+          "sku": "STONEWASH-MINI-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 13
+        },
+        {
+          "sku": "STONEWASH-MINI-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 3
+        },
+        {
+          "sku": "STONEWASH-MINI-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 16
+        },
+        {
+          "sku": "STONEWASH-MINI-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 0
+        },
+        {
+          "sku": "STONEWASH-MINI-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 6
+        }
+      ],
+      "images": [
+        {
+          "file": "stonewash-mini-obsidian-black-full-model.webp",
+          "alt": "Stonewash Mini - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "stonewash-mini-obsidian-black-front-product.webp",
+          "alt": "Stonewash Mini - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "stonewash-mini-obsidian-black-side-model.webp",
+          "alt": "Stonewash Mini - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "stonewash-mini-oxblood-burgundy-front-product.webp",
+          "alt": "Stonewash Mini - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "chiffon-column",
+      "title": "Chiffon Column",
+      "description": "Fluid lines and a precise drape that moves with you, from the first meeting to the last call. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Dresses",
+      "materials": [
+        "Chiffon"
+      ],
+      "tags": [
+        "dresses",
+        "chiffon"
+      ],
+      "priceCents": 34000,
+      "compareAtCents": null,
+      "featuredRank": 12,
+      "collections": [
+        "dresses"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "CHIFFON-COLUMN-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 10
+        },
+        {
+          "sku": "CHIFFON-COLUMN-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 5
+        },
+        {
+          "sku": "CHIFFON-COLUMN-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 18
+        },
+        {
+          "sku": "CHIFFON-COLUMN-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 13
+        },
+        {
+          "sku": "CHIFFON-COLUMN-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 3
+        },
+        {
+          "sku": "CHIFFON-COLUMN-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 16
+        },
+        {
+          "sku": "CHIFFON-COLUMN-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 0
+        },
+        {
+          "sku": "CHIFFON-COLUMN-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 6
+        }
+      ],
+      "images": [
+        {
+          "file": "chiffon-column-obsidian-black-full-model.webp",
+          "alt": "Chiffon Column - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "chiffon-column-obsidian-black-front-product.webp",
+          "alt": "Chiffon Column - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "chiffon-column-obsidian-black-side-model.webp",
+          "alt": "Chiffon Column - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "chiffon-column-oxblood-burgundy-front-product.webp",
+          "alt": "Chiffon Column - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "jersey-dress",
+      "title": "Jersey Dress",
+      "description": "Fluid lines and a precise drape that moves with you, from the first meeting to the last call. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Dresses",
+      "materials": [
+        "Jersey"
+      ],
+      "tags": [
+        "dresses",
+        "jersey"
+      ],
+      "priceCents": 36500,
+      "compareAtCents": null,
+      "featuredRank": null,
+      "collections": [
+        "dresses"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "JERSEY-DRESS-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 14
+        },
+        {
+          "sku": "JERSEY-DRESS-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 9
+        },
+        {
+          "sku": "JERSEY-DRESS-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 4
+        },
+        {
+          "sku": "JERSEY-DRESS-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 0
+        },
+        {
+          "sku": "JERSEY-DRESS-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 7
+        },
+        {
+          "sku": "JERSEY-DRESS-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 2
+        },
+        {
+          "sku": "JERSEY-DRESS-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 15
+        },
+        {
+          "sku": "JERSEY-DRESS-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 10
+        }
+      ],
+      "images": [
+        {
+          "file": "jersey-dress-obsidian-black-full-model.webp",
+          "alt": "Jersey Dress - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "jersey-dress-obsidian-black-front-product.webp",
+          "alt": "Jersey Dress - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "jersey-dress-obsidian-black-side-model.webp",
+          "alt": "Jersey Dress - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "jersey-dress-oxblood-burgundy-front-product.webp",
+          "alt": "Jersey Dress - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "draped-slip",
+      "title": "Draped Slip",
+      "description": "Fluid lines and a precise drape that moves with you, from the first meeting to the last call. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Dresses",
+      "materials": [
+        "Chiffon"
+      ],
+      "tags": [
+        "dresses",
+        "chiffon"
+      ],
+      "priceCents": 33000,
+      "compareAtCents": 40244,
+      "featuredRank": null,
+      "collections": [
+        "dresses"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "DRAPED-SLIP-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 7
+        },
+        {
+          "sku": "DRAPED-SLIP-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 2
+        },
+        {
+          "sku": "DRAPED-SLIP-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 15
+        },
+        {
+          "sku": "DRAPED-SLIP-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 10
+        },
+        {
+          "sku": "DRAPED-SLIP-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 18
+        },
+        {
+          "sku": "DRAPED-SLIP-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 13
+        },
+        {
+          "sku": "DRAPED-SLIP-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 8
+        },
+        {
+          "sku": "DRAPED-SLIP-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 3
+        }
+      ],
+      "images": [
+        {
+          "file": "draped-slip-obsidian-black-full-model.webp",
+          "alt": "Draped Slip - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "draped-slip-obsidian-black-front-product.webp",
+          "alt": "Draped Slip - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "draped-slip-obsidian-black-side-model.webp",
+          "alt": "Draped Slip - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "draped-slip-oxblood-burgundy-front-product.webp",
+          "alt": "Draped Slip - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "raven-trench",
+      "title": "Raven Trench",
+      "description": "A considered outer layer with a strong silhouette, built for weather and for the city at night. Fully lined with clean, minimal hardware. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Outerwear",
+      "materials": [
+        "Wool"
+      ],
+      "tags": [
+        "outerwear",
+        "wool"
+      ],
+      "priceCents": 26000,
+      "compareAtCents": 31325,
+      "featuredRank": null,
+      "collections": [
+        "outerwear"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "RAVEN-TRENCH-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 14
+        },
+        {
+          "sku": "RAVEN-TRENCH-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 9
+        },
+        {
+          "sku": "RAVEN-TRENCH-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 4
+        },
+        {
+          "sku": "RAVEN-TRENCH-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 0
+        },
+        {
+          "sku": "RAVEN-TRENCH-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 7
+        },
+        {
+          "sku": "RAVEN-TRENCH-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 2
+        },
+        {
+          "sku": "RAVEN-TRENCH-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 15
+        },
+        {
+          "sku": "RAVEN-TRENCH-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 10
+        }
+      ],
+      "images": [
+        {
+          "file": "raven-trench-obsidian-black-full-model.webp",
+          "alt": "Raven Trench - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "raven-trench-obsidian-black-front-product.webp",
+          "alt": "Raven Trench - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "raven-trench-obsidian-black-side-model.webp",
+          "alt": "Raven Trench - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "raven-trench-oxblood-burgundy-front-product.webp",
+          "alt": "Raven Trench - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "leather-tee",
+      "title": "Leather Tee",
+      "description": "An elevated essential with a clean neckline and a relaxed, boxy shape. Designed for effortless layering. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Tops",
+      "materials": [
+        "Leather",
+        "Cotton"
+      ],
+      "tags": [
+        "tops",
+        "leather",
+        "cotton"
+      ],
+      "priceCents": 32500,
+      "compareAtCents": 44521,
+      "featuredRank": null,
+      "collections": [
+        "tops",
+        "leathers",
+        "cotton"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "LEATHER-TEE-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 7
+        },
+        {
+          "sku": "LEATHER-TEE-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 2
+        },
+        {
+          "sku": "LEATHER-TEE-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 15
+        },
+        {
+          "sku": "LEATHER-TEE-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 10
+        },
+        {
+          "sku": "LEATHER-TEE-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 18
+        },
+        {
+          "sku": "LEATHER-TEE-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 13
+        },
+        {
+          "sku": "LEATHER-TEE-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 8
+        },
+        {
+          "sku": "LEATHER-TEE-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 3
+        }
+      ],
+      "images": [
+        {
+          "file": "leather-tee-obsidian-black-full-model.webp",
+          "alt": "Leather Tee - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "leather-tee-obsidian-black-front-product.webp",
+          "alt": "Leather Tee - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "leather-tee-obsidian-black-side-model.webp",
+          "alt": "Leather Tee - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "leather-tee-oxblood-burgundy-full-model.webp",
+          "alt": "Leather Tee - Oxblood Burgundy - full model",
+          "color": "Oxblood Burgundy"
+        },
+        {
+          "file": "leather-tee-oxblood-burgundy-front-product.webp",
+          "alt": "Leather Tee - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        },
+        {
+          "file": "leather-tee-oxblood-burgundy-side-model.webp",
+          "alt": "Leather Tee - Oxblood Burgundy - side model",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "gloom-dress",
+      "title": "Obsidian Classic Gloom Dress",
+      "description": "Fluid lines and a precise drape that moves with you, from the first meeting to the last call. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Dresses",
+      "materials": [
+        "Cotton"
+      ],
+      "tags": [
+        "dresses",
+        "cotton"
+      ],
+      "priceCents": 36000,
+      "compareAtCents": 47368,
+      "featuredRank": null,
+      "collections": [
+        "dresses",
+        "cotton"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "GLOOM-DRESS-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 7
+        },
+        {
+          "sku": "GLOOM-DRESS-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 2
+        },
+        {
+          "sku": "GLOOM-DRESS-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 15
+        },
+        {
+          "sku": "GLOOM-DRESS-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 10
+        },
+        {
+          "sku": "GLOOM-DRESS-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 18
+        },
+        {
+          "sku": "GLOOM-DRESS-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 13
+        },
+        {
+          "sku": "GLOOM-DRESS-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 8
+        },
+        {
+          "sku": "GLOOM-DRESS-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 3
+        }
+      ],
+      "images": [
+        {
+          "file": "gloom-dress-obsidian-black-full-model.webp",
+          "alt": "Obsidian Classic Gloom Dress - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "gloom-dress-obsidian-black-front-product.webp",
+          "alt": "Obsidian Classic Gloom Dress - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "gloom-dress-obsidian-black-side-model.webp",
+          "alt": "Obsidian Classic Gloom Dress - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "gloom-dress-oxblood-burgundy-front-product.webp",
+          "alt": "Obsidian Classic Gloom Dress - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "haze-tunic",
+      "title": "Haze Tunic",
+      "description": "An elevated essential with a clean neckline and a relaxed, boxy shape. Designed for effortless layering. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Tops",
+      "materials": [
+        "Chiffon",
+        "Jersey"
+      ],
+      "tags": [
+        "tops",
+        "chiffon",
+        "jersey"
+      ],
+      "priceCents": 29000,
+      "compareAtCents": null,
+      "featuredRank": null,
+      "collections": [
+        "tops"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "HAZE-TUNIC-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 18
+        },
+        {
+          "sku": "HAZE-TUNIC-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 13
+        },
+        {
+          "sku": "HAZE-TUNIC-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 8
+        },
+        {
+          "sku": "HAZE-TUNIC-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 3
+        },
+        {
+          "sku": "HAZE-TUNIC-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 11
+        },
+        {
+          "sku": "HAZE-TUNIC-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 0
+        },
+        {
+          "sku": "HAZE-TUNIC-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 19
+        },
+        {
+          "sku": "HAZE-TUNIC-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 14
+        }
+      ],
+      "images": [
+        {
+          "file": "haze-tunic-obsidian-black-full-model.webp",
+          "alt": "Haze Tunic - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "haze-tunic-obsidian-black-front-product.webp",
+          "alt": "Haze Tunic - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "haze-tunic-obsidian-black-side-model.webp",
+          "alt": "Haze Tunic - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "haze-tunic-oxblood-burgundy-front-product.webp",
+          "alt": "Haze Tunic - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "ghost-mesh",
+      "title": "Ghost Mesh",
+      "description": "An elevated essential with a clean neckline and a relaxed, boxy shape. Designed for effortless layering. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Tops",
+      "materials": [
+        "Chiffon"
+      ],
+      "tags": [
+        "tops",
+        "chiffon"
+      ],
+      "priceCents": 30500,
+      "compareAtCents": null,
+      "featuredRank": null,
+      "collections": [
+        "tops"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "GHOST-MESH-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 18
+        },
+        {
+          "sku": "GHOST-MESH-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 13
+        },
+        {
+          "sku": "GHOST-MESH-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 8
+        },
+        {
+          "sku": "GHOST-MESH-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 3
+        },
+        {
+          "sku": "GHOST-MESH-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 11
+        },
+        {
+          "sku": "GHOST-MESH-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 0
+        },
+        {
+          "sku": "GHOST-MESH-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 19
+        },
+        {
+          "sku": "GHOST-MESH-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 14
+        }
+      ],
+      "images": [
+        {
+          "file": "ghost-mesh-obsidian-black-full-model.webp",
+          "alt": "Ghost Mesh - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "ghost-mesh-obsidian-black-front-product.webp",
+          "alt": "Ghost Mesh - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "ghost-mesh-obsidian-black-side-model.webp",
+          "alt": "Ghost Mesh - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "ghost-mesh-oxblood-burgundy-front-product.webp",
+          "alt": "Ghost Mesh - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "noir-mini",
+      "title": "Noir Mini",
+      "description": "Fluid lines and a precise drape that moves with you, from the first meeting to the last call. Available in Obsidian Black and Oxblood Burgundy.",
+      "productType": "Dresses",
+      "materials": [
+        "Cotton"
+      ],
+      "tags": [
+        "dresses",
+        "cotton"
+      ],
+      "priceCents": 35500,
+      "compareAtCents": null,
+      "featuredRank": null,
+      "collections": [
+        "dresses",
+        "cotton"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        },
+        {
+          "name": "Oxblood Burgundy",
+          "hex": "#4A0F1B"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "NOIR-MINI-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 0
+        },
+        {
+          "sku": "NOIR-MINI-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 6
+        },
+        {
+          "sku": "NOIR-MINI-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 19
+        },
+        {
+          "sku": "NOIR-MINI-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 14
+        },
+        {
+          "sku": "NOIR-MINI-OXBU-S",
+          "color": "Oxblood Burgundy",
+          "size": "S",
+          "initialStock": 4
+        },
+        {
+          "sku": "NOIR-MINI-OXBU-M",
+          "color": "Oxblood Burgundy",
+          "size": "M",
+          "initialStock": 17
+        },
+        {
+          "sku": "NOIR-MINI-OXBU-L",
+          "color": "Oxblood Burgundy",
+          "size": "L",
+          "initialStock": 12
+        },
+        {
+          "sku": "NOIR-MINI-OXBU-XL",
+          "color": "Oxblood Burgundy",
+          "size": "XL",
+          "initialStock": 0
+        }
+      ],
+      "images": [
+        {
+          "file": "noir-mini-obsidian-black-full-model.webp",
+          "alt": "Noir Mini - Obsidian Black - full model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "noir-mini-obsidian-black-front-product.webp",
+          "alt": "Noir Mini - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "noir-mini-obsidian-black-side-model.webp",
+          "alt": "Noir Mini - Obsidian Black - side model",
+          "color": "Obsidian Black"
+        },
+        {
+          "file": "noir-mini-oxblood-burgundy-front-product.webp",
+          "alt": "Noir Mini - Oxblood Burgundy - front product",
+          "color": "Oxblood Burgundy"
+        }
+      ]
+    },
+    {
+      "handle": "indigo-trousers",
+      "title": "Indigo Trousers",
+      "description": "Clean lines, a considered rise and a relaxed leg that pairs with everything from tailoring to tees. Available in Obsidian Black.",
+      "productType": "Bottoms",
+      "materials": [
+        "Cotton"
+      ],
+      "tags": [
+        "bottoms",
+        "cotton"
+      ],
+      "priceCents": 40500,
+      "compareAtCents": null,
+      "featuredRank": null,
+      "collections": [
+        "bottoms",
+        "cotton"
+      ],
+      "colors": [
+        {
+          "name": "Obsidian Black",
+          "hex": "#000000"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "INDIGO-TROUSERS-OBBL-S",
+          "color": "Obsidian Black",
+          "size": "S",
+          "initialStock": 17
+        },
+        {
+          "sku": "INDIGO-TROUSERS-OBBL-M",
+          "color": "Obsidian Black",
+          "size": "M",
+          "initialStock": 12
+        },
+        {
+          "sku": "INDIGO-TROUSERS-OBBL-L",
+          "color": "Obsidian Black",
+          "size": "L",
+          "initialStock": 7
+        },
+        {
+          "sku": "INDIGO-TROUSERS-OBBL-XL",
+          "color": "Obsidian Black",
+          "size": "XL",
+          "initialStock": 2
+        }
+      ],
+      "images": [
+        {
+          "file": "indigo-trousers-obsidian-black-front-product.webp",
+          "alt": "Indigo Trousers - Obsidian Black - front product",
+          "color": "Obsidian Black"
+        }
+      ]
+    }
+  ],
+  "collections": [
+    {
+      "handle": "tops",
+      "title": "Tops",
+      "description": "Elevated essentials and sharp layers.",
+      "products": [
+        "ink-asymmetric",
+        "woven-crop",
+        "leather-tee",
+        "haze-tunic",
+        "ghost-mesh"
+      ]
+    },
+    {
+      "handle": "bottoms",
+      "title": "Bottoms",
+      "description": "Trousers, culottes and skirts with clean lines.",
+      "products": [
+        "slouchy-culottes-set",
+        "wrap-skirt",
+        "indigo-trousers"
+      ]
+    },
+    {
+      "handle": "dresses",
+      "title": "Dresses",
+      "description": "Fluid forms, redefined.",
+      "products": [
+        "zenith-shift",
+        "stonewash-mini",
+        "chiffon-column",
+        "jersey-dress",
+        "draped-slip",
+        "gloom-dress",
+        "noir-mini"
+      ]
+    },
+    {
+      "handle": "footwear",
+      "title": "Footwear",
+      "description": "Boots and loafers built for the city.",
+      "products": [
+        "sharp-boot"
+      ]
+    },
+    {
+      "handle": "outerwear",
+      "title": "Outerwear",
+      "description": "The art of everyday layers.",
+      "products": [
+        "sable-blazer",
+        "umber-jacket",
+        "raven-trench"
+      ]
+    },
+    {
+      "handle": "blazers",
+      "title": "Blazers",
+      "description": "Tailoring, reconsidered.",
+      "products": [
+        "sable-blazer"
+      ]
+    },
+    {
+      "handle": "knitwear",
+      "title": "Knitwear",
+      "description": "Soft structure in dense knits.",
+      "products": [
+        "abyssal-cardigan",
+        "calm-pullover"
+      ]
+    },
+    {
+      "handle": "leathers",
+      "title": "Leathers",
+      "description": "Leather and heavy cotton that wear in, not out.",
+      "products": [
+        "sharp-boot",
+        "leather-tee"
+      ]
+    },
+    {
+      "handle": "cotton",
+      "title": "Cotton",
+      "description": "Breathable everyday pieces.",
+      "products": [
+        "ink-asymmetric",
+        "slouchy-culottes-set",
+        "umber-jacket",
+        "woven-crop",
+        "zenith-shift",
+        "wrap-skirt",
+        "stonewash-mini",
+        "leather-tee",
+        "gloom-dress",
+        "noir-mini",
+        "indigo-trousers"
+      ]
+    }
+  ]
+}

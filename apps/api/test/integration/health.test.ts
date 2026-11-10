@@ -23,6 +23,7 @@ function config(overrides: Record<string, string> = {}) {
 describe('health con dependencias reales', () => {
   it('ok con bases y Redis arriba', async () => {
     infra = await createInfrastructure(config(), silentLogger, new Metrics(), []);
+    await infra.writeDb.query('UPDATE outbox SET processed_at = now() WHERE processed_at IS NULL'); // eventos de otras suites
     const report = await infra.health.ready();
     expect(report.status).toBe('ok');
     expect(report.checks.writeDb.status).toBe('up');
