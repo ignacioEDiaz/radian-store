@@ -47,3 +47,33 @@
   align-items: center;
   gap: var(--space-4);
 }
+
+.action,
+.linkButton {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.linkButton {
+  background: none;
+  border: 0;
+  color: var(--color-muted);
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+
+.linkButton:hover {
+  color: var(--color-text);
+}
+
+@media (max-width: 640px) {
+  .nav {
+    font-size: 12px;
+  }
+  .logo {
+    font-size: 16px;
+    letter-spacing: 0.2em;
+  }
+}

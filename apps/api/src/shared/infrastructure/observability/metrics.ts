@@ -82,6 +82,14 @@ export class Metrics {
     registers: [this.registry],
   });
 
+  // --- Negocio ---
+  readonly authLogins = new Counter({
+    name: 'auth_login_total',
+    help: 'Intentos de login por resultado',
+    labelNames: ['result'] as const,
+    registers: [this.registry],
+  });
+
   constructor(options: { defaultMetrics?: boolean } = {}) {
     if (options.defaultMetrics) collectDefaultMetrics({ register: this.registry });
   }

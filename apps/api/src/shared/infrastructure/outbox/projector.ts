@@ -44,12 +44,12 @@ export class Projector {
   private running: Promise<void> | undefined;
   private rerun = false;
   private stopped = true;
-  private readonly byType = new Map<string, EventConsumer[]>();
 
-  constructor(private readonly o: ProjectorOptions) {
-    for (const c of o.consumers) {
-      for (const type of c.handles) this.byType.set(type, [...(this.byType.get(type) ?? []), c]);
-    }
+  constructor(private readonly o: ProjectorOptions) {}
+
+  /** Se resuelve en cada lote: los consumidores pueden registrarse después de crear el proyector. */
+  private consumersFor(type: string): EventConsumer[] {
+    return this.o.consumers.filter((c) => c.handles.includes(type));
   }
 
   async start(): Promise<void> {
@@ -119,7 +119,7 @@ export class Projector {
       for (const row of rows) {
         const event = toEvent(row);
         try {
-          for (const consumer of this.byType.get(event.type) ?? []) {
+          for (const consumer of this.consumersFor(event.type)) {
             const result = await this.applyConsumer(consumer, event);
             result?.invalidate?.forEach((t) => tags.add(t));
           }

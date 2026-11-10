@@ -55,15 +55,15 @@ export class ConflictError extends AppError {
 
 export class UnauthorizedError extends AppError {
   readonly kind = 'unauthorized';
-  constructor(message = 'Necesitás iniciar sesión') {
-    super('UNAUTHENTICATED', message);
+  constructor(message = 'Necesitás iniciar sesión', code = 'UNAUTHENTICATED') {
+    super(code, message);
   }
 }
 
 export class ForbiddenError extends AppError {
   readonly kind = 'forbidden';
-  constructor(message = 'No tenés permiso para esta operación') {
-    super('FORBIDDEN', message);
+  constructor(message = 'No tenés permiso para esta operación', code = 'FORBIDDEN') {
+    super(code, message);
   }
 }
 

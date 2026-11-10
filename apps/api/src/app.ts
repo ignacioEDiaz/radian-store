@@ -1,6 +1,8 @@
 import Fastify, { type FastifyBaseLogger, type FastifyInstance } from 'fastify';
 import helmet from '@fastify/helmet';
 import cors from '@fastify/cors';
+import cookie from '@fastify/cookie';
+import { ForbiddenError } from './shared/domain/errors.js';
 import type { Logger } from './shared/infrastructure/observability/logger.js';
 import type { Metrics } from './shared/infrastructure/observability/metrics.js';
 import type { HealthService } from './shared/infrastructure/observability/health/health-service.js';
@@ -8,7 +10,7 @@ import { registerErrorHandling } from './shared/infrastructure/http/error-handle
 import { registerObservability } from './shared/infrastructure/http/observability-routes.js';
 
 export interface AppDeps {
-  config: { version: string; webOrigin: string; enableDiagRoutes: boolean; env: string };
+  config: { version: string; webOrigin: string; enableDiagRoutes: boolean; env: string; cookieSecret?: string };
   logger: Logger;
   metrics: Metrics;
   health: HealthService;
@@ -43,8 +45,19 @@ export async function buildApp(deps: AppDeps, modules: AppModule[] = []): Promis
 
   await app.register(helmet, { contentSecurityPolicy: false, crossOriginResourcePolicy: { policy: 'same-site' } });
   await app.register(cors, { origin: deps.config.webOrigin, credentials: true });
+  await app.register(cookie, { secret: deps.config.cookieSecret ?? 'test-cookie-secret-0123456789abcdef' });
 
   registerErrorHandling(app);
+
+  // CSRF: las mutaciones de la API solo se aceptan desde el origen de la web (o sin Origin: clientes no-navegador).
+  const MUTATIONS = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
+  app.addHook('onRequest', async (req) => {
+    if (!MUTATIONS.has(req.method) || !req.url.startsWith('/api/')) return;
+    const origin = req.headers.origin;
+    if (origin && origin !== deps.config.webOrigin) {
+      throw new ForbiddenError('Origen no permitido', 'BAD_ORIGIN');
+    }
+  });
   registerObservability(app, deps);
 
   if (deps.config.enableDiagRoutes && deps.diagPool) {
