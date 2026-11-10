@@ -38,7 +38,10 @@ export class UploadMedia {
   async execute(data: Buffer): Promise<{ asset: MediaAssetView; created: boolean }> {
     const sha256 = createHash('sha256').update(data).digest('hex');
     const existing = await this.d.uow.run((repo) => repo.findBySha256(sha256));
-    if (existing) return { asset: toMediaView(existing), created: false };
+    if (existing) {
+      await this.repairIfMissing(existing, data);
+      return { asset: toMediaView(existing), created: false };
+    }
 
     const processed = await this.d.processor.process(data, MediaAsset.widthsFor);
     const id = this.d.ids.uuid();
@@ -65,6 +68,18 @@ export class UploadMedia {
         if (winner) return { asset: toMediaView(winner), created: false };
       }
       throw err;
+    }
+  }
+
+  /** Autorreparación: el registro existe pero faltan archivos (volumen recreado, restore parcial). */
+  private async repairIfMissing(asset: MediaAsset, data: Buffer): Promise<void> {
+    const s = asset.toSnapshot();
+    const missing = [];
+    for (const w of s.widths) if (!(await this.d.storage.read(`${s.id}/${w}.webp`))) missing.push(w);
+    if (missing.length === 0) return;
+    const processed = await this.d.processor.process(data, () => s.widths);
+    for (const r of processed.renditions) {
+      if (missing.includes(r.width)) await this.d.storage.put(`${s.id}/${r.width}.webp`, r.data);
     }
   }
 }

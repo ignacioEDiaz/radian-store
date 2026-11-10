@@ -70,7 +70,7 @@ const panels = [
   row('Resumen'),
   ...line(
     stat('Pedidos/s', 'sum(rate(http_requests_total[1m]))', { unit: 'reqps', decimals: 2 }),
-    stat('Errores 5xx', 'sum(rate(http_requests_total{status=~"5.."}[5m])) / clamp_min(sum(rate(http_requests_total[5m])), 1e-9)', { unit: 'percentunit', thresholds: red }),
+    stat('Errores 5xx', '(sum(rate(http_requests_total{status=~"5.."}[5m])) or vector(0)) / clamp_min(sum(rate(http_requests_total[5m])), 1e-9)', { unit: 'percentunit', thresholds: red }),
     stat('Latencia p95', 'histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket[5m])))', { unit: 's', decimals: 3 }),
     stat('Cache hit ratio', 'sum(rate(cache_requests_total{result="hit"}[5m])) / clamp_min(sum(rate(cache_requests_total[5m])), 1e-9)', {
       unit: 'percentunit',
@@ -125,6 +125,10 @@ const panels = [
     ts('Operaciones de carrito', [['sum by (op) (rate(cart_operations_total[5m]))', '{{op}}']], { unit: 'ops', w: 6 }),
     ts('Pedidos', [['sum by (result) (increase(orders_placed_total[5m]))', '{{result}}']], { w: 6 }),
     ts('Pagos', [['sum by (result) (increase(payment_attempts_total[5m]))', '{{result}}']], { w: 6 }),
+  ),
+  ...line(
+    ts('Subidas de imágenes', [['sum by (result) (increase(media_uploads_total[5m]))', '{{result}}']], { w: 12 }),
+    ts('Procesamiento de imágenes p95', [['histogram_quantile(0.95, sum by (le) (rate(media_processing_seconds_bucket[5m])))', 'p95']], { unit: 's', w: 12 }),
   ),
   row('Proceso Node.js'),
   ...line(

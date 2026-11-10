@@ -49,6 +49,8 @@ export async function importCatalog(d: ImportDeps): Promise<{ productsCreated: n
     const existing = await d.writeDb.query<{ id: string }>('SELECT product_id AS id FROM product_variants WHERE sku = $1', [p.variants[0]?.sku ?? '']);
     if (existing.rows[0]) {
       idsByHandle.set(p.handle, existing.rows[0].id);
+      // Re-subir es idempotente (dedupe por sha256) y repara archivos faltantes en el almacenamiento.
+      for (const img of p.images) await d.upload.execute(await readFile(path.join(d.seedDir, 'images', img.file)));
       continue;
     }
     let product = await d.products.createProduct({

@@ -64,6 +64,15 @@ describe('UploadMedia', () => {
     expect(storage.files.size).toBe(2);
   });
 
+  it('si el asset existe pero sus archivos se perdieron del almacenamiento, los regenera con el mismo id', async () => {
+    const { upload, storage } = setup();
+    const first = await upload.execute(Buffer.from('perdida'));
+    storage.files.clear(); // p. ej. volumen recreado o backup de base sin archivos
+    const again = await upload.execute(Buffer.from('perdida'));
+    expect(again).toEqual({ asset: first.asset, created: false });
+    expect([...storage.files.keys()].sort()).toEqual([`${first.asset.id}/320.webp`, `${first.asset.id}/640.webp`]);
+  });
+
   it('no deja archivos huérfanos si falla el guardado en base', async () => {
     const { upload, storage, repo } = setup();
     repo.failSave = true;

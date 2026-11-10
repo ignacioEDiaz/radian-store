@@ -102,13 +102,13 @@ implementación.
 
 - [x] T043 [US1] `apps/web/src/shared/api/` (httpClient, ApiError, queryKeys) y `src/app/` (QueryClientProvider, router, Layout con header/footer de la marca)
 - [x] T044 [US1] `apps/web/src/features/system/` (systemService, useHealth, StatusPage en `/estado`)
-- [ ] T045 [US1] Dockerfiles `apps/api/Dockerfile` y `apps/web/Dockerfile` (multi-stage; web servida por nginx con proxy `/api` y `/media`)
+- [x] T045 [US1] Dockerfiles `apps/api/Dockerfile` y `apps/web/Dockerfile` (multi-stage; web servida por nginx con proxy `/api` y `/media`)
 - [x] T046 [US1] `README.md` raíz con arquitectura (diagrama), comandos y capturas de Grafana
 
 ## Phase 9: Polish
 
 - [x] T047 Ejecutar `npm run lint && npm run typecheck && npm run arch && npm test && npm run test:integration` en verde
-- [ ] T048 Validar quickstart.md de punta a punta
+- [x] T048 Validar quickstart.md de punta a punta
 
 ## Dependencies
 

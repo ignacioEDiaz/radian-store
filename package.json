@@ -20,7 +20,8 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "arch": "depcruise apps/api/src --config .dependency-cruiser.cjs",
     "format": "prettier --write .",
-    "test:e2e": "npm run test:e2e -w @radian/web"
+    "test:e2e": "npm run test:e2e -w @radian/web",
+    "seed": "npm run seed:catalog -w @radian/api"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",

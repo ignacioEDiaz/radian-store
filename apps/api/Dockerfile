@@ -25,6 +25,8 @@ RUN npm ci --omit=dev --workspace @radian/api --workspace @radian/contracts --in
  && npm cache clean --force
 COPY --from=build /repo/packages/contracts/dist packages/contracts/dist
 COPY --from=build /repo/apps/api/dist apps/api/dist
+# El volumen de imágenes debe pertenecer al usuario sin privilegios (un volumen nuevo hereda estos permisos).
+RUN mkdir -p /data/media && chown -R node:node /data/media
 WORKDIR /repo/apps/api
 USER node
 EXPOSE 3000
