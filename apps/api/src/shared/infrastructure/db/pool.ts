@@ -50,10 +50,18 @@ export function createPool(options: PoolOptions, metrics: Metrics, logger: Logge
   const label = { pool: options.name };
   metrics.poolMax.set(label, options.max);
 
-  pool.on('error', (err) => {
-    metrics.poolErrors.inc(label);
-    logger.error({ event: 'pool.idle_client_error', pool: options.name, err }, 'Conexión inactiva del pool falló');
+  // `pg` solo escucha errores en las conexiones inactivas. Si el servidor corta una conexión
+  // mientras está en uso (p. ej. por idle-in-transaction timeout o un reinicio de PostgreSQL), el
+  // cliente emite `error`; sin este listener ese evento tiraba el proceso entero. Con él, falla
+  // solo la operación en curso y `withClient` descarta la conexión rota.
+  pool.on('connect', (client) => {
+    client.on('error', (err) => {
+      metrics.poolErrors.inc(label);
+      logger.error({ event: 'pool.client_error', pool: options.name, err }, 'Una conexión del pool falló');
+    });
   });
+  // Requerido por `pg` para conexiones inactivas; el conteo y el log ya los hace el listener de arriba.
+  pool.on('error', () => undefined);
 
   async function acquire(): Promise<PoolClient> {
     const end = metrics.poolAcquire.startTimer(label);
