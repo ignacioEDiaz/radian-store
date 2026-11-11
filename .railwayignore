@@ -1,0 +1,14 @@
+# La API no necesita nada de esto para construirse (ver apps/api/Dockerfile).
+node_modules
+apps/web/public
+apps/web/src
+apps/web/theme
+apps/web/e2e
+apps/web/dist
+apps/api/dist
+apps/api/test
+apps/api/storage
+/docs
+/specs
+/infra
+/tools

@@ -139,6 +139,46 @@ docker compose -f infra/docker-compose.yml exec api node dist/src/scripts/seed-c
 Tarjetas de prueba: `4242 4242 4242 4242` (aprobada), `4000 0000 0000 0002` (rechazada),
 `4000 0000 0000 9995` (fondos insuficientes), `4000 0000 0000 0119` (timeout del proveedor).
 
+## Despliegue
+
+En producción: **https://radian-store.vercel.app**
+
+```
+navegador ──▶ Vercel (web estática: home del tema + app React)
+                 │  /api/* · /media/* · /health/*   (rewrites de vercel.json)
+                 ▼
+              Railway: api ──▶ write-db (PostgreSQL) · read-db (PostgreSQL) · redis
+                        └──▶ volumen /data/media (imágenes de producto)
+```
+
+La web llama a la API con rutas relativas y Vercel las reenvía a Railway, igual que nginx en la
+versión con contenedores. Así el navegador ve un solo origen: las cookies de sesión y de carrito
+son `SameSite=Lax` sin CORS, y la protección por `Origin` de la API sigue valiendo tal cual.
+
+| Pieza | Dónde | Configuración |
+|-------|-------|---------------|
+| Web | Vercel, proyecto `radian-store` | [`vercel.json`](vercel.json): build del workspace, proxy a la API, fallback a `app.html`, caché de `/assets` y del tema |
+| API | Railway, servicio `api` | `apps/api/Dockerfile` (migra al arrancar), health check `/health/live`, volumen en `/data/media` |
+| Bases | Railway, `write-db` y `read-db` | PostgreSQL administrado; la API las recibe por red privada |
+| Caché | Railway, `redis` | `REDIS_URL` con `?family=0` (red privada IPv6) |
+
+Variables del servicio `api`: `WEB_ORIGIN` (URL de la web en Vercel), `WRITE_DATABASE_URL`,
+`READ_DATABASE_URL`, `REDIS_URL`, `MEDIA_DIR=/data/media`, `SESSION_SECRET`, `COOKIE_SECRET`,
+`ADMIN_EMAIL`, `ADMIN_PASSWORD`, `VIEWER_EMAIL`, `VIEWER_PASSWORD`, `RAILWAY_DOCKERFILE_PATH`
+y `RAILWAY_RUN_UID=0` (el volumen se monta como root). Los secretos y la contraseña del admin se
+generaron al desplegar y viven solo en Railway; la cuenta demo de solo lectura es pública.
+
+```bash
+railway up --service api --ci     # API: sube el repo y construye el Dockerfile
+npx vercel deploy --prod          # Web
+E2E_BASE_URL=https://radian-store.vercel.app npm run test:e2e -w @radian/web -- --project desktop
+```
+
+El catálogo se carga una sola vez con `node dist/src/scripts/seed-catalog.js` dentro del
+contenedor de la API (`railway ssh`, o como comando de inicio temporal del servicio). Si cambia el
+dominio de la API hay que actualizar los `rewrites` de `vercel.json`; si cambia el de la web,
+`WEB_ORIGIN`. Prometheus y Grafana quedan solo en el entorno local.
+
 ## Calidad
 
 ```bash
