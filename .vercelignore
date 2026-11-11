@@ -1,0 +1,12 @@
+# La web solo necesita apps/web, packages/contracts y los package.json del workspace.
+node_modules
+apps/api/*
+!apps/api/package.json
+apps/web/dist
+apps/web/e2e
+apps/web/test-results
+apps/web/playwright-report
+/docs
+/specs
+/infra
+/tools
