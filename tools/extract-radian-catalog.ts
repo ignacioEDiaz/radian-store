@@ -93,8 +93,31 @@ for (const m of html.matchAll(/<script[^>]*type="application\/json"[^>]*>(\[\{"i
   const colors = [...new Set(variants.map((v) => v.option1))];
   const fake = `<a class="product-card-info__link">${v0.name.split(' - ')[0]}</a> $${(v0.price / 100).toFixed(2)} ${
     v0.compare_at_price ? `$${(v0.compare_at_price / 100).toFixed(2)}` : ''
-  } ${colors.map((c) => `--swatch-bg: ${c.startsWith('Oxblood') ? '#4A0F1B' : '#000000'}; data-swatch="${c}"`).join(' ')}`;
+  } ${colors.map((c) => `<i style="--swatch-bg: ${c.startsWith('Oxblood') ? '#4A0F1B' : '#000000'};" data-swatch="${c}"></i>`).join(' ')}`;
   cards.set(handle, fake);
+}
+/**
+ * El "product finder" de la home lista el catálogo completo: título, precio, imagen, primera
+ * variante y los términos reales (tipo + colecciones) de cada producto.
+ */
+interface FinderEntry { title: string; terms: string[]; image: string | null; variantId: string }
+const finder = new Map<string, FinderEntry>();
+for (const m of html.matchAll(/<li class="product-finder__result"[^>]*data-terms="([^"]*)"([\s\S]*?)<\/li>/g)) {
+  const body = m[2]!;
+  const handle = /href="\/products\/([a-z0-9-]+)"/.exec(body)?.[1];
+  if (!handle || SKIP.has(handle) || finder.has(handle)) continue;
+  const title = decode(/product-finder__result-title[^>]*>([^<]+)</.exec(body)?.[1]?.trim() ?? handle);
+  const image = /<img[^>]*src="[^"]*\/files\/([^"?]+?)\.(?:png|jpe?g|webp)/.exec(body)?.[1] ?? null;
+  finder.set(handle, {
+    title,
+    terms: [...new Set(m[1]!.split(',').map((t) => t.trim().replace(/\s+/g, '-')).filter(Boolean))],
+    image,
+    variantId: /data-variant-id="(\d+)"/.exec(body)?.[1] ?? '',
+  });
+  if (!cards.has(handle)) {
+    const amounts = [...body.matchAll(/\$([\d,]+\.\d\d)/g)].map((a) => a[1]!);
+    cards.set(handle, `<a class="product-card-info__link">${title}</a> ${amounts.slice(0, 2).map((a) => `$${a}`).join(' ')}`);
+  }
 }
 const handles = [...cards.keys()];
 
@@ -114,6 +137,20 @@ interface SeedProduct {
   images: { file: string; alt: string; color: string }[];
 }
 
+/** Colecciones que existen en la tienda original (los links del tema apuntan a estos handles). */
+const COLLECTION_HANDLES = new Set([
+  'bestseller', 'featured', 'new-arrial', 'sale-off', 'blazer', 'outwear', 'skirts', 'gloves', 'loungewear', 'co-ords',
+  'leather-jackets', 'tops', 'bottoms', 'dresses', 'footwear', 'outerwear', 'leathers', 'cotton',
+]);
+
+const KNOWN_COLORS: Record<string, { name: string; hex: string }> = {
+  'obsidian-black': { name: 'Obsidian Black', hex: '#000000' },
+  'oxblood-burgundy': { name: 'Oxblood Burgundy', hex: '#4A0F1B' },
+  'bone-ivory': { name: 'Bone Ivory', hex: '#E9E2D3' },
+  'chocolate-brown': { name: 'Chocolate Brown', hex: '#4B2E22' },
+  'charcoal-grey': { name: 'Charcoal Grey', hex: '#3A3A3C' },
+};
+
 const VIEW_ORDER = ['full-model', 'front-product', 'side-model', 'back-product', 'back-model', 'detail'];
 const products: SeedProduct[] = [];
 let rank = 1;
@@ -127,7 +164,12 @@ for (const handle of handles) {
   const compare = amounts[1] && cents(amounts[1]) > cents(amounts[0]!) ? [null, amounts[1]] : null;
   const colors = [...card.matchAll(/--swatch-bg: (#[0-9A-Fa-f]{6})[^>]*data-swatch="([^"]+)"/g)].map((m) => ({ name: decode(m[2]!), hex: m[1]! }));
   const uniqueColors = colors.filter((c, i) => colors.findIndex((x) => x.name === c.name) === i);
-  if (uniqueColors.length === 0) uniqueColors.push({ name: 'Obsidian Black', hex: '#000000' });
+  if (uniqueColors.length === 0) {
+    for (const [slugged, color] of Object.entries(KNOWN_COLORS)) {
+      if ([...filesByBase.keys()].some((b) => b.startsWith(`${handle}-${slugged}-`))) uniqueColors.push(color);
+    }
+  }
+  if (uniqueColors.length === 0) uniqueColors.push(KNOWN_COLORS['obsidian-black']!);
 
   const images: SeedProduct['images'] = [];
   for (const color of uniqueColors) {
@@ -139,12 +181,21 @@ for (const handle of handles) {
       images.push({ file: `${base}.webp`, alt: `${title} - ${color.name} - ${view}`, color: color.name });
     }
   }
+  const fallback = finder.get(handle)?.image?.replace(/__[0-9a-f]{10}$/, '');
+  if (images.length === 0 && fallback && filesByBase.has(fallback)) {
+    const color = uniqueColors[0]!;
+    filesByBase.set(`${handle}-${slug(color.name)}-full-model`, filesByBase.get(fallback)!);
+    images.push({ file: `${handle}-${slug(color.name)}-full-model.webp`, alt: `${title} - ${color.name}`, color: color.name });
+  }
   if (images.length === 0) {
     console.warn(`(sin imágenes, se omite) ${handle}`);
     continue;
   }
 
-  const { type, materials, collections } = classify(handle, title);
+  const classified = classify(handle, title);
+  const { type, materials } = classified;
+  const terms = (finder.get(handle)?.terms ?? []).filter((t) => COLLECTION_HANDLES.has(t));
+  const collections = [...new Set([...classified.collections, ...terms])];
   const priceCents = sale ? cents(sale[1]!) : 25_000;
   const compareCents = compare ? cents(compare[1]!) : null;
   const colorsWithImages = uniqueColors.filter((c) => images.some((i) => i.color === c.name));
@@ -180,6 +231,17 @@ function rankView(view: string): number {
 }
 
 const COLLECTIONS = [
+  ['bestseller', 'Best sellers', 'The pieces everyone comes back for.'],
+  ['featured', 'Featured', 'Selected by the studio this season.'],
+  ['new-arrial', 'New arrivals', 'Just landed.'],
+  ['sale-off', 'Sale', 'Limited offers on selected pieces.'],
+  ['blazer', 'Blazer', 'Tailoring, reconsidered.'],
+  ['outwear', 'Outwear', 'The art of everyday layers.'],
+  ['skirts', 'Skirts', 'Movement in every step.'],
+  ['gloves', 'Gloves', 'Finishing pieces cut close to the hand.'],
+  ['loungewear', 'Loungewear', 'Soft structure for slow days.'],
+  ['co-ords', 'Co-ords', 'One look, two pieces.'],
+  ['leather-jackets', 'Leather jackets', 'Leather that wears in, not out.'],
   ['tops', 'Tops', 'Elevated essentials and sharp layers.'],
   ['bottoms', 'Bottoms', 'Trousers, culottes and skirts with clean lines.'],
   ['dresses', 'Dresses', 'Fluid forms, redefined.'],
@@ -210,6 +272,64 @@ for (const p of products) {
     written += 1;
   }
 }
+
+/**
+ * El markup del tema referencia variantes por su id de Shopify. El puente del frontend las
+ * traduce a (producto, color, talle) y de ahí a la variante real de nuestro catálogo.
+ */
+const known = new Set(products.map((p) => p.handle));
+const variantMap: Record<string, [handle: string, color: string | null, size: string | null]> = {};
+const put = (id: unknown, handle: string | null | undefined, color: string | null, size: string | null) => {
+  if (!id || !handle || !known.has(handle) || variantMap[String(id)]) return;
+  variantMap[String(id)] = [handle, color, size];
+};
+const handleFromSku = (sku: string) => [...known].sort((a, b) => b.length - a.length).find((h) => sku.toLowerCase().startsWith(`${h}-`)) ?? null;
+const handleFromUrl = (url: unknown) => (typeof url === 'string' ? (/\/products\/([a-z0-9-]+)/.exec(url)?.[1] ?? null) : null);
+function walk(node: unknown, handle: string | null): void {
+  if (Array.isArray(node)) return node.forEach((n) => walk(n, handle));
+  if (!node || typeof node !== 'object') return;
+  const o = node as Record<string, unknown>;
+  const own = (typeof o['handle'] === 'string' ? o['handle'] : null) ?? handleFromUrl(o['url']) ?? handleFromUrl(o['productUrl']) ?? handle;
+  if (typeof o['id'] === 'number' && ('option1' in o || 'options' in o) && !('variants' in o)) {
+    const opts = Array.isArray(o['options']) ? (o['options'] as unknown[]) : [o['option1'], o['option2']];
+    const sku = typeof o['sku'] === 'string' ? o['sku'] : '';
+    put(o['id'], own ?? handleFromSku(sku), typeof opts[0] === 'string' ? opts[0] : null, typeof opts[1] === 'string' ? opts[1] : null);
+  }
+  for (const value of Object.values(o)) walk(value, own);
+}
+for (const m of html.matchAll(/<script[^>]*type="application\/json"[^>]*>([\s\S]*?)<\/script>/g)) {
+  try {
+    walk(JSON.parse(m[1]!), null);
+  } catch {
+    /* JSON de terceros que no nos interesa */
+  }
+}
+for (const m of html.matchAll(/<button[^>]*data-product-card-swatch[^>]*>/g)) {
+  const tag = m[0];
+  put(/data-variant-id="(\d+)"/.exec(tag)?.[1], handleFromUrl(/data-product-url="([^"]+)"/.exec(tag)?.[1]), decode(/data-swatch="([^"]+)"/.exec(tag)?.[1] ?? '') || null, null);
+}
+for (const [handle, entry] of finder) put(entry.variantId, handle, null, null);
+
+// La home ofrece estas variantes como disponibles (hero, conjunto, producto destacado): en la
+// semilla tienen stock, así lo que la portada invita a comprar se puede comprar.
+const MIN_STOCK_ON_HOME = 6;
+for (const [handle, color, size] of Object.values(variantMap)) {
+  if (!size) continue;
+  const variant = products.find((p) => p.handle === handle)?.variants.find((v) => v.size === size && (!color || v.color === color));
+  if (variant && variant.initialStock < MIN_STOCK_ON_HOME) variant.initialStock = MIN_STOCK_ON_HOME;
+}
+for (const product of products) {
+  // Sin talle explícito el puente elige el primero con stock: que cada color tenga alguno.
+  for (const color of product.colors) {
+    const sizes = product.variants.filter((v) => v.color === color.name);
+    if (sizes.length > 0 && sizes.every((v) => v.initialStock === 0)) sizes[0]!.initialStock = MIN_STOCK_ON_HOME;
+  }
+}
+
+const mapFile = 'apps/web/src/theme-bridge/shopify-variants.json';
+mkdirSync(path.dirname(mapFile), { recursive: true });
+writeFileSync(mapFile, JSON.stringify(variantMap).replace(/\],/g, '],\n') + '\n');
+console.log(`${Object.keys(variantMap).length} variantes de Shopify mapeadas → ${mapFile}`);
 
 writeFileSync(path.join(outDir, 'catalog.json'), JSON.stringify({ source: 'radian-rmytbh87.myshopify.com', products, collections }, null, 2) + '\n');
 console.log(`${products.length} productos, ${collections.length} colecciones, ${products.reduce((n, p) => n + p.images.length, 0)} imágenes (${written} nuevas) → ${outDir}`);

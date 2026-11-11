@@ -1,0 +1,1 @@
+import{$t as t,Xt as r}from"./630ba094.D60hzN4o.js";function n(){const n=t(!0);return r(()=>()=>{n.current=!1},[]),n}export{n as t};

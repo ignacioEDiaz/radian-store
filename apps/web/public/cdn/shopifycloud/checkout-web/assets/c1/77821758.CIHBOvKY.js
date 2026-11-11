@@ -1,0 +1,1 @@
+var r={borderRadius:"Iclgp"};export{r as t};

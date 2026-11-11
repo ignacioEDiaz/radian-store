@@ -68,7 +68,7 @@ function StatusBar({ product }: { product: AdminProduct }) {
         )}
         {product.status === 'published' && (
           <>
-            <a className="btn btn--ghost" href={`/productos/${product.slug}`} target="_blank" rel="noreferrer">
+            <a className="btn btn--ghost" href={`/products/${product.slug}`} target="_blank" rel="noreferrer">
               Ver en la tienda
             </a>
             <button type="button" className="btn btn--ghost" disabled={change.isPending} onClick={() => change.mutate('unpublish')}>

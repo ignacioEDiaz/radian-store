@@ -1,0 +1,33 @@
+.horizontal-scroll-progress {
+  display: none;
+  width: min(248px, 60%);
+  height: 2px;
+  margin: 20px auto 0;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--fg) 20%, transparent);
+}
+
+.horizontal-scroll-progress__value {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--fg);
+  transform: scaleX(var(--horizontal-scroll-progress, 0));
+  transform-origin: left center;
+}
+
+[dir='rtl'] .horizontal-scroll-progress__value {
+  transform-origin: right center;
+}
+
+@media (min-width: 768px) {
+  .horizontal-scroll-progress--all-viewports:not([hidden]) {
+    display: block;
+  }
+}
+
+@media (max-width: 767px) {
+  .horizontal-scroll-progress:not([hidden]) {
+    display: block;
+  }
+}

@@ -58,14 +58,21 @@ export function useFiltersFromUrl(fixed: { collection?: string | undefined; q?: 
         else s.delete('available');
         s.delete('page');
       }),
+    /** Rango de precio en centavos; `undefined` quita ese extremo. */
+    setPrice: (min: number | undefined, max: number | undefined) =>
+      update((s) => {
+        if (min === undefined) s.delete('minPrice');
+        else s.set('minPrice', String(min));
+        if (max === undefined) s.delete('maxPrice');
+        else s.set('maxPrice', String(max));
+        s.delete('page');
+      }),
+    clearDimension: (dim: Dimension) =>
+      update((s) => {
+        s.delete(dim);
+        s.delete('page');
+      }),
+    activeCount: params.color.length + params.size.length + params.material.length + params.type.length + (params.available ? 1 : 0) + (params.minPrice !== undefined || params.maxPrice !== undefined ? 1 : 0),
     clear: () => update((s) => ['color', 'size', 'material', 'type', 'minPrice', 'maxPrice', 'available', 'page'].forEach((k) => s.delete(k))),
-    /** href relativo para la página `n` conservando el resto de los parámetros. */
-    pageHref: (n: number) => {
-      const s = new URLSearchParams(search);
-      if (n <= 1) s.delete('page');
-      else s.set('page', String(n));
-      const qs = s.toString();
-      return qs ? `?${qs}` : '?';
-    },
   };
 }

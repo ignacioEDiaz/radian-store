@@ -40,9 +40,9 @@ describe('CheckoutPage', () => {
     setup();
     expect(await screen.findByDisplayValue('ana@example.com')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Av. Corrientes 1234')).toBeInTheDocument();
-    expect(await screen.findByRole('button', { name: /pagar usd 450,00/i })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /pagar us\$ 450,00/i })).toBeInTheDocument();
     await userEvent.click(screen.getByRole('radio', { name: /exprés/i }));
-    expect(await screen.findByRole('button', { name: /pagar usd 475,00/i })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /pagar us\$ 475,00/i })).toBeInTheDocument();
     await userEvent.click(screen.getByRole('radio', { name: /estándar/i }));
     await userEvent.type(screen.getByLabelText(/código de descuento/i), 'NOPE');
     await userEvent.click(screen.getByRole('button', { name: /aplicar/i }));
@@ -50,12 +50,12 @@ describe('CheckoutPage', () => {
     await userEvent.clear(screen.getByLabelText(/código de descuento/i));
     await userEvent.type(screen.getByLabelText(/código de descuento/i), 'WELCOME20');
     await userEvent.click(screen.getByRole('button', { name: /aplicar/i }));
-    expect(await screen.findByRole('button', { name: /pagar usd 360,00/i })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: /pagar us\$ 360,00/i })).toBeInTheDocument();
   });
 
   it('valida la tarjeta antes de enviar (mismo esquema que la API)', async () => {
     setup();
-    await screen.findByRole('button', { name: /pagar usd 450,00/i });
+    await screen.findByRole('button', { name: /pagar us\$ 450,00/i });
     await fillCard('4242 4242 4242 4241');
     await userEvent.click(screen.getByRole('button', { name: /pagar/i }));
     expect(await screen.findByText(/número de tarjeta inválido/i)).toBeInTheDocument();
@@ -73,7 +73,7 @@ describe('CheckoutPage', () => {
         return HttpResponse.json(order(), { status: 201 });
       }),
     );
-    const pay = await screen.findByRole('button', { name: /pagar usd 450,00/i });
+    const pay = await screen.findByRole('button', { name: /pagar us\$ 450,00/i });
     await fillCard();
     await userEvent.dblClick(pay);
     expect(await screen.findByRole('heading', { name: 'Confirmación' })).toBeInTheDocument();
@@ -88,7 +88,7 @@ describe('CheckoutPage', () => {
     server.use(
       http.post('/api/checkout/orders', () => problem(402, 'PAYMENT_DECLINED', 'El pago fue rechazado. Probá con otra tarjeta.', { meta: { reason: 'insufficient_funds' } })),
     );
-    await screen.findByRole('button', { name: /pagar usd 450,00/i });
+    await screen.findByRole('button', { name: /pagar us\$ 450,00/i });
     await fillCard('4000 0000 0000 9995');
     await userEvent.click(screen.getByRole('button', { name: /pagar/i }));
     expect(await screen.findByRole('alert')).toHaveTextContent(/fondos insuficientes/i);
@@ -99,6 +99,6 @@ describe('CheckoutPage', () => {
     setup(null);
     server.use(http.post('/api/checkout/quote', () => problem(422, 'EMPTY_CART', 'Tu carrito está vacío')));
     expect(await screen.findByText(/tu carrito está vacío/i)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /ir a la tienda/i })).toHaveAttribute('href', '/tienda');
+    expect(screen.getByRole('link', { name: /ir a la tienda/i })).toHaveAttribute('href', '/collections/all');
   });
 });

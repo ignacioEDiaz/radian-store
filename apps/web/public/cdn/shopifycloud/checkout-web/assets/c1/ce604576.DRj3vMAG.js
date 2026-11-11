@@ -1,0 +1,1 @@
+var a=function(a){return a.C1InlineModal="c1_inline_modal",a.C1Modal="c1_modal",a.C1ModalShopPay="c1_modal_shop_pay",a.C1ModalShopPaySignIn="c1_modal_shop_pay_sign_in",a.PaymentRequest="payment_request",a}({});export{a as t};

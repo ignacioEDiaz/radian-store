@@ -12,6 +12,8 @@ export default tseslint.config(
       '.specify/**',
       '.claude/**',
       'infra/**',
+      // Archivos del tema original (terceros): se sirven tal cual, no se lintean ni formatean.
+      'apps/web/public/**',
       '**/*.cjs',
     ],
   },

@@ -1,0 +1,1 @@
+import{vb as a}from"./6ec9a0fa.DVsXYFp6.js";var o=/\S+@\S+\.\S{2,}/;function r(o,r){if(!a(o))return r}function s(a,r){return o.test(a)?void 0:r}var n={xsmall:"_8ssCG",small:"zS4x6",medium:"PrlUn",large:"SsCEp",ShopPayLogo:"eEpXo",ShopLogo:"PJvCw",inline:"aTkbO"};export{r as n,s as r,n as t};

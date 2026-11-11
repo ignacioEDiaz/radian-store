@@ -11,7 +11,7 @@ export function createTestQueryClient() {
 
 interface Options {
   route?: string;
-  /** Patrón de ruta para que funcionen los params (p. ej. `/productos/:slug`). */
+  /** Patrón de ruta para que funcionen los params (p. ej. `/products/:slug`). */
   path?: string;
   queryClient?: QueryClient;
   extraRoutes?: { path: string; element: ReactElement }[];

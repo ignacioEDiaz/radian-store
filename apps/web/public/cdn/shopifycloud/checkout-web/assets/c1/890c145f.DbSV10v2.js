@@ -1,0 +1,1 @@
+import{zt as t}from"./630ba094.D60hzN4o.js";import{gD as e,mo as a}from"./6ec9a0fa.DVsXYFp6.js";var o=["paymentMethods"];function r(){const{checkout:{negotiator:r}}=e(),s=r.current.fields.paymentMethods,n=a(o);return t(()=>n.value&&!s.value?.length)}export{r as t};

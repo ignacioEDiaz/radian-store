@@ -1,8 +1,8 @@
-const fmt = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'USD', currencyDisplay: 'code', minimumFractionDigits: 2 });
+const fmt = new Intl.NumberFormat('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-/** 45000 → "USD 450,00" */
+/** 45000 → "US$ 450,00" (el mismo formato que usa la tienda en todas sus secciones). */
 export function formatMoney(cents: number): string {
-  return fmt.format(cents / 100).replace(/\s/g, ' ');
+  return `US$ ${fmt.format(cents / 100)}`;
 }
 
 /** "450" | "450,50" | "450.50" → 45050. Devuelve null si no es un importe válido. */

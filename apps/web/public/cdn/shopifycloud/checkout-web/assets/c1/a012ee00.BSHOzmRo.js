@@ -1,0 +1,1 @@
+import{vt as a,zt as s}from"./630ba094.D60hzN4o.js";import{FT as e,XO as o,gD as t,on as i}from"./6ec9a0fa.DVsXYFp6.js";var r=()=>{const{checkout:r}=t(),u=r.configuration.visibility.showAside,v=e(),m=o({base:!0,medium:!1}),c=a(m),l=i();return s(()=>!(l.value||u.value&&!c.value&&v.value))};export{r as t};

@@ -1,0 +1,359 @@
+/*
+ * Estilos de las pantallas propias (cuenta, checkout, pedidos, administración, estado).
+ *
+ * Todo vive dentro de `.app-root` (la raíz de React en el <main> del tema): nada de este archivo
+ * puede alterar el header, el footer ni los menús originales. Los colores y tipografías salen de
+ * las variables del propio tema, así las pantallas nuevas hablan el mismo idioma visual.
+ */
+.app-root {
+  --color-bg: var(--bg, #ffffff);
+  --color-surface: #f6f6f4;
+  --color-surface-2: #eeeeeb;
+  --color-text: var(--fg, #111111);
+  --color-muted: var(--muted, #5d5d5d);
+  --color-border: var(--border, #e2e2e2);
+  --color-accent: var(--button-bg, #111111);
+  --color-accent-hover: #3a3a3a;
+  --color-success: #2f7d4f;
+  --color-warning: #9a6700;
+  --color-danger: var(--notice, #b42318);
+  --font-sans: var(--font-body, Geist, system-ui, sans-serif);
+  --font-serif: var(--font-heading-secondary, 'Instrument Serif', Georgia, serif);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --radius: 0px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  display: block;
+  min-height: 62vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+
+  /* Pantallas propias: tipografía un punto mayor que la del catálogo para leer formularios y tablas. */
+  .app-page {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--gutter) var(--space-16);
+    font-size: 14px;
+    line-height: 1.5;
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--font-heading, inherit);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin: 0 0 var(--space-4);
+    }
+    h1 {
+      font-size: clamp(24px, 3vw, 32px);
+      text-transform: uppercase;
+    }
+    h2 {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+    h3 {
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    p {
+      margin: 0 0 var(--space-3);
+    }
+    a:not([class]) {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    :focus-visible {
+      outline: 2px solid var(--color-text);
+      outline-offset: 2px;
+    }
+    table {
+      border-collapse: collapse;
+    }
+  }
+
+  .app-page--loading {
+    min-height: 60vh;
+  }
+  .app-page--narrow {
+    max-width: 560px;
+  }
+
+  .serif {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  /* Botones: mismas proporciones que los del tema (negro pleno / contorno). */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 46px;
+    padding: 0 var(--space-6);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius);
+    background: var(--color-accent);
+    color: var(--button-fg, #ffffff);
+    font: 600 12px/1 var(--font-sans);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background 0.25s var(--ease),
+      color 0.25s var(--ease),
+      border-color 0.25s var(--ease);
+  }
+  .btn:hover:not(:disabled) {
+    background: var(--color-bg);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .btn--accent {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--button-fg, #ffffff);
+  }
+  .btn--ghost {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-text);
+  }
+  .btn--ghost:hover:not(:disabled) {
+    background: var(--color-accent);
+    color: var(--button-fg, #ffffff);
+  }
+  .btn--block {
+    width: 100%;
+  }
+  .btn--small {
+    min-height: 34px;
+    padding: 0 var(--space-3);
+    font-size: 11px;
+  }
+
+  /* Formularios */
+  .field {
+    display: grid;
+    gap: var(--space-1);
+    margin-bottom: var(--space-4);
+  }
+  .field label {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    min-height: 46px;
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    font: inherit;
+    font-size: 16px; /* evita el zoom de iOS al enfocar */
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--color-text);
+    outline: none;
+  }
+  .field [aria-invalid='true'] {
+    border-color: var(--color-danger);
+  }
+  .field-error {
+    color: var(--color-danger);
+    font-size: 13px;
+  }
+
+  .error-state {
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
+    padding: var(--space-4);
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: var(--space-4) 0;
+  }
+
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* Tablas anchas: se desplazan dentro de su contenedor, nunca desbordan la página (mobile). */
+  .table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ── Complementos para el markup del tema renderizado por React ───────────────────────── */
+
+  .app-empty {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-4);
+    padding: var(--space-16) var(--gutter);
+    text-align: center;
+    font-size: 15px;
+    color: var(--color-muted);
+  }
+
+  .app-skeleton {
+    background: linear-gradient(100deg, var(--color-surface) 40%, var(--color-surface-2) 50%, var(--color-surface) 60%);
+    background-size: 200% 100%;
+    animation: app-shimmer 1.4s linear infinite;
+  }
+  .app-skeleton-card .product-card-image {
+    aspect-ratio: var(--product-card-image-ratio, 0.7467);
+  }
+  .app-skeleton--line {
+    height: 12px;
+    width: 60%;
+    margin-top: var(--space-3);
+  }
+
+  .products-grid.is-loading {
+    opacity: 0.55;
+    transition: opacity 0.2s var(--ease);
+  }
+
+  .collection-banner-description {
+    max-width: 60ch;
+    margin: var(--space-2) 0 0;
+    color: var(--color-muted);
+  }
+
+  /* El tema lista los colores como botones; acá son links al producto en ese color. */
+  a.swatch {
+    display: block;
+  }
+
+  .load-more-btn {
+    cursor: pointer;
+    background: none;
+    border: 0;
+  }
+  .clear-all-link {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .app-related {
+    padding-block: var(--space-12) var(--space-16);
+  }
+  .app-related__title {
+    margin: 0 0 var(--space-6);
+  }
+  .app-related__grid {
+    --collection-columns-desktop: 4;
+    --collection-columns-mobile: 2;
+    --collection-grid-gap-desktop: 8px;
+    --collection-grid-gap-mobile: 4px;
+  }
+}
+
+/*
+ * Filtros en pantallas chicas: el tema los abría en un drawer servido por Shopify. Acá el botón
+ * "Filtros y orden" despliega los mismos grupos, apilados, debajo de la barra.
+ */
+@media (max-width: 1023px) {
+  .app-root .collection-controls.is-mobile-open {
+    display: flex;
+    flex-direction: column;
+
+    .toolbar {
+      order: -1;
+    }
+    .filter-dropdowns {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0 0 16px;
+    }
+    .filter-group--dropdown {
+      border-bottom: 1px solid var(--border, #e2e2e2);
+    }
+    .filter-group-header {
+      width: 100%;
+      min-height: 48px;
+      justify-content: space-between;
+    }
+    .filter-group--dropdown .filter-group-body--dropdown {
+      position: static;
+      width: 100%;
+      max-height: none;
+      box-shadow: none;
+      border: 0;
+      padding-bottom: 8px;
+    }
+    .toolbar-inner,
+    .toolbar-right,
+    .sort-form {
+      display: block;
+    }
+    .toolbar-inner {
+      height: auto;
+    }
+  }
+  .app-root .collection-controls:not(.is-mobile-open) .toolbar-right {
+    display: none;
+  }
+}
+
+@keyframes app-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-root .app-skeleton {
+    animation: none;
+  }
+}

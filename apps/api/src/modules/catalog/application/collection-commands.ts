@@ -11,9 +11,9 @@ import { toAdminCollection } from './views.js';
 export class CollectionCommands {
   constructor(private readonly d: { uow: UnitOfWork<CatalogRepos>; clock: Clock; ids: IdGenerator }) {}
 
-  create(input: { title: string; description: string; imageMediaId: string | null }): Promise<AdminCollection> {
+  create(input: { title: string; description: string; imageMediaId: string | null; slug?: string | undefined }): Promise<AdminCollection> {
     return this.d.uow.run(async (r) => {
-      const slug = await r.slugs.allocate('collection', Slug.fromTitle(input.title));
+      const slug = await r.slugs.allocate('collection', input.slug ? Slug.create(input.slug) : Slug.fromTitle(input.title));
       const collection = Collection.create({
         id: this.d.ids.uuid(),
         slug,

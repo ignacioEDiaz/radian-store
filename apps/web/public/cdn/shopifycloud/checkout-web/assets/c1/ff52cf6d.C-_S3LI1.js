@@ -1,0 +1,1 @@
+function n(n){const t=n.session.paymentMethodOption.value;return null==t?"SHOP_PAY":t.name}export{n as t};

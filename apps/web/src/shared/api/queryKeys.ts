@@ -16,10 +16,7 @@ export const queryKeys = {
     all: ['catalog'] as const,
     list: (params: object) => ['catalog', 'list', params] as const,
     product: (slug: string) => ['catalog', 'product', slug] as const,
-    collections: ['catalog', 'collections'] as const,
     collection: (slug: string) => ['catalog', 'collection', slug] as const,
-    suggestions: (q: string) => ['catalog', 'suggestions', q] as const,
-    home: ['catalog', 'home'] as const,
   },
   admin: {
     all: ['admin'] as const,

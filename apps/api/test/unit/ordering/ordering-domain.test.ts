@@ -92,3 +92,11 @@ describe('Order', () => {
     expect(o.toSnapshot()).toMatchObject({ status: 'cancelled', cancelReason: 'reservation_expired' });
   });
 });
+
+describe('regla de envío gratis publicada', () => {
+  it('el umbral que muestra la tienda (contrato) es el que aplica el dominio', async () => {
+    const { FREE_SHIPPING_THRESHOLD_CENTS } = await import('@radian/contracts');
+    const { FREE_SHIPPING_THRESHOLD } = await import('../../../src/modules/ordering/domain/pricing.js');
+    expect(FREE_SHIPPING_THRESHOLD_CENTS).toBe(FREE_SHIPPING_THRESHOLD);
+  });
+});

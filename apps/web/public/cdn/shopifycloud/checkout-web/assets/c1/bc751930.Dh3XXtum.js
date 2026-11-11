@@ -1,0 +1,1 @@
+function n(n){return{value:n.amount.toString(),currency:n.currencyCode.toUpperCase()}}function r(r){if(null!=r?.amount&&Number.isFinite(r.amount)&&r.currencyCode)return n({amount:r.amount,currencyCode:r.currencyCode})}export{n,r as t};

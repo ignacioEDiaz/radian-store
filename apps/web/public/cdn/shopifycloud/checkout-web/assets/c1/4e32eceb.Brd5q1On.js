@@ -1,0 +1,1 @@
+function i({isShippingRequired:i,isPickupSelected:n,shippingCountryCode:e,billingCountryCode:o}){return!i||n?o||e:e||o}function n(i,n){const e=n?i.countrySpecific[n]?.phoneMarketingDisclosure:void 0;return void 0===e?i.phoneMarketingDisclosure:e}export{n,i as t};
