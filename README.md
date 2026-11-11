@@ -96,6 +96,7 @@ usa repositorios de escritura.
 | Doble clic / reintentos | `Idempotency-Key` con hash del request y respuesta guardada | Test: 2 requests simultáneos → 1 pedido |
 | Consultas caras | Redis cache-aside con invalidación O(1) por versión de tag y circuit breaker | p97,5 de **21 ms**, ~1500 req/s, 99,8 % de aciertos |
 | Agotamiento de conexiones | Pools instrumentados (adquisición, timeouts → 503) + monitor de saturación con avisos | Dashboard y logs `pool.saturated` / `pool.recovered` |
+| Conexión cortada por PostgreSQL mientras está en uso | Listener de error por conexión: falla solo esa operación, la conexión rota se descarta y el proceso sigue | Test de integración con `idle_in_transaction_session_timeout` |
 | Imágenes | Validación por firma real, sin EXIF, WebP en 5 anchos, `srcset`, caché inmutable, dedupe por sha256 y autorreparación | — |
 
 ## Observabilidad
@@ -147,7 +148,7 @@ npm run test:e2e         # compra completa en Chromium, desktop y mobile (stack 
 npm run lint && npm run typecheck && npm run arch
 ```
 
-- API: 119 tests unitarios y de contrato + 71 de integración contra PostgreSQL y Redis reales.
+- API: 119 tests unitarios y de contrato + 72 de integración contra PostgreSQL y Redis reales.
 - Web: 98 tests (shell del tema, puente tema ⇄ backend y componentes con Testing Library + MSW).
 - E2E en desktop y mobile, también contra la versión dockerizada: la portada original carga sin
   errores ni archivos faltantes, el look del hero llega al carrito del backend, compra completa

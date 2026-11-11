@@ -48,7 +48,7 @@ export class Metrics {
   });
   readonly poolErrors = new Counter({
     name: 'db_pool_errors_total',
-    help: 'Errores de conexiones inactivas del pool',
+    help: 'Conexiones del pool cortadas por error (inactivas o en uso)',
     labelNames: ['pool'] as const,
     registers: [this.registry],
   });

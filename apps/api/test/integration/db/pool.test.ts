@@ -75,6 +75,23 @@ describe('createPool (PostgreSQL real)', () => {
     expect(rows.map((r) => r.v)).toEqual([1]);
   });
 
+  it('si PostgreSQL corta una conexión en uso, el proceso no se cae: falla esa operación y el pool sigue sirviendo', async () => {
+    const metrics = new Metrics();
+    // idle_in_transaction_session_timeout = 2 × statement_timeout = 300 ms
+    const p = make({ statementTimeoutMs: 150 }, metrics);
+    await expect(
+      p.withTransaction(async (client) => {
+        await client.query('SELECT 1');
+        // La transacción queda abierta sin actividad más de lo permitido: el servidor la termina.
+        await new Promise((r) => setTimeout(r, 700));
+        await client.query('SELECT 1');
+      }),
+    ).rejects.toThrow();
+    const { rows } = await p.query<{ one: number }>('SELECT 1 AS one');
+    expect(rows[0]!.one).toBe(1);
+    expect(await metrics.registry.metrics()).toMatch(/db_pool_errors_total\{pool="write"\} [1-9]/);
+  });
+
   it('registra el tiempo de adquisición en el histograma', async () => {
     const metrics = new Metrics();
     const p = make({}, metrics);
