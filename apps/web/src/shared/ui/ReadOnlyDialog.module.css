@@ -1,7 +1,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 200;
+  z-index: 10000;
   background: rgb(0 0 0 / 0.65);
   display: grid;
   place-items: center;

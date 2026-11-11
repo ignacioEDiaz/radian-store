@@ -69,7 +69,7 @@ function CheckoutForm({ profile }: { profile: Profile | null }) {
       <section className={styles.page}>
         <h1>Checkout</h1>
         <p>Tu carrito está vacío.</p>
-        <Link to="/tienda" className="btn">
+        <Link to="/collections/all" className="btn">
           Ir a la tienda
         </Link>
       </section>

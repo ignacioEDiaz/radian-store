@@ -633,13 +633,13 @@
           "sku": "SABLE-BLAZER-OBBL-L",
           "color": "Obsidian Black",
           "size": "L",
-          "initialStock": 4
+          "initialStock": 6
         },
         {
           "sku": "SABLE-BLAZER-OBBL-XL",
           "color": "Obsidian Black",
           "size": "XL",
-          "initialStock": 0
+          "initialStock": 6
         }
       ],
       "images": [
@@ -1646,7 +1646,7 @@
           "sku": "LEATHER-TEE-OBBL-M",
           "color": "Obsidian Black",
           "size": "M",
-          "initialStock": 2
+          "initialStock": 6
         },
         {
           "sku": "LEATHER-TEE-OBBL-L",
@@ -1682,7 +1682,7 @@
           "sku": "LEATHER-TEE-OXBU-XL",
           "color": "Oxblood Burgundy",
           "size": "XL",
-          "initialStock": 3
+          "initialStock": 6
         }
       ],
       "images": [
@@ -2305,7 +2305,7 @@
           "sku": "GLOOM-GAUNTLETS-OBBL-XL",
           "color": "Obsidian Black",
           "size": "XL",
-          "initialStock": 2
+          "initialStock": 6
         }
       ],
       "images": [
@@ -2347,7 +2347,7 @@
           "sku": "INK-BOOTS-OBBL-S",
           "color": "Obsidian Black",
           "size": "S",
-          "initialStock": 0
+          "initialStock": 6
         },
         {
           "sku": "INK-BOOTS-OBBL-M",
@@ -2414,7 +2414,7 @@
           "sku": "KURO-JACKET-OBBL-M",
           "color": "Obsidian Black",
           "size": "M",
-          "initialStock": 2
+          "initialStock": 6
         },
         {
           "sku": "KURO-JACKET-OBBL-L",
@@ -2473,7 +2473,7 @@
           "sku": "SABLE-TROUSERS-OBBL-M",
           "color": "Obsidian Black",
           "size": "M",
-          "initialStock": 5
+          "initialStock": 6
         },
         {
           "sku": "SABLE-TROUSERS-OBBL-L",

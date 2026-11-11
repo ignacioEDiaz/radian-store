@@ -1,58 +1,82 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import { buyFirstAvailableProduct, cartCount, cartDrawer, shot } from './helpers';
 
-const SHOTS = process.env['E2E_SCREENSHOTS'];
+test('la home es el tema original: secciones, estilos y scripts intactos, sin errores', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(String(e)));
+  const missing: string[] = [];
+  page.on('response', (r) => {
+    const { pathname } = new URL(r.url());
+    if (r.status() >= 400 && /^\/(cdn|_hosts|assets)\//.test(pathname)) missing.push(pathname);
+  });
 
-async function shot(page: Page, name: string) {
-  if (SHOTS) await page.screenshot({ path: `${SHOTS}/${test.info().project.name}-${name}.png`, fullPage: false });
-}
-
-test('compra completa como invitado: portada → producto → carrito → checkout → confirmación', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.getByRole('region', { name: /novedades/i }).getByRole('article').first()).toBeVisible();
+  await expect(page.locator('body')).toHaveClass(/template-index/);
+  // Las 25 secciones de la portada original, en su orden.
+  const sections = await page.locator('main [id^="shopify-section-template--"]').evaluateAll((els) => els.map((e) => e.id.replace(/^.*__/, '')));
+  expect(sections).toHaveLength(25);
+  expect(sections.slice(0, 4)).toEqual(['hero_product_hotspots_G6JgYb', 'word_bloom', 'image_gallery_MEhnBR', 'promo_tiles_offer']);
+  await expect(page.locator('.hero-product-hotspots')).toBeVisible();
+  await expect(page.locator('#mainNav .ig-logo').first()).toBeVisible();
+  // El JavaScript del tema corrió (animaciones, scroll suave, menús).
+  expect(await page.evaluate(() => typeof (window as unknown as { Axiom?: { initAnimations?: unknown } }).Axiom?.initAnimations)).toBe('function');
+  await expect(page.locator('html')).toHaveClass(/\bjs\b/);
   await shot(page, '01-home');
 
-  await page.goto('/tienda?available=true');
-  await expect(page.getByText(/\d+ productos/)).toBeVisible();
-  await shot(page, '02-shop');
-  await page.getByRole('article').first().getByRole('link').last().click();
+  const footer = page.locator('footer.footer-group-shell');
+  await footer.scrollIntoViewIfNeeded();
+  await expect(footer).toBeVisible();
+  expect(errors).toEqual([]);
+  expect(missing).toEqual([]);
+});
 
-  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  const size = page.locator('input[name="size"]:not([disabled])').first();
-  await size.check({ force: true });
-  await shot(page, '03-product');
-  await page.getByRole('button', { name: /agregar al carrito/i }).click();
+test('desde la home original: "agregar todo al carrito" guarda el look en el backend', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'el panel del look se abre desde los hotspots del hero en escritorio');
+  await page.goto('/');
+  await page.getByRole('button', { name: /agregar todo al carrito/i }).first().click();
+  await page.getByRole('button', { name: /agregar todo al carrito/i }).last().click();
 
-  const drawer = page.getByRole('dialog', { name: /tu carrito/i });
-  await expect(drawer).toBeVisible();
-  await expect(page.getByRole('button', { name: /carrito, 1 producto/i })).toBeVisible();
-  await shot(page, '04-cart');
-  await drawer.getByRole('link', { name: /finalizar compra/i }).click();
+  const drawer = cartDrawer(page);
+  await expect(drawer).toHaveAttribute('aria-hidden', 'false');
+  await expect(drawer.locator('.cart-item')).toHaveCount(2);
+  await expect(drawer.locator('.cart-item__title')).toHaveText(['Sable Blazer', 'Sable Trousers']);
+  await expect(drawer.locator('.cart-subtotal__price')).toHaveText('US$ 570,00');
+  await expect(cartCount(page)).toHaveText('2');
+  await shot(page, '02-home-cart');
 
-  await expect(page.getByRole('heading', { name: 'Checkout' })).toBeVisible();
-  await page.getByLabel('Email').fill(`e2e-${Date.now()}@example.com`);
-  await page.getByLabel('Destinatario').fill('Ana Pérez');
-  await page.getByLabel('Dirección', { exact: true }).fill('Av. Corrientes 1234');
-  await page.getByLabel('Ciudad').fill('CABA');
-  await page.getByLabel(/provincia/i).fill('CABA');
-  await page.getByLabel(/código postal/i).fill('1043');
-  await page.getByLabel(/país/i).fill('AR');
-  await page.getByLabel(/teléfono/i).fill('+54 11 5555 5555');
-  await page.getByLabel(/número de tarjeta/i).fill('4242 4242 4242 4242');
-  await page.getByLabel(/vencimiento/i).fill('12/30');
-  await page.getByLabel('CVC').fill('123');
-  await page.getByLabel('Titular').fill('Ana Pérez');
-  await shot(page, '05-checkout');
-  await page.getByRole('button', { name: /^pagar/i }).click();
+  // El carrito vive en el servidor: sobrevive a recargar y se ve desde cualquier página.
+  await page.reload();
+  await expect(cartCount(page)).toHaveText('2');
+  await page.goto('/cart');
+  await expect(page.getByRole('heading', { name: /tu bolsa/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Sable Trousers' })).toBeVisible();
 
-  await expect(page.getByRole('heading', { name: /gracias por tu compra/i })).toBeVisible();
-  await expect(page.getByText(/RS-\d{6}/).first()).toBeVisible();
-  await shot(page, '06-confirmation');
-  await expect(page.getByRole('button', { name: /carrito, 0 productos/i })).toBeVisible({ timeout: 10_000 });
+  await page.getByRole('button', { name: /quitar sable trousers/i }).click();
+  await expect(page.getByRole('link', { name: 'Sable Trousers' })).toBeHidden();
+  await expect(cartCount(page)).toHaveText('1');
+});
+
+test('compra completa como invitado: catálogo → producto → carrito → checkout → confirmación', async ({ page }) => {
+  await buyFirstAvailableProduct(page, true);
+  // Pedido pagado ⇒ carrito vacío también en el header del tema.
+  await expect(cartCount(page)).toHaveText('0', { timeout: 10_000 });
+});
+
+test('el buscador del tema consulta el catálogo del backend', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'en pantallas chicas el buscador se abre desde el menú');
+  await page.goto('/collections/all');
+  await page.locator('#mainNav [data-open-search], #mainNav [aria-controls="SearchDrawer"]').first().click();
+  await page.locator('#SearchDrawerInput').fill('boot');
+  const results = page.locator('#SearchDrawerResults .search-product');
+  await expect(results.first()).toBeVisible();
+  await expect(page.locator('#SearchDrawerResults')).toContainText('Sharp Leather Boot');
+  await page.locator('#SearchDrawerInput').press('Enter');
+  await expect(page).toHaveURL(/\/search\?q=boot/);
+  await expect(page.getByRole('heading', { level: 1, name: /resultados para “boot”/i })).toBeVisible();
 });
 
 test('estado del sistema visible para operadores', async ({ page }) => {
   await page.goto('/estado');
   await expect(page.getByText(/operativo/i, { exact: false }).first()).toBeVisible();
-  await shot(page, '07-status');
+  await shot(page, '08-status');
 });

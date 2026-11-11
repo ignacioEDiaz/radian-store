@@ -6,8 +6,7 @@ import { server } from '../../test/server';
 import { renderWithProviders } from '../../test/render';
 import { adminProfile, customerProfile, problem } from '../../test/fixtures';
 import { createQueryClient } from '../../app/queryClient';
-import { CartDrawerProvider } from '../cart/components/CartDrawerContext';
-import { Header } from '../../app/Header';
+import { AccountPage } from '../account/pages/AccountPage';
 import { LoginPage } from '../account/pages/LoginPage';
 import { AdminLayout } from './pages/AdminLayout';
 import { CollectionsPage } from './pages/CollectionsPage';
@@ -19,17 +18,16 @@ const READ_ONLY = 'Esta es una cuenta de demostración de solo lectura: podés r
 afterEach(() => vi.unstubAllEnvs());
 
 describe('Cuenta de solo lectura (viewer)', () => {
-  it('ve el acceso Admin en el header', async () => {
-    server.use(
-      http.get('/api/me', () => HttpResponse.json(viewerProfile)),
-      http.get('/api/cart', () => HttpResponse.json({ id: null, lines: [], itemCount: 0, subtotalCents: 0, currency: 'USD' })),
-    );
-    renderWithProviders(
-      <CartDrawerProvider>
-        <Header />
-      </CartDrawerProvider>,
-    );
-    expect(await screen.findByRole('link', { name: /admin/i })).toHaveAttribute('href', '/admin');
+  it('desde Mi cuenta ve el acceso al panel de administración (un cliente común no)', async () => {
+    server.use(http.get('/api/me', () => HttpResponse.json(viewerProfile)));
+    const staff = renderWithProviders(<AccountPage />);
+    expect(await screen.findByRole('link', { name: /panel de administración/i })).toHaveAttribute('href', '/admin');
+    staff.unmount();
+
+    server.use(http.get('/api/me', () => HttpResponse.json(customerProfile)));
+    renderWithProviders(<AccountPage />);
+    expect(await screen.findByRole('link', { name: /mis pedidos/i })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /panel de administración/i })).not.toBeInTheDocument();
   });
 
   it('entra al panel y ve un aviso permanente de modo solo lectura', async () => {

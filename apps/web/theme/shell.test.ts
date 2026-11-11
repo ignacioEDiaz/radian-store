@@ -78,5 +78,27 @@ describe('shell del tema', () => {
       expect(app).toContain('/cdn/shop/t/8/assets/product-media-layouts.css');
       expect(app.indexOf('/a.css')).toBeGreaterThan(app.indexOf('collection.css'));
     });
+
+    it('conserva los estilos de producto que en la home venían dentro de <main>', () => {
+      const productCss = /\/cdn\/shop\/t\/8\/assets\/product__[0-9a-f]{10}\.css/.exec(original)![0];
+      const head = app.slice(0, app.indexOf('</head>'));
+      expect(head).toContain(productCss);
+    });
+
+    it('el traductor del tema no entra a la raíz de React (no altera emails ni textos de la app)', () => {
+      const script = (html: string) => /<script id="ig-traductor">([\s\S]*?)<\/script>/.exec(html)![1]!;
+      expect(script(app)).toContain('p.closest("#root")');
+      expect(script(app)).toContain('n.id === "root"');
+      // En la home el traductor queda exactamente como estaba.
+      expect(script(buildShell(original, 'home'))).toBe(script(original));
+    });
+
+    it('muestra el logo oscuro: en páginas internas el header es claro', () => {
+      const logo = /<a\b[^>]*class="nav-logo[^"]*"[^>]*>[\s\S]*?<\/a>/.exec(app)![0];
+      expect(logo).not.toContain('nav-logo--has-top');
+      expect(logo).not.toContain('nav-logo__variant--top');
+      expect(logo).toContain('nav-logo__variant--default');
+      expect(logo).toContain('ig-logo--negro');
+    });
   });
 });

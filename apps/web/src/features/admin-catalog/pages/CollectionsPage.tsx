@@ -64,7 +64,7 @@ function CollectionCard({ collection, products }: { collection: AdminCollection;
   return (
     <section className={styles.section} aria-labelledby={headingId}>
       <h2 id={headingId}>{collection.title}</h2>
-      <p className={styles.muted}>/colecciones/{collection.slug}</p>
+      <p className={styles.muted}>/collections/{collection.slug}</p>
       <CommandError error={save.error} />
       <ol>
         {ids.map((id, i) => (

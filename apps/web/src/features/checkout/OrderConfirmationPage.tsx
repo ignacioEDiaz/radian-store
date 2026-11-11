@@ -33,7 +33,7 @@ export function OrderConfirmationPage() {
       )}
       {order && <OrderSummaryView order={order} />}
       <p>
-        <Link to="/tienda" className="btn btn--ghost">
+        <Link to="/collections/all" className="btn btn--ghost">
           Seguir comprando
         </Link>{' '}
         {isAuthenticated && (

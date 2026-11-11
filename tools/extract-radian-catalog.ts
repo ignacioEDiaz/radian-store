@@ -309,6 +309,23 @@ for (const m of html.matchAll(/<button[^>]*data-product-card-swatch[^>]*>/g)) {
   put(/data-variant-id="(\d+)"/.exec(tag)?.[1], handleFromUrl(/data-product-url="([^"]+)"/.exec(tag)?.[1]), decode(/data-swatch="([^"]+)"/.exec(tag)?.[1] ?? '') || null, null);
 }
 for (const [handle, entry] of finder) put(entry.variantId, handle, null, null);
+
+// La home ofrece estas variantes como disponibles (hero, conjunto, producto destacado): en la
+// semilla tienen stock, así lo que la portada invita a comprar se puede comprar.
+const MIN_STOCK_ON_HOME = 6;
+for (const [handle, color, size] of Object.values(variantMap)) {
+  if (!size) continue;
+  const variant = products.find((p) => p.handle === handle)?.variants.find((v) => v.size === size && (!color || v.color === color));
+  if (variant && variant.initialStock < MIN_STOCK_ON_HOME) variant.initialStock = MIN_STOCK_ON_HOME;
+}
+for (const product of products) {
+  // Sin talle explícito el puente elige el primero con stock: que cada color tenga alguno.
+  for (const color of product.colors) {
+    const sizes = product.variants.filter((v) => v.color === color.name);
+    if (sizes.length > 0 && sizes.every((v) => v.initialStock === 0)) sizes[0]!.initialStock = MIN_STOCK_ON_HOME;
+  }
+}
+
 const mapFile = 'apps/web/src/theme-bridge/shopify-variants.json';
 mkdirSync(path.dirname(mapFile), { recursive: true });
 writeFileSync(mapFile, JSON.stringify(variantMap).replace(/\],/g, '],\n') + '\n');

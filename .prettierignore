@@ -1,0 +1,4 @@
+# Tema original (terceros): se conserva byte a byte.
+apps/web/public/
+apps/web/theme/home.original.html
+apps/web/src/theme-bridge/shopify-variants.json

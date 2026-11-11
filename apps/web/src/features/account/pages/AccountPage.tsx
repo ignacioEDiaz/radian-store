@@ -4,12 +4,15 @@ import { updateProfileRequestSchema, type Profile } from '@radian/contracts';
 import { ApiError } from '../../../shared/api/httpClient';
 import { validate, type FieldErrors } from '../../../shared/forms/validate';
 import { TextField } from '../../../shared/ui/TextField';
-import { useSession, useUpdateProfile } from '../hooks/useSession';
+import { usePageTitle } from '../../../shared/ui/usePageTitle';
+import { useLogout, useSession, useUpdateProfile } from '../hooks/useSession';
 import { AddressFields, emptyAddress, isBlankAddress, toAddressInput, type AddressValues } from '../components/AddressFields';
 import styles from './AccountPage.module.css';
 
 export function AccountPage() {
-  const { profile } = useSession();
+  const { profile, isStaff } = useSession();
+  const logout = useLogout();
+  usePageTitle('Mi cuenta');
   if (!profile) return <p className="container" aria-busy="true">Cargando…</p>;
 
   return (
@@ -20,6 +23,16 @@ export function AccountPage() {
         <nav aria-label="Secciones de la cuenta" className={styles.tabs}>
           <Link to="/cuenta">Perfil</Link>
           <Link to="/cuenta/pedidos">Mis pedidos</Link>
+          {isStaff && <Link to="/admin">Panel de administración</Link>}
+          <button
+            type="button"
+            className={styles.logout}
+            disabled={logout.isPending}
+            // Recarga completa: el carrito y el header del tema vuelven al estado de invitado.
+            onClick={() => logout.mutate(undefined, { onSuccess: () => window.location.assign('/') })}
+          >
+            Cerrar sesión
+          </button>
         </nav>
       </header>
       <ProfileForm key={profile.id} profile={profile} />

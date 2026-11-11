@@ -122,6 +122,14 @@ describe('backend del tema: carrito', () => {
     expect(deps.cart.add).not.toHaveBeenCalled();
   });
 
+  it('si una prenda de un conjunto no tiene stock no agrega ninguna (nada de conjuntos a medias)', async () => {
+    const { backend, deps } = setup({ getProduct: vi.fn(async () => product([variant(V1, 'Obsidian Black', 'S', false), variant(V2, 'Obsidian Black', 'M')])) });
+    const res = await backend.handle(request('POST', '/cart/add', { items: [{ id: V2, quantity: 1 }, { id: SABLE_BLAZER_S, quantity: 1 }] }))!;
+    expect(res.status).toBe(422);
+    expect(((await res.json()) as { description: string }).description).toBe('Sable Blazer (Obsidian Black, talle S) no tiene stock en este momento.');
+    expect(deps.cart.add).not.toHaveBeenCalled();
+  });
+
   it('los rechazos de negocio de la API (sin stock) llegan al tema como error 422 con su mensaje', async () => {
     const { backend } = setup({
       cart: { get: vi.fn(), remove: vi.fn(), update: vi.fn(), add: vi.fn(async () => Promise.reject(new ApiError(409, 'INSUFFICIENT_STOCK', 'No hay stock suficiente'))) },

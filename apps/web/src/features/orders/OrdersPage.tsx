@@ -23,7 +23,7 @@ export function OrdersPage() {
       )}
       {data && data.items.length === 0 && (
         <p>
-          Todavía no hiciste compras. <Link to="/tienda">Ir a la tienda</Link>
+          Todavía no hiciste compras. <Link to="/collections/all">Ir a la tienda</Link>
         </p>
       )}
       {data && data.items.length > 0 && (

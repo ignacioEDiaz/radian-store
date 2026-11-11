@@ -1,1 +1,1 @@
-export const BRAND_NAME = import.meta.env.VITE_BRAND_NAME ?? 'Radian';
+export const BRAND_NAME = import.meta.env.VITE_BRAND_NAME ?? 'Ignacio';

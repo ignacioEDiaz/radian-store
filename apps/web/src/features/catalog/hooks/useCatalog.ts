@@ -1,24 +1,20 @@
-import { useEffect, useState } from 'react';
-import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query';
-import { PAGE_SIZE } from '@radian/contracts';
+import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { queryKeys } from '../../../shared/api/queryKeys';
 import { catalogService, type ListParams } from '../services/catalogService';
 
-/** Listado con la página anterior visible mientras carga la nueva y prefetch de la siguiente. */
-export function useProducts(params: ListParams) {
-  const queryClient = useQueryClient();
-  const query = useQuery({
-    queryKey: queryKeys.catalog.list(params),
-    queryFn: ({ signal }) => catalogService.listProducts(params, signal),
+/**
+ * Listado "cargar más" (como la grilla del tema): cada página se suma a las anteriores.
+ * Los filtros forman parte de la clave, así que cambiar uno reinicia desde la página 1 mientras
+ * se sigue mostrando el resultado anterior hasta que llega el nuevo.
+ */
+export function useInfiniteProducts(params: Omit<ListParams, 'page'>) {
+  return useInfiniteQuery({
+    queryKey: queryKeys.catalog.list({ ...params, infinite: true }),
+    queryFn: ({ pageParam, signal }) => catalogService.listProducts({ ...params, page: pageParam }, signal),
+    initialPageParam: 1,
+    getNextPageParam: (last) => (last.page * last.pageSize < last.total ? last.page + 1 : undefined),
     placeholderData: keepPreviousData,
   });
-  const hasNext = !!query.data && query.data.total > params.page * PAGE_SIZE;
-  useEffect(() => {
-    if (!hasNext) return;
-    const next = { ...params, page: params.page + 1 };
-    void queryClient.prefetchQuery({ queryKey: queryKeys.catalog.list(next), queryFn: () => catalogService.listProducts(next) });
-  }, [hasNext, params, queryClient]);
-  return query;
 }
 
 export function useProduct(slug: string) {
@@ -26,32 +22,5 @@ export function useProduct(slug: string) {
 }
 
 export function useCollection(slug: string | undefined) {
-  return useQuery({ queryKey: queryKeys.catalog.collection(slug ?? ''), queryFn: () => catalogService.getCollection(slug!), enabled: !!slug });
-}
-
-export function useCollections() {
-  return useQuery({ queryKey: queryKeys.catalog.collections, queryFn: catalogService.listCollections, staleTime: 5 * 60_000 });
-}
-
-export function useHome() {
-  return useQuery({ queryKey: queryKeys.catalog.home, queryFn: catalogService.home });
-}
-
-export function useDebouncedValue<T>(value: T, ms: number): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const t = setTimeout(() => setDebounced(value), ms);
-    return () => clearTimeout(t);
-  }, [value, ms]);
-  return debounced;
-}
-
-export function useSuggestions(q: string) {
-  const term = useDebouncedValue(q.trim(), 200);
-  return useQuery({
-    queryKey: queryKeys.catalog.suggestions(term.toLowerCase()),
-    queryFn: ({ signal }) => catalogService.suggestions(term, signal),
-    enabled: term.length >= 2,
-    staleTime: 60_000,
-  });
+  return useQuery({ queryKey: queryKeys.catalog.collection(slug ?? ''), queryFn: () => catalogService.getCollection(slug!), enabled: !!slug, retry: false });
 }

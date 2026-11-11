@@ -3,7 +3,7 @@ import type { CartView } from '@radian/contracts';
 import { queryKeys } from '../shared/api/queryKeys';
 import { cartService } from '../features/cart/services/cartService';
 import { catalogService } from '../features/catalog/services/catalogService';
-import { installDomBridge } from './dom';
+import { installDomBridge, type DomBridgeOptions } from './dom';
 import { installFetchBridge } from './fetchBridge';
 import { createThemeBackend } from './themeBackend';
 import { localizeThemeStrings, readDrawerShell, renderThemeCart } from './themeApi';
@@ -19,7 +19,7 @@ const whenReady = (run: () => void) =>
  *     servidor se guarda ahí y se vuelca en el drawer y el contador del tema.
  *  3. Los controles que dependían de Shopify (cuenta, vista rápida) llevan a nuestras pantallas.
  */
-export function installThemeBridge(queryClient: QueryClient): void {
+export function installThemeBridge(queryClient: QueryClient, options: DomBridgeOptions = {}): void {
   /** `true` mientras el propio tema está aplicando una respuesta (ya re-renderiza él). */
   let fromTheme = false;
 
@@ -37,7 +37,7 @@ export function installThemeBridge(queryClient: QueryClient): void {
   });
 
   installFetchBridge(backend);
-  installDomBridge();
+  installDomBridge(options);
 
   // Cambios del carrito hechos desde React (checkout, login, logout) → drawer y contador del tema.
   queryClient.getQueryCache().subscribe((event) => {

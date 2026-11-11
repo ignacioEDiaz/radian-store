@@ -125,13 +125,17 @@ export function createThemeBackend(deps: ThemeBackendDeps) {
     return json({ ...toAjaxCart(cart), ...extra, ...(sections ? { sections } : {}) });
   }
 
-  async function resolveVariant(id: unknown): Promise<string | null> {
+  /** Variante real para un id del tema. `soldOut` trae el nombre si ya se sabe que no tiene stock. */
+  async function resolveVariant(id: unknown): Promise<{ variantId: string; soldOut?: string } | null> {
     const raw = rawId(id);
-    if (isVariantUuid(raw)) return raw;
+    if (isVariantUuid(raw)) return { variantId: raw };
     const ref = lookupShopifyVariant(raw);
     if (!ref) return null;
     try {
-      return pickVariant(await deps.getProduct(ref.handle), ref)?.id ?? null;
+      const product = await deps.getProduct(ref.handle);
+      const variant = pickVariant(product, ref);
+      if (!variant) return null;
+      return variant.available ? { variantId: variant.id } : { variantId: variant.id, soldOut: `${product.title} (${variant.color}, talle ${variant.size})` };
     } catch (err) {
       if (err instanceof ApiError && err.status === 404) return null;
       throw err;
@@ -142,9 +146,11 @@ export function createThemeBackend(deps: ThemeBackendDeps) {
     const requested = Array.isArray(body['items']) ? (body['items'] as Record<string, unknown>[]) : [body];
     const resolved: { variantId: string; quantity: number }[] = [];
     for (const item of requested) {
-      const variantId = await resolveVariant(item['id']);
-      if (!variantId) return cartError('Este producto no está disponible en este momento.');
-      resolved.push({ variantId, quantity: Math.max(1, toQuantity(item['quantity'], 1)) });
+      const variant = await resolveVariant(item['id']);
+      if (!variant) return cartError('Este producto no está disponible en este momento.');
+      // Se valida todo antes de agregar: un conjunto no debe quedar cargado a medias.
+      if (variant.soldOut) return cartError(`${variant.soldOut} no tiene stock en este momento.`);
+      resolved.push({ variantId: variant.variantId, quantity: Math.max(1, toQuantity(item['quantity'], 1)) });
     }
     let cart: CartView | null = null;
     for (const item of resolved) cart = await deps.cart.add(item.variantId, item.quantity);

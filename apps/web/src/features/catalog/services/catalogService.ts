@@ -1,4 +1,4 @@
-import type { CollectionView, Home, ProductDetail, ProductList, Suggestions } from '@radian/contracts';
+import type { CollectionView, ProductDetail, ProductList, Suggestions } from '@radian/contracts';
 import { httpClient } from '../../../shared/api/httpClient';
 
 export interface ListParams {
@@ -23,8 +23,6 @@ export const catalogService = {
       ...(signal ? { signal } : {}),
     }),
   getProduct: (slug: string) => httpClient.get<ProductDetail>(`/api/catalog/products/${encodeURIComponent(slug)}`),
-  listCollections: () => httpClient.get<CollectionView[]>('/api/catalog/collections'),
   getCollection: (slug: string) => httpClient.get<CollectionView>(`/api/catalog/collections/${encodeURIComponent(slug)}`),
   suggestions: (q: string, signal?: AbortSignal) => httpClient.get<Suggestions>('/api/catalog/search/suggestions', { query: { q }, ...(signal ? { signal } : {}) }),
-  home: () => httpClient.get<Home>('/api/catalog/home'),
 };
