@@ -55,7 +55,8 @@ export async function buyFirstAvailableProduct(page: Page, capture = false): Pro
   await snap('06-checkout');
   await page.getByRole('button', { name: /^pagar/i }).click();
 
-  await expect(page.getByRole('heading', { name: /gracias por tu compra/i })).toBeVisible();
+  // El cobro pasa por el proveedor de pagos (simulado, con latencia): se le da margen.
+  await expect(page.getByRole('heading', { name: /gracias por tu compra/i })).toBeVisible({ timeout: 20_000 });
   await expect(page.getByText(/RS-\d{6}/).first()).toBeVisible();
   await snap('07-confirmation');
   return email;

@@ -14,5 +14,3 @@ test-results/
 apps/web/test-results/
 apps/web/playwright-report/
 
-# sondas manuales de Playwright
-apps/web/e2e/_*.mjs

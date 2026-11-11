@@ -19,6 +19,12 @@ Constitución: `.specify/memory/constitution.md`. Specs: `specs/NNN-*/`.
 - Acceso a bases solo vía pools de `shared/infrastructure/db/pool.ts`.
 - Web: `fetch` solo dentro de `shared/api/httpClient.ts`; componentes → hooks React Query →
   services.
+- **El diseño es el del tema original y no se cambia.** `apps/web/theme/home.original.html` y
+  `apps/web/public/{cdn,_hosts}` se conservan tal cual. La portada es ese documento; las páginas
+  internas se montan en su `<main>` y usan su markup y estilos (`src/theme-ui`). Los estilos
+  propios viven dentro de `.app-root` (`src/styles/app.css`).
+- El tema habla con el backend a través de `src/theme-bridge` (responde sus pedidos de carrito y
+  búsqueda con los services). No se edita el JavaScript del tema.
 
 ## Comandos
 

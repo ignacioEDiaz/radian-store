@@ -4,20 +4,25 @@ Tienda de moda full-stack construida como proyecto de portafolio con **Spec-Driv
 (GitHub Spec Kit), **TDD**, **DDD + CQRS** con bases separadas de escritura y lectura, caché
 invalidada por eventos y observabilidad de punta a punta.
 
+El frontend conserva el diseño original de la tienda (un tema de Shopify clonado: markup, estilos
+y animaciones intactos) y lo conecta a un backend propio: lo que antes respondía Shopify ahora lo
+responde esta API.
+
 ![Portada](docs/screenshots/desktop-01-home.png)
 
 | Capa | Tecnología |
 |------|------------|
 | Backend | Node.js 24, TypeScript 6 (strict), Fastify 5, Zod 4 |
 | Persistencia | PostgreSQL 17 ×2 (escritura / lectura), Redis 8 (caché), almacenamiento de imágenes propio |
-| Frontend | React 19, Vite, TanStack Query 5, React Router, `fetch` + capa de servicios |
+| Frontend | Tema original + React 19, Vite, TanStack Query 5, React Router, `fetch` + capa de servicios |
 | Observabilidad | Prometheus, Grafana (dashboard como código), pino (JSON), health checks |
 | Calidad | Vitest, Testcontainers, Testing Library, MSW, Playwright, dependency-cruiser, GitHub Actions |
 
 ## Qué hace
 
-- **Tienda**: portada, listados con filtros y facetas con conteos, búsqueda tolerante a errores de
-  tipeo con sugerencias, ficha de producto con disponibilidad por color × talle.
+- **Tienda**: la portada original, listados con filtros y facetas con conteos, búsqueda tolerante
+  a errores de tipeo con sugerencias en el buscador del tema, ficha de producto con disponibilidad
+  por color × talle.
 - **Carrito** persistente en el backend (visitante con cookie firmada o cliente), con merge al
   iniciar sesión y avisos de precio o stock cambiados.
 - **Checkout** con envío, códigos de descuento (`WELCOME20`), pago simulado y pedidos.
@@ -27,18 +32,36 @@ invalidada por eventos y observabilidad de punta a punta.
 - **Cuenta demo de solo lectura** (rol `viewer`): recorre todo el panel, pero cualquier
   modificación es rechazada por el servidor (403 `READ_ONLY_ACCOUNT`) y la web explica por qué;
   los datos personales de los clientes se ven enmascarados.
-- Catálogo inicial: 21 productos, 168 variantes y 82 imágenes, importados de la tienda Radian
-  original con los mismos casos de uso del panel.
+- Catálogo inicial: 41 productos, 248 variantes, 105 imágenes y 21 colecciones, importados de la
+  tienda original con los mismos casos de uso del panel.
 
 | Producto | Checkout | Carrito (mobile) |
 |----------|----------|------------------|
-| ![Producto](docs/screenshots/desktop-03-product.png) | ![Checkout](docs/screenshots/desktop-05-checkout.png) | ![Carrito](docs/screenshots/mobile-04-cart.png) |
+| ![Producto](docs/screenshots/desktop-04-product.png) | ![Checkout](docs/screenshots/desktop-06-checkout.png) | ![Carrito](docs/screenshots/mobile-05-cart.png) |
+
+### El tema original sobre un backend propio
+
+El tema fue escrito para hablar con Shopify. En lugar de reescribirlo, la aplicación le da lo que
+espera:
+
+- **`apps/web/theme`**: el documento original es el HTML de la web. Un plugin de Vite lo sirve tal
+  cual (portada) o como marco con el `<main>` libre para React (páginas internas). Solo se quitan
+  scripts de terceros invisibles (analítica, pixels); un test compara el resultado con el original.
+- **`src/theme-bridge`**: intercepta los pedidos que el tema le hacía a Shopify (`/cart/add`,
+  `/cart/change`, `/search/suggest`…) y los responde con la capa de services, en el formato que el
+  tema espera, incluido el HTML del carrito. Así el drawer, el contador y las animaciones son los
+  del tema, y los precios, el stock y los totales son los del backend.
+- **`src/theme-ui`**: colección, búsqueda y producto se renderizan en React con el markup y los
+  estilos del propio tema; las pantallas nuevas (checkout, cuenta, administración) usan sus tokens.
+- La caché de React Query es la única fuente de verdad del carrito: cualquier cambio confirmado
+  por el servidor se refleja en el drawer del tema y en las pantallas de React.
 
 ## Arquitectura
 
 ```mermaid
 flowchart LR
-  subgraph Web[React SPA]
+  subgraph Web[Tema original + React]
+    T[JS del tema] --> B[theme-bridge] --> S
     C[Componentes] --> H[Hooks React Query] --> S[Services] --> HC[httpClient fetch]
   end
   HC -->|HTTP| API
@@ -124,9 +147,13 @@ npm run test:e2e         # compra completa en Chromium, desktop y mobile (stack 
 npm run lint && npm run typecheck && npm run arch
 ```
 
-- API: 114 tests unitarios y de contrato + 67 de integración contra PostgreSQL y Redis reales.
-- Web: 59 tests de componentes con Testing Library + MSW.
-- E2E: compra completa como invitado en desktop y mobile, también contra la versión dockerizada.
+- API: 119 tests unitarios y de contrato + 71 de integración contra PostgreSQL y Redis reales.
+- Web: 98 tests (shell del tema, puente tema ⇄ backend y componentes con Testing Library + MSW).
+- E2E en desktop y mobile, también contra la versión dockerizada: la portada original carga sin
+  errores ni archivos faltantes, el look del hero llega al carrito del backend, compra completa
+  como invitado, buscador del tema y cuenta demo de solo lectura.
+- Fidelidad de la portada: capturas contra el clon estático en 12 posiciones de scroll, con
+  diferencias de 0 a 1 % (solo marquesinas y videos en movimiento).
 
 ## Spec-Driven Development
 
@@ -145,3 +172,4 @@ Todo el código nace de specs y tareas ([Spec Kit](https://github.com/github/spe
 | [005](specs/005-shopping-cart/spec.md) | Carrito persistente con merge al iniciar sesión |
 | [006](specs/006-checkout-orders/spec.md) | Checkout idempotente, reservas sin sobreventa, pedidos y administración |
 | [007](specs/007-admin-viewer-role/spec.md) | Rol de solo lectura para el panel (demo segura) |
+| [008](specs/008-original-storefront/spec.md) | Frontend original del tema conectado al backend (puente de carrito y búsqueda) |
